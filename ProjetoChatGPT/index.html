@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Comercial Local</title>
+
+    <!-- CSS principal -->
+    <link rel="stylesheet" href="src/css/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+    
+    <!-- LOGO -->
+    <div class="logo">Guia<span>Comercial</span></div>
+
+    <!-- MENU DESKTOP -->
+    <nav class="menu-central">
+        <a href="#">Início</a>
+
+        <div class="dropdown">
+            <a href="#">Categorias ▾</a>
+            <div class="dropdown-content">
+                <a href="#">Comércio</a>
+                <a href="#">Serviço</a>
+                <a href="#">Lazer</a>
+                <a href="#">Moda</a>
+                <a href="#">Farmácia</a>
+                <a href="#">Estética</a>
+            </div>
+        </div>
+
+        <a href="#">Destaques</a>
+        <a href="#">Notícias</a>
+        <a href="#">Contato</a>
+    </nav>
+
+    <!-- BOTÃO MOBILE -->
+    <div class="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- INSTAGRAM -->
+    <div class="social">
+        <a href="#" target="_blank" class="btn-insta-icon">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+
+</header>
+
+<!-- ================= CONTEÚDO PRINCIPAL ================= -->
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="overlay"></div>
+
+        <div class="hero-content">
+            <h1>Encontre o que você precisa</h1>
+            <p>Olá! O que você deseja buscar hoje no bairro?</p>
+
+            <!-- BUSCA -->
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="Ex: Pizza, Chaveiro, Remédio..."
+                    aria-label="Buscar comércios"
+                >
+                <button type="button" id="searchBtn">BUSCAR</button>
+            </div>
+
+            <!-- CATEGORIAS RÁPIDAS -->
+            <div class="quick-cards">
+                <div class="q-card">Comércio</div>
+                <div class="q-card">Serviço</div>
+                <div class="q-card">Lazer</div>
+                <div class="q-card">Moda</div>
+                <div class="q-card">Farmácia</div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- JS -->
+<script src="src/js/script.js"></script>
+
+</body>
+</html>

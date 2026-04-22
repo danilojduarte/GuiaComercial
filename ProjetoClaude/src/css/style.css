@@ -1,0 +1,585 @@
+/* ==============================================
+   GUIA COMERCIAL — style.css
+   Estrutura:
+   1. Variáveis e Reset
+   2. Navbar
+   3. Dropdown
+   4. Botão Instagram
+   5. Menu Mobile (Hamburguer)
+   6. Hero Section
+   7. Overlay
+   8. Barra de Busca
+   9. Quick Cards
+   10. Responsividade (Media Queries)
+   ============================================== */
+
+
+/* -----------------------------------------------
+   1. VARIÁVEIS GLOBAIS E RESET BÁSICO
+   As variáveis (--nome) permitem alterar cores e
+   tamanhos em um só lugar, refletindo em todo o site.
+   ----------------------------------------------- */
+:root {
+    --cor-primaria: #E1306C;       /* Rosa/pink — cor principal da marca */
+    --cor-primaria-escura: #bc1888; /* Tom mais escuro para hover */
+    --cor-texto: #333333;           /* Cinza escuro para textos gerais */
+    --cor-texto-muted: #666666;     /* Cinza médio para textos secundários */
+    --cor-fundo: #f4f4f4;           /* Fundo geral da página */
+    --altura-navbar: 80px;          /* Altura fixa da barra de navegação */
+    --sombra-suave: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --sombra-media: 0 4px 20px rgba(0, 0, 0, 0.15);
+    --borda-radius: 10px;
+    --transicao: 0.3s ease;         /* Duração padrão para transições CSS */
+}
+
+/* Reset: remove margens e paddings padrão do navegador
+   e garante que border + padding sejam incluídos na largura total */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fonte base para todo o site */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+    /* Evita que o conteúdo fique atrás da navbar fixa */
+    padding-top: var(--altura-navbar);
+}
+
+/* Remove estilos padrão de todos os links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* -----------------------------------------------
+   2. NAVBAR — barra de navegação fixa no topo
+   ----------------------------------------------- */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Logo | Menu | Ações */
+    align-items: center;
+    padding: 0 5%;                  /* Espaçamento lateral responsivo */
+    height: var(--altura-navbar);
+    background: #ffffff;
+    position: fixed;                /* Fica no topo mesmo ao rolar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;                  /* Fica acima de outros elementos */
+    box-shadow: var(--sombra-suave);
+}
+
+/* Logo: "Guia" em cinza + "Comercial" em rosa */
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--cor-texto);
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: var(--cor-primaria);
+}
+
+/* Menu central: links lado a lado */
+.menu-central {
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Espaço entre os itens */
+}
+
+.menu-central a {
+    color: #444;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    transition: color var(--transicao), background var(--transicao);
+}
+
+/* Efeito hover e foco nos links do menu */
+.menu-central a:hover,
+.menu-central a:focus-visible {
+    color: var(--cor-primaria);
+    background-color: rgba(225, 48, 108, 0.06);
+    outline: none;
+}
+
+/* Agrupa Instagram + hamburguer no lado direito */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+/* -----------------------------------------------
+   3. DROPDOWN — menu de categorias
+   ----------------------------------------------- */
+.dropdown {
+    position: relative; /* Ancora o .dropdown-content */
+    display: inline-block;
+}
+
+/* O botão do dropdown herda o visual dos links do menu */
+.dropdown-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #444;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 15px;
+    font-family: inherit; /* Herda a fonte do body */
+    transition: color var(--transicao), background var(--transicao);
+}
+
+.dropdown-btn:hover,
+.dropdown-btn:focus-visible {
+    color: var(--cor-primaria);
+    background-color: rgba(225, 48, 108, 0.06);
+    outline: none;
+}
+
+/* Setinha do dropdown — gira 180° quando o menu abre */
+.chevron {
+    font-size: 11px;
+    display: inline-block;
+    transition: transform var(--transicao);
+}
+
+/* Quando o dropdown está ativo (hover ou focus), a setinha vira */
+.dropdown:hover .chevron,
+.dropdown:focus-within .chevron {
+    transform: rotate(180deg);
+}
+
+/* Caixa flutuante com as opções */
+.dropdown-content {
+    display: none;              /* Oculto por padrão */
+    position: absolute;
+    top: calc(100% + 8px);     /* Logo abaixo do botão */
+    left: 0;
+    background-color: #ffffff;
+    min-width: 170px;
+    border: 0.5px solid #e8e8e8;
+    border-radius: 12px;
+    box-shadow: var(--sombra-media);
+    overflow: hidden;
+    z-index: 100;
+    /* Animação de entrada sutil */
+    animation: fadeDown 0.2s ease;
+}
+
+/* Exibe o dropdown ao passar o mouse ou focar no elemento pai */
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+    display: block;
+}
+
+/* Animação que faz o dropdown "aparecer de cima" */
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Links dentro do dropdown */
+.dropdown-content a {
+    display: block;
+    padding: 11px 18px;
+    color: #444;
+    font-size: 14px;
+    transition: background var(--transicao), color var(--transicao);
+}
+
+.dropdown-content a:hover,
+.dropdown-content a:focus-visible {
+    background-color: rgba(225, 48, 108, 0.06);
+    color: var(--cor-primaria);
+    outline: none;
+}
+
+
+/* -----------------------------------------------
+   4. BOTÃO INSTAGRAM
+   ----------------------------------------------- */
+.btn-insta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    /* Gradiente característico do Instagram */
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    color: #ffffff;
+    font-size: 20px;
+    transition: transform var(--transicao), box-shadow var(--transicao);
+    box-shadow: 0 3px 10px rgba(225, 48, 108, 0.2);
+}
+
+.btn-insta-icon:hover {
+    transform: scale(1.1) rotate(-5deg); /* Efeito de "pulo" no hover */
+    box-shadow: 0 6px 16px rgba(225, 48, 108, 0.35);
+}
+
+/* Garante que o ícone FA fique centralizado */
+.btn-insta-icon i {
+    line-height: 0;
+}
+
+
+/* -----------------------------------------------
+   5. MENU MOBILE (HAMBURGUER)
+   O botão aparece só no mobile. Ao clicar, o menu
+   desliza para baixo.
+   ----------------------------------------------- */
+
+/* Botão hamburguer — 3 barrinhas */
+.hamburger {
+    display: none;              /* Oculto no desktop */
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 6px;
+    transition: background var(--transicao);
+}
+
+.hamburger:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Cada "barra" do hamburguer */
+.hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: var(--cor-texto);
+    border-radius: 2px;
+    transition: transform var(--transicao), opacity var(--transicao);
+}
+
+/* Animação do hamburguer → X quando o menu está aberto.
+   A classe .ativo é adicionada via JavaScript. */
+.hamburger.ativo .bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.hamburger.ativo .bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.hamburger.ativo .bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Menu lateral/dropdown do mobile — oculto por padrão */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;            /* Fica sobre o conteúdo */
+    top: var(--altura-navbar);  /* Começa logo abaixo da navbar */
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    /* Animação de deslize */
+    animation: slideDown 0.25s ease;
+}
+
+/* Quando a classe .aberto é adicionada via JS, o menu aparece */
+.mobile-menu.aberto {
+    display: flex;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Links dentro do menu mobile */
+.mobile-menu a {
+    padding: 14px 5%;
+    font-weight: 500;
+    font-size: 15px;
+    color: #444;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background var(--transicao), color var(--transicao);
+}
+
+.mobile-menu a:last-child {
+    border-bottom: none; /* Remove borda no último item */
+}
+
+.mobile-menu a:hover {
+    background-color: rgba(225, 48, 108, 0.05);
+    color: var(--cor-primaria);
+}
+
+
+/* -----------------------------------------------
+   6. HERO — seção principal de destaque
+   ----------------------------------------------- */
+.hero {
+    /* Altura total da tela menos a navbar */
+    height: calc(100vh - var(--altura-navbar));
+    width: 100%;
+    /* Substitua pelo caminho da sua imagem */
+    background: url('../img/img_section_hero.png') no-repeat center center / cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Conteúdo centralizado do hero */
+.hero-content {
+    position: relative;
+    z-index: 2;             /* Fica acima do overlay */
+    color: #ffffff;
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+    /* Animação de entrada suave */
+    animation: heroEntrada 0.7s ease both;
+}
+
+@keyframes heroEntrada {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-content h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); /* Tamanho fluido — maior em telas maiores */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content p {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    margin-bottom: 30px;
+    opacity: 0.88;
+}
+
+
+/* -----------------------------------------------
+   7. OVERLAY — camada escura sobre a imagem do hero
+   Melhora o contraste e a legibilidade do texto.
+   ----------------------------------------------- */
+.overlay {
+    position: absolute;
+    inset: 0; /* Equivale a: top:0; right:0; bottom:0; left:0 */
+    background-color: rgba(0, 0, 0, 0.55);
+    z-index: 1;
+}
+
+
+/* -----------------------------------------------
+   8. BARRA DE BUSCA
+   ----------------------------------------------- */
+.search-container {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 6px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    max-width: 580px;
+    margin: 0 auto 36px;
+    transition: box-shadow var(--transicao);
+}
+
+/* Destaque ao focar na barra de busca */
+.search-container:focus-within {
+    box-shadow: 0 4px 24px rgba(225, 48, 108, 0.3);
+}
+
+.search-container input {
+    flex: 1;                /* Ocupa todo o espaço disponível */
+    border: none;
+    padding: 14px 22px;
+    border-radius: 50px;
+    outline: none;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    background: transparent;
+    font-family: inherit;
+}
+
+/* Texto do placeholder */
+.search-container input::placeholder {
+    color: #aaa;
+}
+
+.search-container button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--cor-primaria);
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    font-family: inherit;
+    transition: background var(--transicao), transform 0.1s;
+    white-space: nowrap; /* Impede quebra de linha no texto do botão */
+}
+
+.search-container button:hover {
+    background: var(--cor-primaria-escura);
+}
+
+/* Efeito de "pressionar" o botão ao clicar */
+.search-container button:active {
+    transform: scale(0.97);
+}
+
+
+/* -----------------------------------------------
+   9. QUICK CARDS — atalhos de categoria no hero
+   ----------------------------------------------- */
+.quick-cards {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap; /* Quebra linha em telas menores */
+}
+
+.q-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Fundo semitransparente com efeito "vidro" (glassmorphism) */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #ffffff;
+    /* Desfoque no fundo — requer suporte do navegador */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background var(--transicao), transform var(--transicao), border-color var(--transicao);
+    /* Permite navegação por teclado visualmente coerente */
+    outline-offset: 3px;
+}
+
+.q-card:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-4px); /* Leve elevação no hover */
+}
+
+/* Foco via teclado — mantém acessibilidade sem outline padrão feio */
+.q-card:focus-visible {
+    outline: 2px solid #fff;
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* Efeito de clique */
+.q-card:active {
+    transform: translateY(-1px);
+}
+
+/* Ícones dentro do card */
+.q-card i {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+
+/* -----------------------------------------------
+   10. RESPONSIVIDADE — Media Queries
+   Ajustes para tablets e celulares.
+   Lógica "mobile-first" adaptada:
+   o CSS base funciona no desktop, e aqui
+   fazemos os ajustes para telas menores.
+   ----------------------------------------------- */
+
+/* Tablet: telas até 992px */
+@media (max-width: 992px) {
+    /* Reduz um pouco o espaçamento lateral da navbar */
+    .navbar {
+        padding: 0 4%;
+    }
+
+    /* Esconde o menu central e mostra o hamburguer */
+    .menu-central {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* Mobile: telas até 600px */
+@media (max-width: 600px) {
+    /* Barra de busca empilhada verticalmente */
+    .search-container {
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .search-container input {
+        width: 100%;
+        text-align: center;
+        padding: 12px;
+    }
+
+    .search-container button {
+        width: 100%;
+        justify-content: center;
+        padding: 14px;
+        border-radius: 12px;
+    }
+
+    /* Cards menores para caber bem na tela */
+    .q-card {
+        padding: 9px 16px;
+        font-size: 0.85rem;
+    }
+
+    /* Navbar mais compacta */
+    .navbar {
+        padding: 0 4%;
+    }
+}
+
+/* Mobile pequeno: telas até 380px (ex: iPhone SE) */
+@media (max-width: 380px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .q-card {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}

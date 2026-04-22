@@ -1,0 +1,227 @@
+/* RESET BÁSICO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    height: 80px;
+    background: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo { 
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #333; 
+}
+
+.logo span { 
+    color: #E1306C; 
+}
+
+.menu-central {
+    display: flex;
+    align-items: center;
+}
+
+.menu-central a {
+    text-decoration: none;
+    color: #444;
+    margin: 0 15px;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.menu-central a:hover { 
+    color: #E1306C; 
+}
+
+/* DROPDOWN MENU */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin: 0;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    border-radius: 8px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* BOTÃO INSTAGRAM */
+/* BOTÃO INSTAGRAM (APENAS ÍCONE) */
+.btn-insta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+    color: white !important;
+    border-radius: 50%; /* Deixa redondinho */
+    text-decoration: none;
+    font-size: 22px; /* Tamanho do ícone */
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-insta-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(225, 48, 108, 0.3);
+}
+
+/* Ajuste fino para o ícone centralizar */
+.btn-insta-icon i {
+    line-height: 0;
+}
+
+/* SECTION HERO */
+.hero {
+    height: 100vh;
+    width: 100%;
+    /* Ajustado para o nome da sua imagem e pasta */
+    background: url('../img/img_section_hero.png') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Camada de ofuscamento */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 800px;
+}
+
+.hero-content h1 { 
+    font-size: 3.2rem; 
+    margin-bottom: 10px; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+/* BARRA DE BUSCA */
+.search-container {
+    display: flex;
+    background: white;
+    padding: 6px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.search-container input {
+    flex: 1;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 50px;
+    outline: none;
+    font-size: 1rem;
+    color: #333;
+}
+
+.search-container button {
+    background: #E1306C;
+    color: white;
+    border: none;
+    padding: 0 35px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.search-container button:hover {
+    background: #bc1888;
+}
+
+/* QUICK CARDS (Categorias abaixo da busca) */
+.quick-cards {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.q-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px); /* Efeito de vidro */
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.q-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+/* RESPONSIVIDADE PARA CELULAR */
+@media (max-width: 768px) {
+    .menu-central { display: none; } /* Esconde menu no mobile para simplificar */
+    .hero-content h1 { font-size: 2.2rem; }
+    .search-container { flex-direction: column; border-radius: 20px; padding: 10px; }
+    .search-container input { padding: 10px; text-align: center; }
+    .search-container button { padding: 12px; border-radius: 10px; margin-top: 10px; }
+}
