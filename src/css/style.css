@@ -242,10 +242,13 @@ body {
 /* GRID RESPONSIVO: Ajusta colunas automaticamente conforme o tamanho da tela */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 30px;
-    max-width: 1200px;
+    /* O 'minmax' diz: no mínimo 250px, no máximo 1 fração do espaço */
+    /* Isso permite que os cards fiquem menores para caberem 4 em 1200px */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 25px;
+    max-width: 1300px; /* Aumentei um pouco para caber os 4 confortavelmente */
     margin: 0 auto;
+    padding: 20px 0;
 }
 
 /* ESTILO DO CARD */
@@ -346,11 +349,44 @@ body {
 
 .btn-social:hover { transform: scale(1.1); filter: brightness(0.95); }
 
-/* RESPONSIVIDADE PARA CELULAR */
+/* ============================= RESPONSIVIDADE  ============================= */
+
+/* ==== telas 1200px ==== */
+@media (min-width: 1200px) {
+    .cards-grid {
+        /* Forçamos 4 colunas exatas em telas bem largas */
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ==== telas 1024px ==== */
+@media (max-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .hero-content h1 { font-size: 2.8rem; }
+}
+
+/* ==== telas 768px ==== */
 @media (max-width: 768px) {
     .menu-central { display: none; } /* Esconde menu no mobile para simplificar */
     .hero-content h1 { font-size: 2.2rem; }
     .search-container { flex-direction: column; border-radius: 20px; padding: 10px; }
     .search-container input { padding: 10px; text-align: center; }
     .search-container button { padding: 12px; border-radius: 10px; margin-top: 10px; }
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .section-title { font-size: 2rem;
+}
+
+
+/* ==== telas 480px ==== */
+@media (max-width: 480px) {
+    .section-title { font-size: 1.8rem; }
+    .cards-grid {
+        grid-template-columns: 1fr; /* Um card por linha para não esmagar a info */
+    }
+    .hero-content h1 { font-size: 2rem; }
+    .card-lojista { max-width: 320px; margin: 0 auto; } /* Centraliza o card único */
 }
