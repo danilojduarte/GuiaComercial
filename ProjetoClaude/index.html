@@ -1,92 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guia Comercial Local</title>
 
     <!-- Folha de estilos principal -->
-    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/style.css" />
 
     <!-- Ícones Font Awesome (Instagram, lupa, etc.) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body>
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+  <body>
     <!-- =============================================
          NAVBAR — barra de navegação fixa no topo
          ============================================= -->
     <header class="navbar" role="banner">
+      <!-- Logo do site -->
+      <div class="logo" aria-label="Guia Comercial">
+        Guia<span>Comercial</span>
+      </div>
 
-        <!-- Logo do site -->
-        <div class="logo" aria-label="Guia Comercial">
-            Guia<span>Comercial</span>
-        </div>
+      <!-- Menu de navegação central (visível apenas no desktop) -->
+      <nav class="menu-central" role="navigation" aria-label="Menu principal">
+        <a href="#">Início</a>
 
-        <!-- Menu de navegação central (visível apenas no desktop) -->
-        <nav class="menu-central" role="navigation" aria-label="Menu principal">
-
-            <a href="#">Início</a>
-
-            <!-- Dropdown de categorias:
+        <!-- Dropdown de categorias:
                  usamos <button> aqui (não <a>) porque ele ABRE um menu,
                  não navega para outra página — isso é semântica correta. -->
-            <div class="dropdown">
-                <button
-                    class="dropdown-btn"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    id="btnCategorias"
-                >
-                    Categorias <span class="chevron" aria-hidden="true">▾</span>
-                </button>
+        <div class="dropdown">
+          <button
+            class="dropdown-btn"
+            aria-haspopup="true"
+            aria-expanded="false"
+            id="btnCategorias"
+          >
+            Categorias <span class="chevron" aria-hidden="true">▾</span>
+          </button>
 
-                <!-- Lista de categorias dentro do dropdown -->
-                <div class="dropdown-content" role="menu" aria-labelledby="btnCategorias">
-                    <a href="#" role="menuitem">Comércio</a>
-                    <a href="#" role="menuitem">Serviço</a>
-                    <a href="#" role="menuitem">Lazer</a>
-                    <a href="#" role="menuitem">Moda</a>
-                    <a href="#" role="menuitem">Farmácia</a>
-                    <a href="#" role="menuitem">Estética</a>
-                </div>
-            </div>
-
-            <a href="#">Destaques</a>
-            <a href="#">Notícias</a>
-            <a href="#">Contato</a>
-        </nav>
-
-        <!-- Lado direito da navbar: ícone do Instagram + hamburguer mobile -->
-        <div class="navbar-right">
-
-            <!-- Botão do Instagram (abre em nova aba) -->
-            <a
-                href="SUA_URL_DO_INSTAGRAM_AQUI"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-insta-icon"
-                aria-label="Siga nosso Guia no Instagram"
-                title="Instagram"
-            >
-                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
-            </a>
-
-            <!-- Botão hamburguer — aparece apenas no mobile.
-                 O aria-expanded é atualizado via JavaScript. -->
-            <button
-                class="hamburger"
-                id="btnHamburger"
-                aria-label="Abrir menu de navegação"
-                aria-expanded="false"
-                aria-controls="menuMobile"
-            >
-                <!-- Três barrinhas do ícone hamburguer -->
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
+          <!-- Lista de categorias dentro do dropdown -->
+          <div
+            class="dropdown-content"
+            role="menu"
+            aria-labelledby="btnCategorias"
+          >
+            <a href="#" role="menuitem">Comércio</a>
+            <a href="#" role="menuitem">Serviço</a>
+            <a href="#" role="menuitem">Lazer</a>
+            <a href="#" role="menuitem">Moda</a>
+            <a href="#" role="menuitem">Farmácia</a>
+            <a href="#" role="menuitem">Estética</a>
+          </div>
         </div>
+
+        <a href="#">Destaques</a>
+        <a href="#">Notícias</a>
+        <a href="#">Contato</a>
+      </nav>
+
+      <!-- Lado direito da navbar: ícone do Instagram + hamburguer mobile -->
+      <div class="navbar-right">
+        <!-- Botão do Instagram (abre em nova aba) -->
+        <a
+          href="SUA_URL_DO_INSTAGRAM_AQUI"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-insta-icon"
+          aria-label="Siga nosso Guia no Instagram"
+          title="Instagram"
+        >
+          <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+        </a>
+
+        <!-- Botão hamburguer — aparece apenas no mobile.
+                 O aria-expanded é atualizado via JavaScript. -->
+        <button
+          class="hamburger"
+          id="btnHamburger"
+          aria-label="Abrir menu de navegação"
+          aria-expanded="false"
+          aria-controls="menuMobile"
+        >
+          <!-- Três barrinhas do ícone hamburguer -->
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
     </header>
 
     <!-- =============================================
@@ -94,83 +97,348 @@
          é clicado. Fica escondido no desktop.
          ============================================= -->
     <nav
-        class="mobile-menu"
-        id="menuMobile"
-        role="navigation"
-        aria-label="Menu mobile"
-        aria-hidden="true"
+      class="mobile-menu"
+      id="menuMobile"
+      role="navigation"
+      aria-label="Menu mobile"
+      aria-hidden="true"
     >
-        <a href="#">Início</a>
-        <!-- Categorias aparecem direto no mobile (sem dropdown) -->
-        <a href="#">Comércio</a>
-        <a href="#">Serviço</a>
-        <a href="#">Lazer</a>
-        <a href="#">Moda</a>
-        <a href="#">Farmácia</a>
-        <a href="#">Estética</a>
-        <a href="#">Destaques</a>
-        <a href="#">Notícias</a>
-        <a href="#">Contato</a>
+      <a href="#">Início</a>
+      <!-- Categorias aparecem direto no mobile (sem dropdown) -->
+      <a href="#">Comércio</a>
+      <a href="#">Serviço</a>
+      <a href="#">Lazer</a>
+      <a href="#">Moda</a>
+      <a href="#">Farmácia</a>
+      <a href="#">Estética</a>
+      <a href="#">Destaques</a>
+      <a href="#">Notícias</a>
+      <a href="#">Contato</a>
     </nav>
 
     <!-- =============================================
          HERO — seção principal com busca
          ============================================= -->
     <main>
-        <section class="hero" aria-label="Seção de busca principal">
+      <section class="hero" aria-label="Seção de busca principal">
+        <!-- Camada escura sobre a imagem de fundo (melhora leitura do texto) -->
+        <div class="overlay" aria-hidden="true"></div>
 
-            <!-- Camada escura sobre a imagem de fundo (melhora leitura do texto) -->
-            <div class="overlay" aria-hidden="true"></div>
+        <div class="hero-content">
+          <h1>Encontre o que você precisa</h1>
+          <p>Olá! O que você deseja buscar hoje no bairro?</p>
 
-            <div class="hero-content">
-                <h1>Encontre o que você precisa</h1>
-                <p>Olá! O que você deseja buscar hoje no bairro?</p>
-
-                <!-- Barra de busca:
+          <!-- Barra de busca:
                      role="search" indica para leitores de tela que é uma área de busca -->
-                <div class="search-container" role="search">
-                    <input
-                        type="search"
-                        id="campoBusca"
-                        placeholder="Ex: Pizza, Chaveiro, Remédio..."
-                        aria-label="Buscar estabelecimento"
-                        autocomplete="off"
-                    >
-                    <button id="btnBuscar" type="button" aria-label="Executar busca">
-                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
-                        BUSCAR
-                    </button>
-                </div>
+          <div class="search-container" role="search">
+            <input
+              type="search"
+              id="campoBusca"
+              placeholder="Ex: Pizza, Chaveiro, Remédio..."
+              aria-label="Buscar estabelecimento"
+              autocomplete="off"
+            />
+            <button id="btnBuscar" type="button" aria-label="Executar busca">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              BUSCAR
+            </button>
+          </div>
 
-                <!-- Quick cards: atalhos rápidos para cada categoria.
+          <!-- Quick cards: atalhos rápidos para cada categoria.
                      tabindex="0" permite navegar por teclado (Tab + Enter). -->
-                <div class="quick-cards" role="list" aria-label="Categorias de acesso rápido">
-                    <div class="q-card" role="listitem" tabindex="0" data-categoria="Comércio">
-                        <i class="fa-solid fa-store" aria-hidden="true"></i>
-                        Comércio
-                    </div>
-                    <div class="q-card" role="listitem" tabindex="0" data-categoria="Serviço">
-                        <i class="fa-solid fa-wrench" aria-hidden="true"></i>
-                        Serviço
-                    </div>
-                    <div class="q-card" role="listitem" tabindex="0" data-categoria="Lazer">
-                        <i class="fa-solid fa-masks-theater" aria-hidden="true"></i>
-                        Lazer
-                    </div>
-                    <div class="q-card" role="listitem" tabindex="0" data-categoria="Moda">
-                        <i class="fa-solid fa-shirt" aria-hidden="true"></i>
-                        Moda
-                    </div>
-                    <div class="q-card" role="listitem" tabindex="0" data-categoria="Farmácia">
-                        <i class="fa-solid fa-pills" aria-hidden="true"></i>
-                        Farmácia
-                    </div>
-                </div>
+          <div
+            class="quick-cards"
+            role="list"
+            aria-label="Categorias de acesso rápido"
+          >
+            <div
+              class="q-card"
+              role="listitem"
+              tabindex="0"
+              data-categoria="Comércio"
+            >
+              <i class="fa-solid fa-store" aria-hidden="true"></i>
+              Comércio
             </div>
-        </section>
+            <div
+              class="q-card"
+              role="listitem"
+              tabindex="0"
+              data-categoria="Serviço"
+            >
+              <i class="fa-solid fa-wrench" aria-hidden="true"></i>
+              Serviço
+            </div>
+            <div
+              class="q-card"
+              role="listitem"
+              tabindex="0"
+              data-categoria="Lazer"
+            >
+              <i class="fa-solid fa-masks-theater" aria-hidden="true"></i>
+              Lazer
+            </div>
+            <div
+              class="q-card"
+              role="listitem"
+              tabindex="0"
+              data-categoria="Moda"
+            >
+              <i class="fa-solid fa-shirt" aria-hidden="true"></i>
+              Moda
+            </div>
+            <div
+              class="q-card"
+              role="listitem"
+              tabindex="0"
+              data-categoria="Farmácia"
+            >
+              <i class="fa-solid fa-pills" aria-hidden="true"></i>
+              Farmácia
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =============================================
+         Section Destaques - Exibi o card dos principais 
+         lojistas
+         ============================================= -->
+      <section class="destaques">
+        <div class="container">
+          <h2 class="section-title">Comércios em Destaque</h2>
+          <p class="section-subtitle">
+            Os melhores lugares do bairro selecionados para você.
+          </p>
+
+          <div class="cards-grid">
+            <!-- Card 01  -->
+            <article class="card-lojista">
+              <div
+                class="card-header"
+                style="
+                  background-image: url(&quot;https://picsum.photos/400/250?random=20&quot;);
+                "
+              >
+                <span class="status-badge aberto">Aberto Agora</span>
+              </div>
+
+              <div class="card-content">
+                <div class="logo-wrapper">
+                  <img
+                    src="https://picsum.photos/80/80?random=21"
+                    alt="Logo Lojista"
+                  />
+                </div>
+                <h3 class="lojista-nome">Pizzaria Del Bairro</h3>
+                <div class="horario-info">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                </div>
+                <p class="endereco">
+                  <i class="fa-solid fa-location-dot"></i> Rua Principal, 450 -
+                  Centro
+                </p>
+                <p class="descricao">
+                  As melhores pizzas artesanais feitas no forno a lenha com
+                  ingredientes frescos.
+                </p>
+                <div class="card-footer">
+                  <a href="#" class="btn-social insta"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                  <a href="#" class="btn-social whats"
+                    ><i class="fa-brands fa-whatsapp"></i
+                  ></a>
+                  <a href="#" class="btn-social maps"
+                    ><i class="fa-solid fa-map-location-dot"></i
+                  ></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 02  -->
+            <article class="card-lojista">
+              <div
+                class="card-header"
+                style="
+                  background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
+                "
+              >
+                <span class="status-badge aberto">Aberto Agora</span>
+              </div>
+
+              <div class="card-content">
+                <div class="logo-wrapper">
+                  <img
+                    src="https://picsum.photos/80/80?random=31"
+                    alt="Logo Lojista"
+                  />
+                </div>
+                <h3 class="lojista-nome">Pizzaria Del Bairro 2</h3>
+                <div class="horario-info">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                </div>
+                <p class="endereco">
+                  <i class="fa-solid fa-location-dot"></i> Rua Secundária, 100 -
+                  Centro
+                </p>
+                <p class="descricao">
+                  Outra descrição legal para o segundo lojista teste.
+                </p>
+                <div class="card-footer">
+                  <a href="#" class="btn-social insta"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                  <a href="#" class="btn-social whats"
+                    ><i class="fa-brands fa-whatsapp"></i
+                  ></a>
+                  <a href="#" class="btn-social maps"
+                    ><i class="fa-solid fa-map-location-dot"></i
+                  ></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 03 -->
+            <article class="card-lojista">
+              <div
+                class="card-header"
+                style="
+                  background-image: url(&quot;https://picsum.photos/400/250?random=20&quot;);
+                "
+              >
+                <span class="status-badge aberto">Aberto Agora</span>
+              </div>
+
+              <div class="card-content">
+                <div class="logo-wrapper">
+                  <img
+                    src="https://picsum.photos/80/80?random=21"
+                    alt="Logo Lojista"
+                  />
+                </div>
+                <h3 class="lojista-nome">Pizzaria Del Bairro</h3>
+                <div class="horario-info">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                </div>
+                <p class="endereco">
+                  <i class="fa-solid fa-location-dot"></i> Rua Principal, 450 -
+                  Centro
+                </p>
+                <p class="descricao">
+                  As melhores pizzas artesanais feitas no forno a lenha com
+                  ingredientes frescos.
+                </p>
+                <div class="card-footer">
+                  <a href="#" class="btn-social insta"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                  <a href="#" class="btn-social whats"
+                    ><i class="fa-brands fa-whatsapp"></i
+                  ></a>
+                  <a href="#" class="btn-social maps"
+                    ><i class="fa-solid fa-map-location-dot"></i
+                  ></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 04  -->
+            <article class="card-lojista">
+              <div
+                class="card-header"
+                style="
+                  background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
+                "
+              >
+                <span class="status-badge aberto">Aberto Agora</span>
+              </div>
+
+              <div class="card-content">
+                <div class="logo-wrapper">
+                  <img
+                    src="https://picsum.photos/80/80?random=31"
+                    alt="Logo Lojista"
+                  />
+                </div>
+                <h3 class="lojista-nome">Pizzaria Del Bairro 2</h3>
+                <div class="horario-info">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                </div>
+                <p class="endereco">
+                  <i class="fa-solid fa-location-dot"></i> Rua Secundária, 100 -
+                  Centro
+                </p>
+                <p class="descricao">
+                  Outra descrição legal para o segundo lojista teste.
+                </p>
+                <div class="card-footer">
+                  <a href="#" class="btn-social insta"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                  <a href="#" class="btn-social whats"
+                    ><i class="fa-brands fa-whatsapp"></i
+                  ></a>
+                  <a href="#" class="btn-social maps"
+                    ><i class="fa-solid fa-map-location-dot"></i
+                  ></a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Card 04  -->
+            <article class="card-lojista">
+              <div
+                class="card-header"
+                style="
+                  background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
+                "
+              >
+                <span class="status-badge aberto">Aberto Agora</span>
+              </div>
+
+              <div class="card-content">
+                <div class="logo-wrapper">
+                  <img
+                    src="https://picsum.photos/80/80?random=31"
+                    alt="Logo Lojista"
+                  />
+                </div>
+                <h3 class="lojista-nome">Pizzaria Del Bairro 2</h3>
+                <div class="horario-info">
+                  <i class="fa-regular fa-clock"></i>
+                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                </div>
+                <p class="endereco">
+                  <i class="fa-solid fa-location-dot"></i> Rua Secundária, 100 -
+                  Centro
+                </p>
+                <p class="descricao">
+                  Outra descrição legal para o segundo lojista teste.
+                </p>
+                <div class="card-footer">
+                  <a href="#" class="btn-social insta"
+                    ><i class="fa-brands fa-instagram"></i
+                  ></a>
+                  <a href="#" class="btn-social whats"
+                    ><i class="fa-brands fa-whatsapp"></i
+                  ></a>
+                  <a href="#" class="btn-social maps"
+                    ><i class="fa-solid fa-map-location-dot"></i
+                  ></a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Script principal (carregado por último para não bloquear o HTML) -->
     <script src="src/js/script.js"></script>
-</body>
+  </body>
 </html>

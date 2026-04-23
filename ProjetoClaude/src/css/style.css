@@ -15,7 +15,7 @@
 
 
 /* -----------------------------------------------
-   1. VARIÁVEIS GLOBAIS E RESET BÁSICO
+   VARIÁVEIS GLOBAIS E RESET BÁSICO
    As variáveis (--nome) permitem alterar cores e
    tamanhos em um só lugar, refletindo em todo o site.
    ----------------------------------------------- */
@@ -58,9 +58,7 @@ a {
 }
 
 
-/* -----------------------------------------------
-   2. NAVBAR — barra de navegação fixa no topo
-   ----------------------------------------------- */
+/* ===========   NAVBAR — barra de navegação fixa no topo ===========*/
 .navbar {
     display: flex;
     justify-content: space-between; /* Logo | Menu | Ações */
@@ -120,9 +118,8 @@ a {
 }
 
 
-/* -----------------------------------------------
-   3. DROPDOWN — menu de categorias
-   ----------------------------------------------- */
+/* ===========   DROPDOWN — menu de categorias ===========*/
+
 .dropdown {
     position: relative; /* Ancora o .dropdown-content */
     display: inline-block;
@@ -212,7 +209,7 @@ a {
 
 
 /* -----------------------------------------------
-   4. BOTÃO INSTAGRAM
+   BOTÃO INSTAGRAM
    ----------------------------------------------- */
 .btn-insta-icon {
     display: flex;
@@ -241,7 +238,7 @@ a {
 
 
 /* -----------------------------------------------
-   5. MENU MOBILE (HAMBURGUER)
+   MENU MOBILE (HAMBURGUER)
    O botão aparece só no mobile. Ao clicar, o menu
    desliza para baixo.
    ----------------------------------------------- */
@@ -332,9 +329,8 @@ a {
 }
 
 
-/* -----------------------------------------------
-   6. HERO — seção principal de destaque
-   ----------------------------------------------- */
+/* ===========   HERO — seção principal de destaque ===========*/
+
 .hero {
     /* Altura total da tela menos a navbar */
     height: calc(100vh - var(--altura-navbar));
@@ -381,7 +377,7 @@ a {
 
 
 /* -----------------------------------------------
-   7. OVERLAY — camada escura sobre a imagem do hero
+   OVERLAY — camada escura sobre a imagem do hero
    Melhora o contraste e a legibilidade do texto.
    ----------------------------------------------- */
 .overlay {
@@ -393,7 +389,7 @@ a {
 
 
 /* -----------------------------------------------
-   8. BARRA DE BUSCA
+   BARRA DE BUSCA
    ----------------------------------------------- */
 .search-container {
     display: flex;
@@ -458,7 +454,7 @@ a {
 
 
 /* -----------------------------------------------
-   9. QUICK CARDS — atalhos de categoria no hero
+   QUICK CARDS — atalhos de categoria no hero
    ----------------------------------------------- */
 .quick-cards {
     display: flex;
@@ -511,14 +507,165 @@ a {
     opacity: 0.9;
 }
 
+/* =========== SEÇÃO DE DESTAQUES ===========*/
+
+.destaques {
+    padding: 100px 5%;
+    background-color: #f8f9fa; /* Fundo levemente cinza para destacar os cards brancos */
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 60px;
+}
+
+/* GRID RESPONSIVO: Ajusta colunas automaticamente conforme o tamanho da tela */
+.cards-grid {
+    display: grid;
+    /* O 'minmax' diz: no mínimo 250px, no máximo 1 fração do espaço */
+    /* Isso permite que os cards fiquem menores para caberem 4 em 1200px */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 25px;
+    max-width: 1300px; /* Aumentei um pouco para caber os 4 confortavelmente */
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* ESTILO DO CARD */
+.card-lojista {
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.card-lojista:hover {
+    transform: translateY(-10px); /* Efeito de levitação */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Foto de Capa */
+.card-header {
+    height: 160px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Etiqueta de Aberto/Fechado */
+.status-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+}
+.status-badge.aberto { background-color: #2ecc71; }
+
+/* Conteúdo Interno */
+.card-content {
+    padding: 50px 25px 25px; /* Espaço maior no topo para a logo */
+    position: relative;
+    text-align: center;
+}
+
+/* Logo do Cliente Circular */
+.logo-wrapper {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-wrapper img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    background: white;
+    object-fit: cover;
+}
+
+.lojista-nome { font-size: 1.4rem; color: #333; margin-bottom: 8px; }
+
+/* Informações de Horário e Endereço */
+.horario-info { color: #2ecc71; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
+.horario-info i { margin-right: 5px; }
+
+.endereco { font-size: 0.85rem; color: #888; margin-bottom: 15px; }
+.descricao { font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 25px; height: 45px; overflow: hidden; }
+
+/* BOTÕES DE AÇÃO */
+.card-footer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    border-top: 1px solid #f1f1f1;
+    padding-top: 20px;
+}
+
+.btn-social {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px; /* Bordas levemente arredondadas (estilo App) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+/* Cores atenuadas para um visual mais moderno */
+.btn-social.insta { background: #fdf2f5; color: #E1306C; }
+.btn-social.whats { background: #e7f9ed; color: #25D366; }
+.btn-social.maps { background: #f0f4ff; color: #4285F4; }
+
+.btn-social:hover { transform: scale(1.1); filter: brightness(0.95); }
+
+
+
+
+/* =========== RESPONSIVIDADE ===========*/
 
 /* -----------------------------------------------
-   10. RESPONSIVIDADE — Media Queries
+    Media Queries
    Ajustes para tablets e celulares.
    Lógica "mobile-first" adaptada:
    o CSS base funciona no desktop, e aqui
    fazemos os ajustes para telas menores.
    ----------------------------------------------- */
+
+/* ==== telas 1200px ==== */
+@media (min-width: 1200px) {
+    .cards-grid {
+        /* Forçamos 4 colunas exatas em telas bem largas */
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ==== telas 1024px ==== */
+@media (max-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .hero-content h1 { font-size: 2.8rem; }
+}
+
 
 /* Tablet: telas até 992px */
 @media (max-width: 992px) {
@@ -570,16 +717,25 @@ a {
     .navbar {
         padding: 0 4%;
     }
+       .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .section-title { font-size: 2rem;
+}
 }
 
 /* Mobile pequeno: telas até 380px (ex: iPhone SE) */
-@media (max-width: 380px) {
+@media (max-width: 480px) {
     .logo {
         font-size: 20px;
     }
-
     .q-card {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
+    .cards-grid {
+        grid-template-columns: 1fr; /* Um card por linha para não esmagar a info */
+    }
+    .card-lojista { max-width: 320px; margin: 0 auto; } /* Centraliza o card único */
 }
+

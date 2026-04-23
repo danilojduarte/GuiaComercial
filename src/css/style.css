@@ -374,10 +374,13 @@ body {
     .search-container { flex-direction: column; border-radius: 20px; padding: 10px; }
     .search-container input { padding: 10px; text-align: center; }
     .search-container button { padding: 12px; border-radius: 10px; margin-top: 10px; }
+    
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     .section-title { font-size: 2rem;
+}
+
 }
 
 
