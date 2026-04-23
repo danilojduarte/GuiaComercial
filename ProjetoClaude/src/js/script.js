@@ -170,3 +170,41 @@ document.addEventListener('keydown', function (evento) {
         }
     }
 });
+
+
+//Função para atualizar status do lojista de aberto/fechado, utilizado a hora atual.
+function atualizarStatusLojas() {
+    // 1. Pega a data e hora atual do navegador
+    const agora = new Date();
+    const hora = agora.getHours();
+    const minutos = agora.getMinutes();
+    
+    // Converte para um número comparável (ex: 15:43 vira 1543)
+    const horaAtualFormatada = (hora * 100) + minutos;
+
+    // 2. Busca todos os cards de lojistas
+    const cards = document.querySelectorAll('.card-lojista');
+
+    cards.forEach(card => {
+        const badge = card.querySelector('.status-badge');
+        
+        // Pega os horários definidos no HTML do card
+        const abreStr = card.getAttribute('data-abre').replace(':', '');
+        const fechaStr = card.getAttribute('data-fecha').replace(':', '');
+        
+        const horaAbre = parseInt(abreStr);
+        const horaFecha = parseInt(fechaStr);
+
+        // 3. Lógica de comparação
+        if (horaAtualFormatada >= horaAbre && horaAtualFormatada < horaFecha) {
+            badge.textContent = "Aberto Agora";
+            badge.className = "status-badge aberto"; // Aplica a cor verde
+        } else {
+            badge.textContent = "Fechado";
+            badge.className = "status-badge fechado"; // Aplica a cor vermelha
+        }
+    });
+}
+
+// Executa assim que a página termina de carregar
+window.addEventListener('load', atualizarStatusLojas);

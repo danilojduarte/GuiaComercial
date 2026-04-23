@@ -7,6 +7,8 @@
 
     <!-- Folha de estilos principal -->
     <link rel="stylesheet" href="src/css/style.css" />
+    <!-- <link rel="stylesheet" href="src/css/destaques.css"> -->
+
 
     <!-- Ícones Font Awesome (Instagram, lupa, etc.) -->
     <link
@@ -212,15 +214,14 @@
           </p>
 
           <div class="cards-grid">
-            <!-- Card 01  -->
-            <article class="card-lojista">
+            <article class="card-lojista" data-abre="08:00" data-fecha="23:30">
               <div
                 class="card-header"
                 style="
                   background-image: url(&quot;https://picsum.photos/400/250?random=20&quot;);
                 "
               >
-                <span class="status-badge aberto">Aberto Agora</span>
+                <span class="status-badge">Verificando...</span>
               </div>
 
               <div class="card-content">
@@ -233,7 +234,7 @@
                 <h3 class="lojista-nome">Pizzaria Del Bairro</h3>
                 <div class="horario-info">
                   <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                  <span>Seg a Sáb: 08:00 - 23:30</span>
                 </div>
                 <p class="endereco">
                   <i class="fa-solid fa-location-dot"></i> Rua Principal, 450 -
@@ -244,28 +245,27 @@
                   ingredientes frescos.
                 </p>
                 <div class="card-footer">
-                  <a href="#" class="btn-social insta"
+                  <a href="#" class="btn-social insta" title="Instagram"
                     ><i class="fa-brands fa-instagram"></i
                   ></a>
-                  <a href="#" class="btn-social whats"
+                  <a href="#" class="btn-social whats" title="WhatsApp"
                     ><i class="fa-brands fa-whatsapp"></i
                   ></a>
-                  <a href="#" class="btn-social maps"
+                  <a href="#" class="btn-social maps" title="Localização"
                     ><i class="fa-solid fa-map-location-dot"></i
                   ></a>
                 </div>
               </div>
             </article>
 
-            <!-- Card 02  -->
-            <article class="card-lojista">
+            <article class="card-lojista" data-abre="18:00" data-fecha="23:30">
               <div
                 class="card-header"
                 style="
                   background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
                 "
               >
-                <span class="status-badge aberto">Aberto Agora</span>
+                <span class="status-badge">Verificando...</span>
               </div>
 
               <div class="card-content">
@@ -275,7 +275,7 @@
                     alt="Logo Lojista"
                   />
                 </div>
-                <h3 class="lojista-nome">Pizzaria Del Bairro 2</h3>
+                <h3 class="lojista-nome">Hamburgueria Central</h3>
                 <div class="horario-info">
                   <i class="fa-regular fa-clock"></i>
                   <span>Seg a Sáb: 18:00 - 23:30</span>
@@ -285,149 +285,104 @@
                   Centro
                 </p>
                 <p class="descricao">
-                  Outra descrição legal para o segundo lojista teste.
+                  Hambúrgueres suculentos e batata frita crocante para o seu
+                  jantar.
                 </p>
                 <div class="card-footer">
-                  <a href="#" class="btn-social insta"
+                  <a href="#" class="btn-social insta" title="Instagram"
                     ><i class="fa-brands fa-instagram"></i
                   ></a>
-                  <a href="#" class="btn-social whats"
+                  <a href="#" class="btn-social whats" title="WhatsApp"
                     ><i class="fa-brands fa-whatsapp"></i
                   ></a>
-                  <a href="#" class="btn-social maps"
+                  <a href="#" class="btn-social maps" title="Localização"
                     ><i class="fa-solid fa-map-location-dot"></i
                   ></a>
                 </div>
               </div>
             </article>
 
-            <!-- Card 03 -->
-            <article class="card-lojista">
+            <article class="card-lojista" data-abre="11:00" data-fecha="17:30">
               <div
                 class="card-header"
                 style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=20&quot;);
+                  background-image: url(&quot;https://picsum.photos/400/250?random=40&quot;);
                 "
               >
-                <span class="status-badge aberto">Aberto Agora</span>
+                <span class="status-badge">Verificando...</span>
               </div>
 
               <div class="card-content">
                 <div class="logo-wrapper">
                   <img
-                    src="https://picsum.photos/80/80?random=21"
+                    src="https://picsum.photos/80/80?random=41"
                     alt="Logo Lojista"
                   />
                 </div>
-                <h3 class="lojista-nome">Pizzaria Del Bairro</h3>
+                <h3 class="lojista-nome">Restaurante Sabor Local</h3>
                 <div class="horario-info">
                   <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                  <span>Seg a Sáb: 11:00 - 17:30</span>
                 </div>
                 <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Rua Principal, 450 -
-                  Centro
+                  <i class="fa-solid fa-location-dot"></i> Av. das Palmeiras, 22
+                  - Bairro Novo
                 </p>
                 <p class="descricao">
-                  As melhores pizzas artesanais feitas no forno a lenha com
-                  ingredientes frescos.
+                  Almoço caseiro de qualidade com o tempero que você já conhece.
                 </p>
                 <div class="card-footer">
-                  <a href="#" class="btn-social insta"
+                  <a href="#" class="btn-social insta" title="Instagram"
                     ><i class="fa-brands fa-instagram"></i
                   ></a>
-                  <a href="#" class="btn-social whats"
+                  <a href="#" class="btn-social whats" title="WhatsApp"
                     ><i class="fa-brands fa-whatsapp"></i
                   ></a>
-                  <a href="#" class="btn-social maps"
+                  <a href="#" class="btn-social maps" title="Localização"
                     ><i class="fa-solid fa-map-location-dot"></i
                   ></a>
                 </div>
               </div>
             </article>
 
-            <!-- Card 04  -->
-            <article class="card-lojista">
+            <article class="card-lojista" data-abre="08:00" data-fecha="20:00">
               <div
                 class="card-header"
                 style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
+                  background-image: url(&quot;https://picsum.photos/400/250?random=50&quot;);
                 "
               >
-                <span class="status-badge aberto">Aberto Agora</span>
+                <span class="status-badge">Verificando...</span>
               </div>
 
               <div class="card-content">
                 <div class="logo-wrapper">
                   <img
-                    src="https://picsum.photos/80/80?random=31"
+                    src="https://picsum.photos/80/80?random=51"
                     alt="Logo Lojista"
                   />
                 </div>
-                <h3 class="lojista-nome">Pizzaria Del Bairro 2</h3>
+                <h3 class="lojista-nome">Farmácia Saúde</h3>
                 <div class="horario-info">
                   <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 18:00 - 23:30</span>
+                  <span>Seg a Sáb: 08:00 - 20:00</span>
                 </div>
                 <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Rua Secundária, 100 -
+                  <i class="fa-solid fa-location-dot"></i> Rua da Paz, 55 -
                   Centro
                 </p>
                 <p class="descricao">
-                  Outra descrição legal para o segundo lojista teste.
+                  Tudo em medicamentos e perfumaria com entrega rápida no seu
+                  domicílio.
                 </p>
                 <div class="card-footer">
-                  <a href="#" class="btn-social insta"
+                  <a href="#" class="btn-social insta" title="Instagram"
                     ><i class="fa-brands fa-instagram"></i
                   ></a>
-                  <a href="#" class="btn-social whats"
+                  <a href="#" class="btn-social whats" title="WhatsApp"
                     ><i class="fa-brands fa-whatsapp"></i
                   ></a>
-                  <a href="#" class="btn-social maps"
-                    ><i class="fa-solid fa-map-location-dot"></i
-                  ></a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Card 04  -->
-            <article class="card-lojista">
-              <div
-                class="card-header"
-                style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
-                "
-              >
-                <span class="status-badge aberto">Aberto Agora</span>
-              </div>
-
-              <div class="card-content">
-                <div class="logo-wrapper">
-                  <img
-                    src="https://picsum.photos/80/80?random=31"
-                    alt="Logo Lojista"
-                  />
-                </div>
-                <h3 class="lojista-nome">Pizzaria Del Bairro 2</h3>
-                <div class="horario-info">
-                  <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 18:00 - 23:30</span>
-                </div>
-                <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Rua Secundária, 100 -
-                  Centro
-                </p>
-                <p class="descricao">
-                  Outra descrição legal para o segundo lojista teste.
-                </p>
-                <div class="card-footer">
-                  <a href="#" class="btn-social insta"
-                    ><i class="fa-brands fa-instagram"></i
-                  ></a>
-                  <a href="#" class="btn-social whats"
-                    ><i class="fa-brands fa-whatsapp"></i
-                  ></a>
-                  <a href="#" class="btn-social maps"
+                  <a href="#" class="btn-social maps" title="Localização"
                     ><i class="fa-solid fa-map-location-dot"></i
                   ></a>
                 </div>
@@ -436,9 +391,14 @@
           </div>
         </div>
       </section>
+
+      <!-- =============================================
+         
+         ============================================= -->
     </main>
 
     <!-- Script principal (carregado por último para não bloquear o HTML) -->
     <script src="src/js/script.js"></script>
+    <!-- <script src="src/js/destaques.js"></script> -->
   </body>
 </html>

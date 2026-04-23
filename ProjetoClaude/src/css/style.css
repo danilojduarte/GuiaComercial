@@ -637,6 +637,13 @@ a {
 
 .btn-social:hover { transform: scale(1.1); filter: brightness(0.95); }
 
+.status-badge.aberto { 
+    background-color: #2ecc71; /* Verde */
+}
+
+.status-badge.fechado { 
+    background-color: #e74c3c; /* Vermelho */
+}
 
 
 
@@ -721,7 +728,37 @@ a {
         grid-template-columns: repeat(2, 1fr);
     }
     .section-title { font-size: 2rem;
+    }
 }
+
+/* Aplicando funcion scroll */
+@media (max-width: 500px) {
+    /* 1. O PAI (Container dos cards) */
+    .cards-grid {
+        display: flex !important;       /* Muda de Grid para Flex para alinhar lado a lado */
+        flex-wrap: nowrap !important;   /* IMPEDIR que os cards pulem para baixo */
+        overflow-x: auto;               /* Habilita o scroll lateral */
+        scroll-snap-type: x mandatory;  /* Efeito de "ímã" ao deslizar */
+        gap: 20px;                      /* Espaço entre os cards */
+        padding: 20px 20px 40px 20px;   /* Respiro nas laterais e embaixo */
+        -webkit-overflow-scrolling: touch; /* Scroll suave no iPhone/iOS */
+    }
+
+    /* 2. O FILHO (O Card individual) */
+    .card-lojista {
+        flex: 0 0 85%;                  /* Não estica, não encolhe, ocupa 85% da largura */
+        scroll-snap-align: center;       /* Faz o card parar sempre centralizado */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Sombra mais leve no mobile */
+    }
+
+    /* 3. Estética: Esconder a barra de rolagem feia (opcional) */
+    .cards-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Ajuste de textos para telas pequenas */
+    .section-title { font-size: 1.8rem; }
+    .hero-content h1 { font-size: 2rem; }
 }
 
 /* Mobile pequeno: telas até 380px (ex: iPhone SE) */
