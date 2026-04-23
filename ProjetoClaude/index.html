@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="src/css/style.css" />
     <!-- <link rel="stylesheet" href="src/css/destaques.css"> -->
 
-
     <!-- Ícones Font Awesome (Instagram, lupa, etc.) -->
     <link
       rel="stylesheet"
@@ -50,6 +49,7 @@
             aria-labelledby="btnCategorias"
           >
             <a href="#" role="menuitem">Comércio</a>
+            <a href="#" role="menuitem">Alimentação</a>
             <a href="#" role="menuitem">Serviço</a>
             <a href="#" role="menuitem">Lazer</a>
             <a href="#" role="menuitem">Moda</a>
@@ -108,6 +108,7 @@
       <a href="#">Início</a>
       <!-- Categorias aparecem direto no mobile (sem dropdown) -->
       <a href="#">Comércio</a>
+      <a href="#">Alimentação</a>
       <a href="#">Serviço</a>
       <a href="#">Lazer</a>
       <a href="#">Moda</a>
@@ -166,6 +167,15 @@
               class="q-card"
               role="listitem"
               tabindex="0"
+              data-categoria="Alimentação"
+            >
+              <i class="fa-solid fa-pizza-slice" aria-hidden="true"></i>
+              Alimentação
+            </div>
+            <div
+              class="q-card"
+              role="listitem"
+              tabindex="0"
               data-categoria="Serviço"
             >
               <i class="fa-solid fa-wrench" aria-hidden="true"></i>
@@ -207,190 +217,21 @@
          lojistas
          ============================================= -->
       <section class="destaques">
-        <div class="container">
-          <h2 class="section-title">Comércios em Destaque</h2>
-          <p class="section-subtitle">
+    <div class="container">
+        <h2 class="section-title">Comércios em Destaque</h2>
+        <p class="section-subtitle">
             Os melhores lugares do bairro selecionados para você.
-          </p>
+        </p>
 
-          <div class="cards-grid">
-            <article class="card-lojista" data-abre="08:00" data-fecha="23:30">
-              <div
-                class="card-header"
-                style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=20&quot;);
-                "
-              >
-                <span class="status-badge">Verificando...</span>
-              </div>
-
-              <div class="card-content">
-                <div class="logo-wrapper">
-                  <img
-                    src="https://picsum.photos/80/80?random=21"
-                    alt="Logo Lojista"
-                  />
-                </div>
-                <h3 class="lojista-nome">Pizzaria Del Bairro</h3>
-                <div class="horario-info">
-                  <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 08:00 - 23:30</span>
-                </div>
-                <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Rua Principal, 450 -
-                  Centro
-                </p>
-                <p class="descricao">
-                  As melhores pizzas artesanais feitas no forno a lenha com
-                  ingredientes frescos.
-                </p>
-                <div class="card-footer">
-                  <a href="#" class="btn-social insta" title="Instagram"
-                    ><i class="fa-brands fa-instagram"></i
-                  ></a>
-                  <a href="#" class="btn-social whats" title="WhatsApp"
-                    ><i class="fa-brands fa-whatsapp"></i
-                  ></a>
-                  <a href="#" class="btn-social maps" title="Localização"
-                    ><i class="fa-solid fa-map-location-dot"></i
-                  ></a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card-lojista" data-abre="18:00" data-fecha="23:30">
-              <div
-                class="card-header"
-                style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=30&quot;);
-                "
-              >
-                <span class="status-badge">Verificando...</span>
-              </div>
-
-              <div class="card-content">
-                <div class="logo-wrapper">
-                  <img
-                    src="https://picsum.photos/80/80?random=31"
-                    alt="Logo Lojista"
-                  />
-                </div>
-                <h3 class="lojista-nome">Hamburgueria Central</h3>
-                <div class="horario-info">
-                  <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 18:00 - 23:30</span>
-                </div>
-                <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Rua Secundária, 100 -
-                  Centro
-                </p>
-                <p class="descricao">
-                  Hambúrgueres suculentos e batata frita crocante para o seu
-                  jantar.
-                </p>
-                <div class="card-footer">
-                  <a href="#" class="btn-social insta" title="Instagram"
-                    ><i class="fa-brands fa-instagram"></i
-                  ></a>
-                  <a href="#" class="btn-social whats" title="WhatsApp"
-                    ><i class="fa-brands fa-whatsapp"></i
-                  ></a>
-                  <a href="#" class="btn-social maps" title="Localização"
-                    ><i class="fa-solid fa-map-location-dot"></i
-                  ></a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card-lojista" data-abre="11:00" data-fecha="17:30">
-              <div
-                class="card-header"
-                style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=40&quot;);
-                "
-              >
-                <span class="status-badge">Verificando...</span>
-              </div>
-
-              <div class="card-content">
-                <div class="logo-wrapper">
-                  <img
-                    src="https://picsum.photos/80/80?random=41"
-                    alt="Logo Lojista"
-                  />
-                </div>
-                <h3 class="lojista-nome">Restaurante Sabor Local</h3>
-                <div class="horario-info">
-                  <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 11:00 - 17:30</span>
-                </div>
-                <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Av. das Palmeiras, 22
-                  - Bairro Novo
-                </p>
-                <p class="descricao">
-                  Almoço caseiro de qualidade com o tempero que você já conhece.
-                </p>
-                <div class="card-footer">
-                  <a href="#" class="btn-social insta" title="Instagram"
-                    ><i class="fa-brands fa-instagram"></i
-                  ></a>
-                  <a href="#" class="btn-social whats" title="WhatsApp"
-                    ><i class="fa-brands fa-whatsapp"></i
-                  ></a>
-                  <a href="#" class="btn-social maps" title="Localização"
-                    ><i class="fa-solid fa-map-location-dot"></i
-                  ></a>
-                </div>
-              </div>
-            </article>
-
-            <article class="card-lojista" data-abre="08:00" data-fecha="20:00">
-              <div
-                class="card-header"
-                style="
-                  background-image: url(&quot;https://picsum.photos/400/250?random=50&quot;);
-                "
-              >
-                <span class="status-badge">Verificando...</span>
-              </div>
-
-              <div class="card-content">
-                <div class="logo-wrapper">
-                  <img
-                    src="https://picsum.photos/80/80?random=51"
-                    alt="Logo Lojista"
-                  />
-                </div>
-                <h3 class="lojista-nome">Farmácia Saúde</h3>
-                <div class="horario-info">
-                  <i class="fa-regular fa-clock"></i>
-                  <span>Seg a Sáb: 08:00 - 20:00</span>
-                </div>
-                <p class="endereco">
-                  <i class="fa-solid fa-location-dot"></i> Rua da Paz, 55 -
-                  Centro
-                </p>
-                <p class="descricao">
-                  Tudo em medicamentos e perfumaria com entrega rápida no seu
-                  domicílio.
-                </p>
-                <div class="card-footer">
-                  <a href="#" class="btn-social insta" title="Instagram"
-                    ><i class="fa-brands fa-instagram"></i
-                  ></a>
-                  <a href="#" class="btn-social whats" title="WhatsApp"
-                    ><i class="fa-brands fa-whatsapp"></i
-                  ></a>
-                  <a href="#" class="btn-social maps" title="Localização"
-                    ><i class="fa-solid fa-map-location-dot"></i
-                  ></a>
-                </div>
-              </div>
-            </article>
-          </div>
+        <div id="area-filtros" style="display: none; text-align: center; margin-bottom: 30px;">
+            <button id="btnLimparBusca" style="background: #E1306C; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s;">
+                <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os destaques
+            </button>
         </div>
-      </section>
+
+        <div class="cards-grid"></div>
+    </div>
+</section>
 
       <!-- =============================================
          

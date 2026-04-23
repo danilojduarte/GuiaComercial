@@ -1,210 +1,238 @@
 /* ==============================================
    GUIA COMERCIAL — script.js
-   Estrutura:
-   1. Seleção de Elementos
-   2. Menu Mobile (Hamburguer)
-   3. Fechar menu ao clicar fora
-   4. Barra de Busca
-   5. Quick Cards
-   6. Fechar dropdown com Escape
    ============================================== */
 
+/* -----------------------------------------------
+   1. BANCO DE DADOS (JSON)
+   ----------------------------------------------- */
+const lojistas = [
+    {
+        id: 1,
+        nome: "Pizzaria Del Bairro",
+        categoria: "Comércio",
+        abre: "08:00",
+        fecha: "23:30",
+        horarioTexto: "Seg a Sáb: 08:00 - 23:30",
+        endereco: "Rua Principal, 450 - Centro",
+        descricao: "As melhores pizzas artesanais feitas no forno a lenha com ingredientes frescos.",
+        imagemCapa: "https://picsum.photos/400/250?random=20",
+        logo: "https://picsum.photos/80/80?random=21",
+        linkInsta: "#",
+        linkWhats: "#",
+        linkMaps: "#"
+    },
+    {
+        id: 2,
+        nome: "Hamburgueria Central",
+        categoria: "Comércio",
+        abre: "18:00",
+        fecha: "23:30",
+        horarioTexto: "Seg a Sáb: 18:00 - 23:30",
+        endereco: "Rua Secundária, 100 - Centro",
+        descricao: "Hambúrgueres suculentos e batata frita crocante para o seu jantar.",
+        imagemCapa: "https://picsum.photos/400/250?random=30",
+        logo: "https://picsum.photos/80/80?random=31",
+        linkInsta: "#",
+        linkWhats: "#",
+        linkMaps: "#"
+    },
+    {
+        id: 3,
+        nome: "Farmácia Saúde",
+        categoria: "Farmácia",
+        abre: "08:00",
+        fecha: "20:00",
+        horarioTexto: "Seg a Sáb: 08:00 - 20:00",
+        endereco: "Rua da Paz, 55 - Centro",
+        descricao: "Tudo em medicamentos e perfumaria com entrega rápida no seu domicílio.",
+        imagemCapa: "https://picsum.photos/400/250?random=50",
+        logo: "https://picsum.photos/80/80?random=51",
+        linkInsta: "#",
+        linkWhats: "#",
+        linkMaps: "#"
+    }
+];
 
 /* -----------------------------------------------
-   1. SELEÇÃO DE ELEMENTOS DO DOM
-   Guardamos as referências dos elementos em
-   variáveis para não precisar buscá-los toda vez.
-   "const" porque esses valores não mudam.
+   2. SELEÇÃO DE ELEMENTOS DO DOM
    ----------------------------------------------- */
 const btnHamburger = document.getElementById('btnHamburger');
 const menuMobile   = document.getElementById('menuMobile');
 const campoBusca   = document.getElementById('campoBusca');
 const btnBuscar    = document.getElementById('btnBuscar');
-const quickCards   = document.querySelectorAll('.q-card'); // Retorna todos os cards
+const quickCards   = document.querySelectorAll('.q-card');
 const btnDropdown  = document.getElementById('btnCategorias');
+const containerGrid = document.querySelector('.cards-grid');
 
+// Novos elementos do filtro/busca
+const areaFiltros    = document.getElementById('area-filtros');
+const btnLimparBusca = document.getElementById('btnLimparBusca');
 
 /* -----------------------------------------------
-   2. MENU MOBILE — abre e fecha ao clicar no hamburguer
+   3. RENDERIZAÇÃO E STATUS (ABERTO/FECHADO)
    ----------------------------------------------- */
-btnHamburger.addEventListener('click', function () {
 
-    // toggle() adiciona a classe se não existir, remove se já existir
-    const estaAberto = menuMobile.classList.toggle('aberto');
-    btnHamburger.classList.toggle('ativo');
+function renderizarCards(lista) {
+    if (!containerGrid) return;
+    containerGrid.innerHTML = ""; 
 
-    // Atualiza os atributos de acessibilidade (para leitores de tela)
-    btnHamburger.setAttribute('aria-expanded', estaAberto);
-    menuMobile.setAttribute('aria-hidden', !estaAberto);
-});
+    if (lista.length === 0) {
+        containerGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: #666;">Nenhum lojista encontrado.</p>`;
+        return;
+    }
 
-/* Fecha o menu mobile ao clicar em qualquer link dentro dele */
-menuMobile.querySelectorAll('a').forEach(function (link) {
-    link.addEventListener('click', function () {
-        menuMobile.classList.remove('aberto');
-        btnHamburger.classList.remove('ativo');
-        btnHamburger.setAttribute('aria-expanded', 'false');
-        menuMobile.setAttribute('aria-hidden', 'true');
+    lista.forEach(lojista => {
+        const cardHTML = `
+            <article class="card-lojista" data-abre="${lojista.abre}" data-fecha="${lojista.fecha}">
+                <div class="card-header" style="background-image: url('${lojista.imagemCapa}');">
+                    <span class="status-badge">Verificando...</span>
+                </div>
+                <div class="card-content">
+                    <div class="logo-wrapper">
+                        <img src="${lojista.logo}" alt="Logo ${lojista.nome}" />
+                    </div>
+                    <h3 class="lojista-nome">${lojista.nome}</h3>
+                    <div class="horario-info">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>${lojista.horarioTexto}</span>
+                    </div>
+                    <p class="endereco">
+                        <i class="fa-solid fa-location-dot"></i> ${lojista.endereco}
+                    </p>
+                    <p class="descricao">${lojista.descricao}</p>
+                    <div class="card-footer">
+                        <a href="${lojista.linkInsta}" class="btn-social insta" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="${lojista.linkWhats}" class="btn-social whats" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="${lojista.linkMaps}" class="btn-social maps" title="Localização"><i class="fa-solid fa-map-location-dot"></i></a>
+                    </div>
+                </div>
+            </article>
+        `;
+        containerGrid.innerHTML += cardHTML;
     });
-});
 
-
-/* -----------------------------------------------
-   3. FECHAR MENU AO CLICAR FORA DELE
-   Se o usuário clicar em qualquer lugar da página
-   que não seja o menu ou o botão hamburguer,
-   o menu fecha automaticamente.
-   ----------------------------------------------- */
-document.addEventListener('click', function (evento) {
-
-    // contains() verifica se o clique foi DENTRO dos elementos
-    const clicouNoMenu    = menuMobile.contains(evento.target);
-    const clicouNoBotao   = btnHamburger.contains(evento.target);
-
-    // Se o menu está aberto E o clique foi fora dele → fecha
-    if (menuMobile.classList.contains('aberto') && !clicouNoMenu && !clicouNoBotao) {
-        menuMobile.classList.remove('aberto');
-        btnHamburger.classList.remove('ativo');
-        btnHamburger.setAttribute('aria-expanded', 'false');
-        menuMobile.setAttribute('aria-hidden', 'true');
-    }
-});
-
-
-/* -----------------------------------------------
-   4. BARRA DE BUSCA
-   Executa a busca tanto no clique do botão
-   quanto ao pressionar Enter no campo de texto.
-   ----------------------------------------------- */
-
-/**
- * Função principal de busca.
- * Lê o valor do campo, valida se não está vazio
- * e então executa a ação desejada.
- */
-function executarBusca() {
-    // trim() remove espaços em branco no início e no fim
-    const termoBuscado = campoBusca.value.trim();
-
-    // Validação: não faz nada se o campo estiver vazio
-    if (termoBuscado === '') {
-        // Coloca o foco de volta no campo e dá um "chacoalhão" visual
-        campoBusca.focus();
-        campoBusca.classList.add('campo-erro');
-
-        // Remove a classe de erro depois de 600ms
-        setTimeout(function () {
-            campoBusca.classList.remove('campo-erro');
-        }, 600);
-
-        return; // Sai da função sem continuar
-    }
-
-    // ✅ Aqui você conectará com o back-end ou seu sistema de busca.
-    // Por enquanto, exibe no console para testes.
-    console.log('Buscando por:', termoBuscado);
-
-    // Exemplo de uso futuro:
-    // window.location.href = `resultados.html?q=${encodeURIComponent(termoBuscado)}`;
+    atualizarStatusLojas(); 
 }
 
-/* Dispara a busca ao clicar no botão "BUSCAR" */
-btnBuscar.addEventListener('click', executarBusca);
-
-/* Dispara a busca ao pressionar Enter no campo de texto */
-campoBusca.addEventListener('keydown', function (evento) {
-    if (evento.key === 'Enter') {
-        executarBusca();
-    }
-});
-
-
-/* -----------------------------------------------
-   5. QUICK CARDS — clique e teclado nas categorias
-   ----------------------------------------------- */
-quickCards.forEach(function (card) {
-
-    /* Clique com o mouse */
-    card.addEventListener('click', function () {
-        // data-categoria é o atributo que colocamos no HTML
-        const categoria = card.dataset.categoria;
-
-        // ✅ Conecte aqui ao seu sistema de filtro.
-        console.log('Categoria selecionada:', categoria);
-
-        // Exemplo de uso futuro:
-        // window.location.href = `resultados.html?categoria=${encodeURIComponent(categoria)}`;
-    });
-
-    /* Acessibilidade: permite "clicar" com Enter ou Espaço no teclado.
-       Sem isso, elementos com tabindex funcionam só com mouse. */
-    card.addEventListener('keydown', function (evento) {
-        if (evento.key === 'Enter' || evento.key === ' ') {
-            evento.preventDefault(); // Evita que a página role ao pressionar Espaço
-            card.click();            // Dispara o evento de clique acima
-        }
-    });
-});
-
-
-/* -----------------------------------------------
-   6. FECHAR DROPDOWN COM A TECLA ESCAPE
-   Melhora a experiência de usuários de teclado.
-   ----------------------------------------------- */
-document.addEventListener('keydown', function (evento) {
-
-    if (evento.key === 'Escape') {
-
-        /* Fecha o menu mobile se estiver aberto */
-        if (menuMobile.classList.contains('aberto')) {
-            menuMobile.classList.remove('aberto');
-            btnHamburger.classList.remove('ativo');
-            btnHamburger.setAttribute('aria-expanded', 'false');
-            menuMobile.setAttribute('aria-hidden', 'true');
-            btnHamburger.focus(); // Devolve o foco ao botão hamburguer
-        }
-
-        /* Perde o foco do botão de dropdown (fecha o dropdown CSS) */
-        if (document.activeElement === btnDropdown) {
-            btnDropdown.blur();
-        }
-    }
-});
-
-
-//Função para atualizar status do lojista de aberto/fechado, utilizado a hora atual.
 function atualizarStatusLojas() {
-    // 1. Pega a data e hora atual do navegador
     const agora = new Date();
-    const hora = agora.getHours();
-    const minutos = agora.getMinutes();
-    
-    // Converte para um número comparável (ex: 15:43 vira 1543)
-    const horaAtualFormatada = (hora * 100) + minutos;
-
-    // 2. Busca todos os cards de lojistas
+    const horaAtual = (agora.getHours() * 100) + agora.getMinutes();
     const cards = document.querySelectorAll('.card-lojista');
 
     cards.forEach(card => {
         const badge = card.querySelector('.status-badge');
-        
-        // Pega os horários definidos no HTML do card
-        const abreStr = card.getAttribute('data-abre').replace(':', '');
-        const fechaStr = card.getAttribute('data-fecha').replace(':', '');
-        
-        const horaAbre = parseInt(abreStr);
-        const horaFecha = parseInt(fechaStr);
+        if (!badge) return;
 
-        // 3. Lógica de comparação
-        if (horaAtualFormatada >= horaAbre && horaAtualFormatada < horaFecha) {
+        const horaAbre = parseInt(card.getAttribute('data-abre').replace(':', ''));
+        const horaFecha = parseInt(card.getAttribute('data-fecha').replace(':', ''));
+
+        if (horaAtual >= horaAbre && horaAtual < horaFecha) {
             badge.textContent = "Aberto Agora";
-            badge.className = "status-badge aberto"; // Aplica a cor verde
+            badge.className = "status-badge aberto";
         } else {
             badge.textContent = "Fechado";
-            badge.className = "status-badge fechado"; // Aplica a cor vermelha
+            badge.className = "status-badge fechado";
         }
     });
 }
 
-// Executa assim que a página termina de carregar
-window.addEventListener('load', atualizarStatusLojas);
+/* -----------------------------------------------
+   4. SISTEMAS DE BUSCA E FILTRO
+   ----------------------------------------------- */
+
+function gerenciarBotaoVoltar(exibir) {
+    if (areaFiltros) {
+        areaFiltros.style.display = exibir ? 'block' : 'none';
+    }
+}
+
+function executarBusca() {
+    const termo = campoBusca.value.toLowerCase().trim();
+
+    if (termo === '') {
+        campoBusca.focus();
+        campoBusca.classList.add('campo-erro');
+        setTimeout(() => campoBusca.classList.remove('campo-erro'), 600);
+        renderizarCards(lojistas);
+        gerenciarBotaoVoltar(false);
+        return;
+    }
+
+    const resultados = lojistas.filter(item => 
+        item.nome.toLowerCase().includes(termo) || 
+        item.descricao.toLowerCase().includes(termo) ||
+        item.categoria.toLowerCase().includes(termo)
+    );
+
+    renderizarCards(resultados);
+    gerenciarBotaoVoltar(true);
+    
+    containerGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Botão de limpar busca / voltar destaques
+if (btnLimparBusca) {
+    btnLimparBusca.addEventListener('click', () => {
+        campoBusca.value = ""; 
+        renderizarCards(lojistas); 
+        gerenciarBotaoVoltar(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+btnBuscar.addEventListener('click', executarBusca);
+campoBusca.addEventListener('keydown', (e) => { if (e.key === 'Enter') executarBusca(); });
+
+// Quick Cards Filtros
+quickCards.forEach(card => {
+    card.addEventListener('click', () => {
+        const categoriaSelecionada = card.dataset.categoria;
+        
+        if(categoriaSelecionada === "Todos") {
+            renderizarCards(lojistas);
+            gerenciarBotaoVoltar(false);
+        } else {
+            const filtrados = lojistas.filter(l => l.categoria === categoriaSelecionada);
+            renderizarCards(filtrados);
+            gerenciarBotaoVoltar(true);
+        }
+        
+        containerGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+
+/* -----------------------------------------------
+   5. INTERFACE (MENU MOBILE, ESCAPE, EVENTOS)
+   ----------------------------------------------- */
+
+// Inicialização ao carregar página
+window.addEventListener('load', () => {
+    renderizarCards(lojistas);
+});
+
+// Menu Mobile toggle
+if (btnHamburger && menuMobile) {
+    btnHamburger.addEventListener('click', () => {
+        const aberto = menuMobile.classList.toggle('aberto');
+        btnHamburger.classList.toggle('ativo');
+        btnHamburger.setAttribute('aria-expanded', aberto);
+        menuMobile.setAttribute('aria-hidden', !aberto);
+    });
+}
+
+// Fecha menu ao clicar fora
+document.addEventListener('click', (e) => {
+    if (menuMobile && menuMobile.classList.contains('aberto') && !menuMobile.contains(e.target) && !btnHamburger.contains(e.target)) {
+        menuMobile.classList.remove('aberto');
+        btnHamburger.classList.remove('ativo');
+    }
+});
+
+// Tecla Escape para fechar menus
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (menuMobile) menuMobile.classList.remove('aberto');
+        if (btnHamburger) btnHamburger.classList.remove('ativo');
+        if (document.activeElement === btnDropdown) btnDropdown.blur();
+    }
+});
