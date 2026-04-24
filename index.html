@@ -7,7 +7,6 @@
 
     <!-- Folha de estilos principal -->
     <link rel="stylesheet" href="css/style.css" />
-    <!-- <link rel="stylesheet" href="src/css/destaques.css"> -->
 
     <!-- Ícones Font Awesome (Instagram, lupa, etc.) -->
     <link
@@ -217,21 +216,37 @@
          lojistas
          ============================================= -->
       <section class="destaques">
-    <div class="container">
-        <h2 class="section-title">Comércios em Destaque</h2>
-        <p class="section-subtitle">
+        <div class="container">
+          <h2 class="section-title">Comércios em Destaque</h2>
+          <p class="section-subtitle">
             Os melhores lugares do bairro selecionados para você.
-        </p>
+          </p>
 
-        <div id="area-filtros" style="display: none; text-align: center; margin-bottom: 30px;">
-            <button id="btnLimparBusca" style="background: #E1306C; color: white; border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s;">
-                <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os destaques
+          <div
+            id="area-filtros"
+            style="display: none; text-align: center; margin-bottom: 30px"
+          >
+            <button
+              id="btnLimparBusca"
+              style="
+                background: #e1306c;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: 0.3s;
+              "
+            >
+              <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os
+              destaques
             </button>
-        </div>
+          </div>
 
-        <div class="cards-grid"></div>
-    </div>
-</section>
+          <div class="cards-grid"></div>
+        </div>
+      </section>
 
       <!-- =============================================
          
@@ -240,6 +255,5 @@
 
     <!-- Script principal (carregado por último para não bloquear o HTML) -->
     <script src="js/script.js"></script>
-    <!-- <script src="src/js/destaques.js"></script> -->
   </body>
 </html>
