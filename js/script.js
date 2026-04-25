@@ -2,57 +2,32 @@
    GUIA COMERCIAL — script.js
    ============================================== */
 
-/* -----------------------------------------------
-   1. BANCO DE DADOS (JSON)
-   ----------------------------------------------- */
-const lojistas = [
-    {
-        id: 1,
-        nome: "Pizzaria Del Bairro",
-        categoria: "Comércio",
-        abre: "08:00",
-        fecha: "23:30",
-        horarioTexto: "Seg a Sáb: 08:00 - 23:30",
-        endereco: "Rua Principal, 450 - Centro",
-        descricao: "As melhores pizzas artesanais feitas no forno a lenha com ingredientes frescos.",
-        imagemCapa: "https://picsum.photos/400/250?random=20",
-        logo: "https://picsum.photos/80/80?random=21",
-        linkInsta: "#",
-        linkWhats: "#",
-        linkMaps: "#"
-    },
-    {
-        id: 2,
-        nome: "Hamburgueria Central",
-        categoria: "Comércio",
-        abre: "18:00",
-        fecha: "23:30",
-        horarioTexto: "Seg a Sáb: 18:00 - 23:30",
-        endereco: "Rua Secundária, 100 - Centro",
-        descricao: "Hambúrgueres suculentos e batata frita crocante para o seu jantar.",
-        imagemCapa: "https://picsum.photos/400/250?random=30",
-        logo: "https://picsum.photos/80/80?random=31",
-        linkInsta: "#",
-        linkWhats: "#",
-        linkMaps: "#"
-    },
-    {
-        id: 3,
-        nome: "Farmácia Saúde",
-        categoria: "Farmácia",
-        abre: "08:00",
-        fecha: "20:00",
-        horarioTexto: "Seg a Sáb: 08:00 - 20:00",
-        endereco: "Rua da Paz, 55 - Centro",
-        descricao: "Tudo em medicamentos e perfumaria com entrega rápida no seu domicílio.",
-        imagemCapa: "https://picsum.photos/400/250?random=50",
-        logo: "https://picsum.photos/80/80?random=51",
-        linkInsta: "#",
-        linkWhats: "#",
-        linkMaps: "#"
-    }
-];
+/* ==============================================
+   GUIA COMERCIAL — script.js
+   ============================================== */
 
+let lojistas = []; // Começa vazio, será preenchido pelo arquivo JSON
+
+// FUNÇÃO PARA BUSCAR OS DADOS EXTERNOS
+async function carregarDadosLojistas() {
+    try {
+        // Busca o arquivo JSON na sua pasta
+        const resposta = await fetch('js/lojistas.json');
+        
+        if (!resposta.ok) throw new Error('Não foi possível carregar os dados');
+
+        lojistas = await resposta.json();
+        
+        // Após carregar, desenha os cards na tela
+        renderizarCards(lojistas);
+        
+    } catch (erro) {
+        console.error("Erro no carregamento:", erro);
+        if (containerGrid) {
+            containerGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: #e74c3c;">Ops! Tivemos um problema ao carregar os comércios. Tente atualizar a página.</p>`;
+        }
+    }
+}
 /* -----------------------------------------------
    2. SELEÇÃO DE ELEMENTOS DO DOM
    ----------------------------------------------- */
@@ -207,7 +182,7 @@ quickCards.forEach(card => {
 
 // Inicialização ao carregar página
 window.addEventListener('load', () => {
-    renderizarCards(lojistas);
+    carregarDadosLojistas(); // Agora chamamos a função que busca o arquivo
 });
 
 // Menu Mobile toggle
