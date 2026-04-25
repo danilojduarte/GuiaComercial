@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "nome": "Pizzaria Del Bairro",
+        "categoria": "Comércio",
+        "abre": "08:00",
+        "fecha": "23:30",
+        "horarioTexto": "Seg a Sáb: 08:00 - 23:30",
+        "endereco": "Rua Principal, 450 - Centro",
+        "descricao": "As melhores pizzas artesanais feitas no forno a lenha com ingredientes frescos.",
+        "imagemCapa": "https://picsum.photos/400/250?random=20",
+        "logo": "https://picsum.photos/80/80?random=21",
+        "linkInsta": "#",
+        "linkWhats": "#",
+        "linkMaps": "#"
+    },
+    {
+        "id": 2,
+        "nome": "Hamburgueria Central",
+        "categoria": "Comércio",
+        "abre": "18:00",
+        "fecha": "23:30",
+        "horarioTexto": "Seg a Sáb: 18:00 - 23:30",
+        "endereco": "Rua Secundária, 100 - Centro",
+        "descricao": "Hambúrgueres suculentos e batata frita crocante para o seu jantar.",
+        "imagemCapa": "https://picsum.photos/400/250?random=30",
+        "logo": "https://picsum.photos/80/80?random=31",
+        "linkInsta": "#",
+        "linkWhats": "#",
+        "linkMaps": "#"
+    }
+]
