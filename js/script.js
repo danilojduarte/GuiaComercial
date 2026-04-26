@@ -11,21 +11,24 @@ let lojistas = []; // Começa vazio, será preenchido pelo arquivo JSON
 // FUNÇÃO PARA BUSCAR OS DADOS EXTERNOS
 async function carregarDadosLojistas() {
     try {
-        // Busca o arquivo JSON na sua pasta
-        const resposta = await fetch('js/lojistas.json');
+        const resposta = await fetch('/js/lojistas.json');
+        if (!resposta.ok) throw new Error('Erro ao carregar JSON');
         
-        if (!resposta.ok) throw new Error('Não foi possível carregar os dados');
-
         lojistas = await resposta.json();
         
-        // Após carregar, desenha os cards na tela
-        renderizarCards(lojistas);
+        // 1. Filtramos apenas quem é destaque
+        const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
+        
+        // 2. Embaralhamos a lista (Sorteio)
+        const destaquesSorteados = apenasDestaques.sort(() => Math.random() - 0.5);
+        
+        // 3. Pegamos apenas os 4 primeiros sorteados (para manter a grid bonita)
+        const vitrineFinal = destaquesSorteados.slice(0, 4);
+        
+        renderizarCards(vitrineFinal);
         
     } catch (erro) {
         console.error("Erro no carregamento:", erro);
-        if (containerGrid) {
-            containerGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: #e74c3c;">Ops! Tivemos um problema ao carregar os comércios. Tente atualizar a página.</p>`;
-        }
     }
 }
 /* -----------------------------------------------
@@ -128,15 +131,20 @@ function executarBusca() {
         campoBusca.focus();
         campoBusca.classList.add('campo-erro');
         setTimeout(() => campoBusca.classList.remove('campo-erro'), 600);
-        renderizarCards(lojistas);
+        
+        // Se a busca estiver vazia, volta a mostrar o padrão inicial
+        const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
+        renderizarCards(apenasDestaques);
         gerenciarBotaoVoltar(false);
         return;
     }
 
+    // FILTRO INTELIGENTE: Busca no Nome, Descrição, Categoria e Keywords
     const resultados = lojistas.filter(item => 
         item.nome.toLowerCase().includes(termo) || 
         item.descricao.toLowerCase().includes(termo) ||
-        item.categoria.toLowerCase().includes(termo)
+        item.categoria.toLowerCase().includes(termo) ||
+        (item.keywords && item.keywords.toLowerCase().includes(termo)) // Procura nas palavras-chave
     );
 
     renderizarCards(resultados);
@@ -145,11 +153,16 @@ function executarBusca() {
     containerGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Botão de limpar busca / voltar destaques
+// Botão de limpar busca / voltar para destaques
 if (btnLimparBusca) {
     btnLimparBusca.addEventListener('click', () => {
         campoBusca.value = ""; 
-        renderizarCards(lojistas); 
+        
+        // Quando limpa, volta a mostrar apenas os destaques sorteados
+        const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
+        const destaquesSorteados = apenasDestaques.sort(() => Math.random() - 0.5);
+        renderizarCards(destaquesSorteados.slice(0, 4)); 
+
         gerenciarBotaoVoltar(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -158,15 +171,17 @@ if (btnLimparBusca) {
 btnBuscar.addEventListener('click', executarBusca);
 campoBusca.addEventListener('keydown', (e) => { if (e.key === 'Enter') executarBusca(); });
 
-// Quick Cards Filtros
+// Quick Cards Filtros (Categorias)
 quickCards.forEach(card => {
     card.addEventListener('click', () => {
         const categoriaSelecionada = card.dataset.categoria;
         
         if(categoriaSelecionada === "Todos") {
-            renderizarCards(lojistas);
+            const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
+            renderizarCards(apenasDestaques);
             gerenciarBotaoVoltar(false);
         } else {
+            // Filtra pela categoria exata
             const filtrados = lojistas.filter(l => l.categoria === categoriaSelecionada);
             renderizarCards(filtrados);
             gerenciarBotaoVoltar(true);
