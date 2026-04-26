@@ -541,12 +541,15 @@ a {
 
 /* ESTILO DO CARD */
 .card-lojista {
-    background: white;
-    border-radius: 25px;
+    background-color: #fff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    border: 1px solid #eee;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    
+    display: flex;          /* Adicione isso */
+    flex-direction: column; /* Adicione isso */
 }
 
 .card-lojista:hover {
@@ -577,10 +580,10 @@ a {
 
 /* Conteúdo Interno */
 .card-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Garante que o conteúdo ocupe a altura total disponível */
-    padding: 15px; /* Ajuste conforme seu design */
+    padding: 20px;
+    display: flex;           /* Ativa o modo flexível */
+    flex-direction: column;  /* Organiza os itens um abaixo do outro */
+    flex-grow: 1;            /* Faz o conteúdo crescer para preencher o card */
 }
 
 /* Logo do Cliente Circular */
@@ -601,14 +604,40 @@ a {
     object-fit: cover;
 }
 
-.lojista-nome { font-size: 1.4rem; color: #333; margin-bottom: 8px; }
+.lojista-nome {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+    
+    /* ADICIONE ESTAS LINHAS */
+    min-height: 2.8rem;      /* Reserva espaço para 2 linhas */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   /* Limita a no máximo 2 linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;        /* Ajusta o espaçamento entre linhas */
+}
 
 /* Informações de Horário e Endereço */
 .horario-info { color: #2ecc71; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
 .horario-info i { margin-right: 5px; }
 
 .endereco { font-size: 0.85rem; color: #888; margin-bottom: 15px; }
-.descricao { font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 25px; height: 45px; overflow: hidden; }
+
+.descricao { 
+    font-size: 0.95rem; 
+    color: #666; 
+    line-height: 1.5; 
+    margin-bottom: 20px; 
+
+    flex-grow: 1;            /* ESTE É O SEGREDO: ela estica para ocupar o vazio */
+    
+    /* Mantém o limite de 3 linhas para ficar elegante */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
 /* BOTÕES DE AÇÃO */
 .card-footer {
@@ -616,7 +645,9 @@ a {
     justify-content: center;
     gap: 15px;
     border-top: 1px solid #f1f1f1;
-    padding-top: 20px;
+    padding-top: 15px;
+    width: 100%;
+    margin-top: auto; /* Isso cria um espaço flexível que empurra o botão para a base */
 }
 
 .btn-social {
