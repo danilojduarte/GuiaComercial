@@ -174,15 +174,22 @@ campoBusca.addEventListener('keydown', (e) => { if (e.key === 'Enter') executarB
 // Quick Cards Filtros (Categorias)
 quickCards.forEach(card => {
     card.addEventListener('click', () => {
-        const categoriaSelecionada = card.dataset.categoria;
+        const categoriaSelecionada = card.dataset.categoria.trim();
+
+        console.log("Botão clicado:", categoriaSelecionada);
         
-        if(categoriaSelecionada === "Todos") {
+        if (categoriaSelecionada === "Todos") {
+            // Volta para a vitrine inicial (destaques sorteados)
             const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
-            renderizarCards(apenasDestaques);
+            renderizarCards(apenasDestaques.sort(() => Math.random() - 0.5).slice(0, 4));
             gerenciarBotaoVoltar(false);
         } else {
-            // Filtra pela categoria exata
-            const filtrados = lojistas.filter(l => l.categoria === categoriaSelecionada);
+            // FILTRO FLEXÍVEL: 
+            // Procura se a categoria do JSON contém o texto do botão
+            const filtrados = lojistas.filter(l => 
+                l.categoria.toLowerCase().includes(categoriaSelecionada.toLowerCase())
+            );
+
             renderizarCards(filtrados);
             gerenciarBotaoVoltar(true);
         }
