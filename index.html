@@ -248,6 +248,60 @@
          ============================================= -->
     </main>
 
+    <div id="modalDetalhes" class="modal-overlay" aria-hidden="true">
+      <div class="modal-content">
+        <button id="fecharModal" class="btn-fechar" aria-label="Fechar modal">
+          &times;
+        </button>
+
+        <div class="modal-header">
+          <img id="modalBanner" src="" alt="Capa do estabelecimento" />
+          <div class="modal-logo-wrapper">
+            <img id="modalLogo" src="" alt="Logo do estabelecimento" />
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <h2 id="modalNome">Nome da Loja</h2>
+          <span id="modalCategoria" class="categoria-badge">Categoria</span>
+
+          <div class="modal-info-grid">
+            <div class="info-item">
+              <i class="fa-regular fa-clock"></i>
+              <span id="modalHorario">Horário de Funcionamento</span>
+            </div>
+            <div class="info-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span id="modalEndereco">Endereço Completo</span>
+            </div>
+          </div>
+
+          <p id="modalDescricao" class="modal-desc">
+            Descrição detalhada do lojista aparecerá aqui.
+          </p>
+
+          <div class="modal-acoes">
+            <a
+              id="linkWhatsModal"
+              href="#"
+              target="_blank"
+              class="btn-acao whats"
+            >
+              <i class="fa-brands fa-whatsapp"></i> Conversar no WhatsApp
+            </a>
+            <a
+              id="linkMapsModal"
+              href="#"
+              target="_blank"
+              class="btn-acao maps"
+            >
+              <i class="fa-solid fa-route"></i> Ver no Google Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Script principal (carregado por último para não bloquear o HTML) -->
     <script src="js/script.js"></script>
     <!-- <script src="js/lojistas.json"></script> -->

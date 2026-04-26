@@ -2,66 +2,61 @@
    GUIA COMERCIAL — script.js
    ============================================== */
 
-/* ==============================================
-   GUIA COMERCIAL — script.js
-   ============================================== */
-
 let lojistas = []; // Começa vazio, será preenchido pelo arquivo JSON
 
 // FUNÇÃO PARA BUSCAR OS DADOS EXTERNOS
 async function carregarDadosLojistas() {
-    try {
-        const resposta = await fetch('/js/lojistas.json');
-        if (!resposta.ok) throw new Error('Erro ao carregar JSON');
-        
-        lojistas = await resposta.json();
-        
-        // 1. Filtramos apenas quem é destaque
-        const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
-        
-        // 2. Embaralhamos a lista (Sorteio)
-        const destaquesSorteados = apenasDestaques.sort(() => Math.random() - 0.5);
-        
-        // 3. Pegamos apenas os 4 primeiros sorteados (para manter a grid bonita)
-        const vitrineFinal = destaquesSorteados.slice(0, 4);
-        
-        renderizarCards(vitrineFinal);
-        
-    } catch (erro) {
-        console.error("Erro no carregamento:", erro);
-    }
+  try {
+    const resposta = await fetch("/js/lojistas.json");
+    if (!resposta.ok) throw new Error("Erro ao carregar JSON");
+
+    lojistas = await resposta.json();
+
+    // 1. Filtramos apenas quem é destaque
+    const apenasDestaques = lojistas.filter((l) => l.isDestaque === true);
+
+    // 2. Embaralhamos a lista (Sorteio)
+    const destaquesSorteados = apenasDestaques.sort(() => Math.random() - 0.5);
+
+    // 3. Pegamos apenas os 4 primeiros sorteados (para manter a grid bonita)
+    const vitrineFinal = destaquesSorteados.slice(0, 4);
+
+    renderizarCards(vitrineFinal);
+  } catch (erro) {
+    console.error("Erro no carregamento:", erro);
+  }
 }
+
 /* -----------------------------------------------
    2. SELEÇÃO DE ELEMENTOS DO DOM
    ----------------------------------------------- */
-const btnHamburger = document.getElementById('btnHamburger');
-const menuMobile   = document.getElementById('menuMobile');
-const campoBusca   = document.getElementById('campoBusca');
-const btnBuscar    = document.getElementById('btnBuscar');
-const quickCards   = document.querySelectorAll('.q-card');
-const btnDropdown  = document.getElementById('btnCategorias');
-const containerGrid = document.querySelector('.cards-grid');
-
-// Novos elementos do filtro/busca
-const areaFiltros    = document.getElementById('area-filtros');
-const btnLimparBusca = document.getElementById('btnLimparBusca');
+const btnHamburger = document.getElementById("btnHamburger");
+const menuMobile = document.getElementById("menuMobile");
+const campoBusca = document.getElementById("campoBusca");
+const btnBuscar = document.getElementById("btnBuscar");
+const quickCards = document.querySelectorAll(".q-card");
+const btnDropdown = document.getElementById("btnCategorias");
+const containerGrid = document.querySelector(".cards-grid");
+const areaFiltros = document.getElementById("area-filtros");
+const btnLimparBusca = document.getElementById("btnLimparBusca");
 
 /* -----------------------------------------------
    3. RENDERIZAÇÃO E STATUS (ABERTO/FECHADO)
    ----------------------------------------------- */
 
 function renderizarCards(lista) {
-    if (!containerGrid) return;
-    containerGrid.innerHTML = ""; 
+  if (!containerGrid) return;
+  containerGrid.innerHTML = "";
 
-    if (lista.length === 0) {
-        containerGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: #666;">Nenhum lojista encontrado.</p>`;
-        return;
-    }
+  if (lista.length === 0) {
+    containerGrid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: #666;">Nenhum lojista encontrado.</p>`;
+    return;
+  }
 
-    lista.forEach(lojista => {
-        const cardHTML = `
-            <article class="card-lojista" data-abre="${lojista.abre}" data-fecha="${lojista.fecha}">
+  lista.forEach((lojista) => {
+    // AJUSTE: Adicionado onclick="abrirModal(${lojista.id})" no article
+    const cardHTML = `
+            <article class="card-lojista" data-abre="${lojista.abre}" data-fecha="${lojista.fecha}" onclick="abrirModal(${lojista.id})">
                 <div class="card-header" style="background-image: url('${lojista.imagemCapa}');">
                     <span class="status-badge">Verificando...</span>
                 </div>
@@ -79,39 +74,41 @@ function renderizarCards(lista) {
                     </p>
                     <p class="descricao">${lojista.descricao}</p>
                     <div class="card-footer">
-                        <a href="${lojista.linkInsta}" class="btn-social insta" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="${lojista.linkWhats}" class="btn-social whats" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-                        <a href="${lojista.linkMaps}" class="btn-social maps" title="Localização"><i class="fa-solid fa-map-location-dot"></i></a>
+                        <span class="btn-detalhes">
+                            <i class="fa-regular fa-eye"></i> Ver detalhes
+                        </span>
                     </div>
                 </div>
             </article>
         `;
-        containerGrid.innerHTML += cardHTML;
-    });
+    containerGrid.innerHTML += cardHTML;
+  });
 
-    atualizarStatusLojas(); 
+  atualizarStatusLojas();
 }
 
 function atualizarStatusLojas() {
-    const agora = new Date();
-    const horaAtual = (agora.getHours() * 100) + agora.getMinutes();
-    const cards = document.querySelectorAll('.card-lojista');
+  const agora = new Date();
+  const horaAtual = agora.getHours() * 100 + agora.getMinutes();
+  const cards = document.querySelectorAll(".card-lojista");
 
-    cards.forEach(card => {
-        const badge = card.querySelector('.status-badge');
-        if (!badge) return;
+  cards.forEach((card) => {
+    const badge = card.querySelector(".status-badge");
+    if (!badge) return;
 
-        const horaAbre = parseInt(card.getAttribute('data-abre').replace(':', ''));
-        const horaFecha = parseInt(card.getAttribute('data-fecha').replace(':', ''));
+    const horaAbre = parseInt(card.getAttribute("data-abre").replace(":", ""));
+    const horaFecha = parseInt(
+      card.getAttribute("data-fecha").replace(":", ""),
+    );
 
-        if (horaAtual >= horaAbre && horaAtual < horaFecha) {
-            badge.textContent = "Aberto Agora";
-            badge.className = "status-badge aberto";
-        } else {
-            badge.textContent = "Fechado";
-            badge.className = "status-badge fechado";
-        }
-    });
+    if (horaAtual >= horaAbre && horaAtual < horaFecha) {
+      badge.textContent = "Aberto Agora";
+      badge.className = "status-badge aberto";
+    } else {
+      badge.textContent = "Fechado";
+      badge.className = "status-badge fechado";
+    }
+  });
 }
 
 /* -----------------------------------------------
@@ -119,117 +116,161 @@ function atualizarStatusLojas() {
    ----------------------------------------------- */
 
 function gerenciarBotaoVoltar(exibir) {
-    if (areaFiltros) {
-        areaFiltros.style.display = exibir ? 'block' : 'none';
-    }
+  if (areaFiltros) {
+    areaFiltros.style.display = exibir ? "block" : "none";
+  }
 }
 
 function executarBusca() {
-    const termo = campoBusca.value.toLowerCase().trim();
+  const termo = campoBusca.value.toLowerCase().trim();
 
-    if (termo === '') {
-        campoBusca.focus();
-        campoBusca.classList.add('campo-erro');
-        setTimeout(() => campoBusca.classList.remove('campo-erro'), 600);
-        
-        // Se a busca estiver vazia, volta a mostrar o padrão inicial
-        const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
-        renderizarCards(apenasDestaques);
-        gerenciarBotaoVoltar(false);
-        return;
-    }
+  if (termo === "") {
+    campoBusca.focus();
+    campoBusca.classList.add("campo-erro");
+    setTimeout(() => campoBusca.classList.remove("campo-erro"), 600);
 
-    // FILTRO INTELIGENTE: Busca no Nome, Descrição, Categoria e Keywords
-    const resultados = lojistas.filter(item => 
-        item.nome.toLowerCase().includes(termo) || 
-        item.descricao.toLowerCase().includes(termo) ||
-        item.categoria.toLowerCase().includes(termo) ||
-        (item.keywords && item.keywords.toLowerCase().includes(termo)) // Procura nas palavras-chave
-    );
+    const apenasDestaques = lojistas.filter((l) => l.isDestaque === true);
+    renderizarCards(apenasDestaques);
+    gerenciarBotaoVoltar(false);
+    return;
+  }
 
-    renderizarCards(resultados);
-    gerenciarBotaoVoltar(true);
-    
-    containerGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const resultados = lojistas.filter(
+    (item) =>
+      item.nome.toLowerCase().includes(termo) ||
+      item.descricao.toLowerCase().includes(termo) ||
+      item.categoria.toLowerCase().includes(termo) ||
+      (item.keywords && item.keywords.toLowerCase().includes(termo)),
+  );
+
+  renderizarCards(resultados);
+  gerenciarBotaoVoltar(true);
+  containerGrid.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// Botão de limpar busca / voltar para destaques
 if (btnLimparBusca) {
-    btnLimparBusca.addEventListener('click', () => {
-        campoBusca.value = ""; 
-        
-        // Quando limpa, volta a mostrar apenas os destaques sorteados
-        const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
-        const destaquesSorteados = apenasDestaques.sort(() => Math.random() - 0.5);
-        renderizarCards(destaquesSorteados.slice(0, 4)); 
-
-        gerenciarBotaoVoltar(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+  btnLimparBusca.addEventListener("click", () => {
+    campoBusca.value = "";
+    const apenasDestaques = lojistas.filter((l) => l.isDestaque === true);
+    const destaquesSorteados = apenasDestaques.sort(() => Math.random() - 0.5);
+    renderizarCards(destaquesSorteados.slice(0, 4));
+    gerenciarBotaoVoltar(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 }
 
-btnBuscar.addEventListener('click', executarBusca);
-campoBusca.addEventListener('keydown', (e) => { if (e.key === 'Enter') executarBusca(); });
+btnBuscar.addEventListener("click", executarBusca);
+campoBusca.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") executarBusca();
+});
 
-// Quick Cards Filtros (Categorias)
-quickCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const categoriaSelecionada = card.dataset.categoria.trim();
-
-        console.log("Botão clicado:", categoriaSelecionada);
-        
-        if (categoriaSelecionada === "Todos") {
-            // Volta para a vitrine inicial (destaques sorteados)
-            const apenasDestaques = lojistas.filter(l => l.isDestaque === true);
-            renderizarCards(apenasDestaques.sort(() => Math.random() - 0.5).slice(0, 4));
-            gerenciarBotaoVoltar(false);
-        } else {
-            // FILTRO FLEXÍVEL: 
-            // Procura se a categoria do JSON contém o texto do botão
-            const filtrados = lojistas.filter(l => 
-                l.categoria.toLowerCase().includes(categoriaSelecionada.toLowerCase())
-            );
-
-            renderizarCards(filtrados);
-            gerenciarBotaoVoltar(true);
-        }
-        
-        containerGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+quickCards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const categoriaSelecionada = card.dataset.categoria.trim();
+    if (categoriaSelecionada === "Todos") {
+      const apenasDestaques = lojistas.filter((l) => l.isDestaque === true);
+      renderizarCards(
+        apenasDestaques.sort(() => Math.random() - 0.5).slice(0, 4),
+      );
+      gerenciarBotaoVoltar(false);
+    } else {
+      const filtrados = lojistas.filter((l) =>
+        l.categoria.toLowerCase().includes(categoriaSelecionada.toLowerCase()),
+      );
+      renderizarCards(filtrados);
+      gerenciarBotaoVoltar(true);
+    }
+    containerGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 });
 
 /* -----------------------------------------------
-   5. INTERFACE (MENU MOBILE, ESCAPE, EVENTOS)
+   5. LÓGICA DO MODAL DE DETALHES (NOVO)
    ----------------------------------------------- */
 
-// Inicialização ao carregar página
-window.addEventListener('load', () => {
-    carregarDadosLojistas(); // Agora chamamos a função que busca o arquivo
-});
+function abrirModal(id) {
+  const lojista = lojistas.find((l) => l.id == id);
+  if (!lojista) return;
 
-// Menu Mobile toggle
-if (btnHamburger && menuMobile) {
-    btnHamburger.addEventListener('click', () => {
-        const aberto = menuMobile.classList.toggle('aberto');
-        btnHamburger.classList.toggle('ativo');
-        btnHamburger.setAttribute('aria-expanded', aberto);
-        menuMobile.setAttribute('aria-hidden', !aberto);
-    });
+  // Preenche os campos do modal
+  document.getElementById("modalNome").textContent = lojista.nome;
+  document.getElementById("modalBanner").src = lojista.imagemCapa;
+  document.getElementById("modalLogo").src = lojista.logo;
+  document.getElementById("modalCategoria").textContent = lojista.categoria;
+  document.getElementById("modalHorario").textContent = lojista.horarioTexto;
+  document.getElementById("modalEndereco").textContent = lojista.endereco;
+  document.getElementById("modalDescricao").textContent = lojista.descricao;
+
+  // Configura o link do WhatsApp com mensagem pronta
+  const foneLimpo = lojista.linkWhats.replace(/\D/g, ""); // Remove ( ) - e espaços
+  const mensagem = encodeURIComponent(
+    `Olá ${lojista.nome}, vi seu anúncio no FindUsBairro e gostaria de mais informações!`,
+  );
+  document.getElementById("linkWhatsModal").href =
+    `https://wa.me/55${foneLimpo}?text=${mensagem}`;
+
+  // Configura o link do Maps
+  document.getElementById("linkMapsModal").href = lojista.linkMaps;
+
+  // Exibe o modal
+  const modal = document.getElementById("modalDetalhes");
+  modal.style.display = "flex";
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden"; // Impede o scroll do fundo
 }
 
-// Fecha menu ao clicar fora
-document.addEventListener('click', (e) => {
-    if (menuMobile && menuMobile.classList.contains('aberto') && !menuMobile.contains(e.target) && !btnHamburger.contains(e.target)) {
-        menuMobile.classList.remove('aberto');
-        btnHamburger.classList.remove('ativo');
-    }
+function fecharModal() {
+  const modal = document.getElementById("modalDetalhes");
+  modal.style.display = "none";
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "auto"; // Devolve o scroll
+}
+
+// Fecha ao clicar no botão X
+document.getElementById("fecharModal").addEventListener("click", fecharModal);
+
+// Fecha ao clicar fora da caixa branca
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("modalDetalhes");
+  if (e.target === modal) fecharModal();
 });
 
-// Tecla Escape para fechar menus
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        if (menuMobile) menuMobile.classList.remove('aberto');
-        if (btnHamburger) btnHamburger.classList.remove('ativo');
-        if (document.activeElement === btnDropdown) btnDropdown.blur();
+/* -----------------------------------------------
+   6. INTERFACE (MENU MOBILE, ESCAPE, EVENTOS)
+   ----------------------------------------------- */
+
+window.addEventListener("load", () => {
+  carregarDadosLojistas();
+});
+
+if (btnHamburger && menuMobile) {
+  btnHamburger.addEventListener("click", () => {
+    const aberto = menuMobile.classList.toggle("aberto");
+    btnHamburger.classList.toggle("ativo");
+    btnHamburger.setAttribute("aria-expanded", aberto);
+    menuMobile.setAttribute("aria-hidden", !aberto);
+  });
+}
+
+document.addEventListener("click", (e) => {
+  if (
+    menuMobile &&
+    menuMobile.classList.contains("aberto") &&
+    !menuMobile.contains(e.target) &&
+    !btnHamburger.contains(e.target)
+  ) {
+    menuMobile.classList.remove("aberto");
+    btnHamburger.classList.remove("ativo");
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    fecharModal(); // Também fecha o modal com a tecla ESC
+    if (menuMobile) {
+      menuMobile.classList.remove("aberto");
+      btnHamburger.classList.remove("ativo");
     }
+    if (document.activeElement === btnDropdown) btnDropdown.blur();
+  }
 });
