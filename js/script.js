@@ -122,12 +122,59 @@ function abrirModal(id) {
   document.body.style.overflow = "hidden";
 }
 
+
 function fecharModal() {
   const modal = document.getElementById("modalDetalhes");
   if (modal) {
       modal.style.display = "none";
       document.body.style.overflow = "auto";
   }
+}
+
+/* ==============================================
+   LÓGICA DA BARRA DE BUSCA
+   ============================================== */
+
+function realizarBusca() {
+    // 1. Pegamos o que o usuário digitou
+    const termo = campoBusca.value.toLowerCase().trim();
+    console.log("Iniciando busca por:", termo);
+
+    // 2. Se a busca estiver vazia, mostramos os destaques iniciais
+    if (termo === "") {
+        const apenasDestaques = lojistas.filter(l => l.isDestaque);
+        renderizarCards(apenasDestaques);
+        return;
+    }
+
+    // 3. Filtramos a lista completa comparando com nome, descrição e categoria
+    const resultados = lojistas.filter(lojista => {
+        return lojista.nome.toLowerCase().includes(termo) || 
+               lojista.descricao.toLowerCase().includes(termo) ||
+               lojista.categoria.toLowerCase().includes(termo);
+    });
+
+    console.log("Resultados encontrados:", resultados.length);
+
+    // 4. Mandamos os resultados para a tela
+    renderizarCards(resultados);
+}
+
+// Evento de clique no botão de busca
+if (btnBuscar) {
+    btnBuscar.addEventListener("click", (e) => {
+        e.preventDefault(); // Evita recarregar a página
+        realizarBusca();
+    });
+}
+
+// Evento de apertar "Enter" no teclado dentro do campo
+if (campoBusca) {
+    campoBusca.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            realizarBusca();
+        }
+    });
 }
 
 // 5. EVENTOS E INICIALIZAÇÃO
