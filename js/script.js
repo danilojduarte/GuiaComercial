@@ -1,20 +1,23 @@
 /* ==============================================
-   GUIA COMERCIAL — script.js (VERSÃO FINALIZADA)
+   GUIA COMERCIAL — script.js (VERSÃO CORRIGIDA)
    ============================================== */
 
-let lojistas = []; 
+let lojistas = [];
 const containerGrid = document.getElementById("cardsGrid");
+
+// Declaração das variáveis globais do DOM
+// (FIX #1: declaradas no topo para evitar erros de referência)
+const campoBusca = document.getElementById("campoBusca");
+const btnBuscar = document.getElementById("btnBuscar");
 
 // 1. CARREGAMENTO DOS DADOS
 async function carregarDadosLojistas() {
   try {
-    // Usando caminho relativo para funcionar no GitHub Pages
     const resposta = await fetch("js/lojistas.json");
     if (!resposta.ok) throw new Error("Erro ao carregar JSON");
 
     lojistas = await resposta.json();
 
-    // Filtramos apenas quem é destaque para a vitrine inicial
     const apenasDestaques = lojistas.filter((l) => l.isDestaque === true);
     const vitrineFinal = apenasDestaques.sort(() => Math.random() - 0.5).slice(0, 4);
 
@@ -24,8 +27,16 @@ async function carregarDadosLojistas() {
   }
 }
 
+// SCROLL SUAVE ATÉ A SEÇÃO DE CARDS
+function scrollParaCards() {
+  const secaoDestaques = document.querySelector(".destaques");
+  if (secaoDestaques) {
+    secaoDestaques.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
 // 2. RENDERIZAÇÃO DOS CARDS
-function renderizarCards(lista) {
+function renderizarCards(lista, comScroll = false) {
   if (!containerGrid) return;
   containerGrid.innerHTML = "";
 
@@ -70,8 +81,9 @@ function renderizarCards(lista) {
     containerGrid.innerHTML += cardHTML;
   });
 
-  // Chama o status logo após criar os elementos
   atualizarStatusLojas();
+
+  if (comScroll) scrollParaCards();
 }
 
 // 3. LÓGICA DE STATUS
@@ -122,12 +134,11 @@ function abrirModal(id) {
   document.body.style.overflow = "hidden";
 }
 
-
 function fecharModal() {
   const modal = document.getElementById("modalDetalhes");
   if (modal) {
-      modal.style.display = "none";
-      document.body.style.overflow = "auto";
+    modal.style.display = "none";
+    document.body.style.overflow = "auto";
   }
 }
 
@@ -136,87 +147,195 @@ function fecharModal() {
    ============================================== */
 
 function realizarBusca() {
-    // 1. Pegamos o que o usuário digitou
-    const termo = campoBusca.value.toLowerCase().trim();
-    console.log("Iniciando busca por:", termo);
+  const termo = campoBusca.value.toLowerCase().trim();
+  const areaFiltros = document.getElementById("area-filtros");
 
-    // 2. Se a busca estiver vazia, mostramos os destaques iniciais
-    if (termo === "") {
-        const apenasDestaques = lojistas.filter(l => l.isDestaque);
-        renderizarCards(apenasDestaques);
-        return;
-    }
+  // Se vazio, volta aos destaques e esconde o botão de limpar
+  if (termo === "") {
+    const apenasDestaques = lojistas.filter((l) => l.isDestaque);
+    renderizarCards(apenasDestaques);
+    if (areaFiltros) areaFiltros.style.display = "none";
+    return;
+  }
 
-    // 3. Filtramos a lista completa comparando com nome, descrição e categoria
-    const resultados = lojistas.filter(lojista => {
-        return lojista.nome.toLowerCase().includes(termo) || 
-               lojista.descricao.toLowerCase().includes(termo) ||
-               lojista.categoria.toLowerCase().includes(termo);
-    });
+  // Busca nos campos: nome, descrição, categoria e keywords
+  const resultados = lojistas.filter((lojista) => {
+    return (
+      lojista.nome.toLowerCase().includes(termo) ||
+      lojista.descricao.toLowerCase().includes(termo) ||
+      lojista.categoria.toLowerCase().includes(termo) ||
+      (lojista.keywords && lojista.keywords.toLowerCase().includes(termo))
+    );
+  });
 
-    console.log("Resultados encontrados:", resultados.length);
+  // Nenhum resultado → abre modal de "não encontrado"
+  if (resultados.length === 0) {
+    abrirModalNaoEncontrado(campoBusca.value.trim());
+    return;
+  }
 
-    // 4. Mandamos os resultados para a tela
-    renderizarCards(resultados);
+  renderizarCards(resultados, true);
+
+  // Exibe o botão "Mostrar todos" após uma busca
+  if (areaFiltros) areaFiltros.style.display = "block";
+}
+
+/* ==============================================
+   MODAL DE "NÃO ENCONTRADO"
+   ============================================== */
+
+function abrirModalNaoEncontrado(termoBuscado) {
+  const sugestoes = ["Padaria", "Farmácia", "Mecânica", "Mercado", "PetShop", "Pintor", "Ar-condicionado", "Ótica"];
+  const sugestoesHTML = sugestoes
+    .map(s => `<button class="sugestao-tag" onclick="buscarSugestao('${s}')">${s}</button>`)
+    .join("");
+
+  const modalHTML = `
+    <div class="modal-overlay" id="modalNaoEncontrado" style="display:flex;" aria-modal="true" role="dialog">
+      <div class="modal-nao-encontrado">
+        <button class="btn-fechar-nao-encontrado" id="fecharNaoEncontrado" aria-label="Fechar">&times;</button>
+        <div class="nao-encontrado-icone">🔍</div>
+        <h2 class="nao-encontrado-titulo">Ops! Nada encontrado</h2>
+        <p class="nao-encontrado-texto">
+          Não encontramos nenhum resultado para <strong>"${termoBuscado}"</strong>.<br><br>
+          Mas não se preocupe — já anotamos essa sugestão e nossa equipe será notificada para buscar esse tipo de comércio para você!
+        </p>
+        <div class="nao-encontrado-info">
+          <i class="fa-solid fa-circle-check"></i>
+          Sugestão "<strong>${termoBuscado}</strong>" enviada ao suporte!
+        </div>
+        <p class="nao-encontrado-sugestao-titulo">Que tal tentar uma dessas buscas?</p>
+        <div class="sugestoes-wrap">${sugestoesHTML}</div>
+        <button class="btn-voltar-principal" id="btnVoltarPrincipal">
+          <i class="fa-solid fa-arrow-left"></i> Voltar à tela principal
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.body.insertAdjacentHTML("beforeend", modalHTML);
+  document.body.style.overflow = "hidden";
+
+  document.getElementById("fecharNaoEncontrado").addEventListener("click", fecharModalNaoEncontrado);
+  document.getElementById("btnVoltarPrincipal").addEventListener("click", fecharModalNaoEncontrado);
+  document.getElementById("modalNaoEncontrado").addEventListener("click", (e) => {
+    if (e.target.id === "modalNaoEncontrado") fecharModalNaoEncontrado();
+  });
+}
+
+function fecharModalNaoEncontrado() {
+  const modal = document.getElementById("modalNaoEncontrado");
+  if (modal) {
+    modal.remove();
+    document.body.style.overflow = "auto";
+    if (campoBusca) campoBusca.value = "";
+    const apenasDestaques = lojistas.filter((l) => l.isDestaque);
+    renderizarCards(apenasDestaques);
+  }
+}
+
+function buscarSugestao(termo) {
+  fecharModalNaoEncontrado();
+  if (campoBusca) campoBusca.value = termo;
+  realizarBusca();
 }
 
 // Evento de clique no botão de busca
 if (btnBuscar) {
-    btnBuscar.addEventListener("click", (e) => {
-        e.preventDefault(); // Evita recarregar a página
-        realizarBusca();
-    });
+  btnBuscar.addEventListener("click", (e) => {
+    e.preventDefault();
+    realizarBusca();
+  });
 }
 
-// Evento de apertar "Enter" no teclado dentro do campo
+// Evento de apertar "Enter" no campo de busca
 if (campoBusca) {
-    campoBusca.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            realizarBusca();
-        }
-    });
+  campoBusca.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      realizarBusca();
+    }
+  });
 }
 
 // 5. EVENTOS E INICIALIZAÇÃO
 document.addEventListener("DOMContentLoaded", () => {
-    carregarDadosLojistas();
+  carregarDadosLojistas();
 
-    const btnFechar = document.getElementById("fecharModal");
-    if (btnFechar) btnFechar.addEventListener("click", fecharModal);
+  // Fechar modal pelo botão X
+  const btnFechar = document.getElementById("fecharModal");
+  if (btnFechar) btnFechar.addEventListener("click", fecharModal);
 
-    window.addEventListener("click", (e) => {
-      const modal = document.getElementById("modalDetalhes");
-      if (e.target === modal) fecharModal();
+  // Fechar modal clicando fora
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modalDetalhes");
+    if (e.target === modal) fecharModal();
+  });
+
+  // FIX #2: Lógica do menu hambúrguer (estava completamente ausente)
+  const btnHamburger = document.getElementById("btnHamburger");
+  const menuMobile = document.getElementById("menuMobile");
+
+  if (btnHamburger && menuMobile) {
+    btnHamburger.addEventListener("click", () => {
+      const estaAberto = menuMobile.classList.toggle("aberto");
+      btnHamburger.classList.toggle("ativo", estaAberto);
+      btnHamburger.setAttribute("aria-expanded", estaAberto);
+      menuMobile.setAttribute("aria-hidden", !estaAberto);
     });
+
+    // Fecha o menu ao clicar em qualquer link dentro dele
+    menuMobile.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        menuMobile.classList.remove("aberto");
+        btnHamburger.classList.remove("ativo");
+        btnHamburger.setAttribute("aria-expanded", "false");
+        menuMobile.setAttribute("aria-hidden", "true");
+      });
+    });
+  }
+
+  // FIX #5: Botão "Mostrar todos os destaques" agora tem listener
+  const btnLimparBusca = document.getElementById("btnLimparBusca");
+  const areaFiltros = document.getElementById("area-filtros");
+
+  if (btnLimparBusca) {
+    btnLimparBusca.addEventListener("click", () => {
+      if (campoBusca) campoBusca.value = "";
+      const apenasDestaques = lojistas.filter((l) => l.isDestaque);
+      renderizarCards(apenasDestaques);
+      if (areaFiltros) areaFiltros.style.display = "none";
+
+      // Remove destaque dos botões de filtro
+      document.querySelectorAll(".btn-categoria").forEach((b) => b.classList.remove("ativo"));
+    });
+  }
 });
 
 /* ==============================================
    LÓGICA DE FILTROS POR CATEGORIA
    ============================================== */
 
-// Seleciona todos os botões que têm a classe 'btn-categoria'
 const botoesFiltro = document.querySelectorAll(".btn-categoria");
 
 if (botoesFiltro.length > 0) {
   botoesFiltro.forEach((botao) => {
     botao.addEventListener("click", () => {
       const categoriaSelecionada = botao.getAttribute("data-categoria");
-      
-      console.log("Filtrando por:", categoriaSelecionada); // Agora vai aparecer no console!
+      const areaFiltros = document.getElementById("area-filtros");
 
-      // Se a categoria for "Todos", mostra os destaques iniciais ou a lista completa
       if (categoriaSelecionada === "Todos") {
-        renderizarCards(lojistas);
+        renderizarCards(lojistas, true);
       } else {
-        // Filtra a lista principal baseada na categoria do JSON
         const filtrados = lojistas.filter(
           (l) => l.categoria.toLowerCase() === categoriaSelecionada.toLowerCase()
         );
-        renderizarCards(filtrados);
+        renderizarCards(filtrados, true);
       }
-      
-      // Feedback visual: opcional, remove 'ativo' de todos e coloca no clicado
-      botoesFiltro.forEach(b => b.classList.remove("ativo"));
+
+      // Mostra o botão de limpar ao filtrar por categoria
+      if (areaFiltros) areaFiltros.style.display = "block";
+
+      botoesFiltro.forEach((b) => b.classList.remove("ativo"));
       botao.classList.add("ativo");
     });
   });
