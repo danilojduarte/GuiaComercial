@@ -7,7 +7,7 @@ let lojistas = []; // Começa vazio, será preenchido pelo arquivo JSON
 // FUNÇÃO PARA BUSCAR OS DADOS EXTERNOS
 async function carregarDadosLojistas() {
   try {
-    const resposta = await fetch("/js/lojistas.json");
+    const resposta = await fetch("js/lojistas.json");
     if (!resposta.ok) throw new Error("Erro ao carregar JSON");
 
     lojistas = await resposta.json();
