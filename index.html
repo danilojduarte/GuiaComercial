@@ -211,34 +211,49 @@
          lojistas
          ============================================= -->
       <section class="destaques">
-  <div class="container">
-    <h2 class="section-title">Comércios em Destaque</h2>
-    <p class="section-subtitle">
-      Os melhores lugares do bairro selecionados para você.
-    </p>
+        <div class="container">
+          <h2 class="section-title">Comércios em Destaque</h2>
+          <p class="section-subtitle">
+            Os melhores lugares do bairro selecionados para você.
+          </p>
 
-    <div id="area-filtros" style="display: none; text-align: center; margin-bottom: 30px">
-      <button id="btnLimparBusca" style="
-          background: #e1306c;
-          color: white;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 50px;
-          cursor: pointer;
-          font-weight: bold;
-          transition: 0.3s;
-        ">
-        <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os destaques
-      </button>
-    </div>
+          <div
+            id="area-filtros"
+            style="display: none; text-align: center; margin-bottom: 30px"
+          >
+            <button
+              id="btnLimparBusca"
+              style="
+                background: #e1306c;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: 0.3s;
+              "
+            >
+              <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os
+              destaques
+            </button>
+          </div>
 
-    <div class="cards-grid" id="cardsGrid"></div>
-  </div>
-</section>
+          <div class="cards-grid" id="cardsGrid"></div>
+        </div>
+      </section>
 
       <!-- =============================================
-         
+         Section Notícias - Exibi as últimas notícias do bairro
          ============================================= -->
+      <section id="noticias" class="noticias-secao">
+        <div class="container">
+          <h2 class="section-title">Avisos e Notícias do Bairro</h2>
+          <div class="noticias-grid" id="gridNoticias"></div>
+        </div>
+      </section>
+
+      
     </main>
 
     <div id="modalDetalhes" class="modal-overlay" aria-hidden="true">
