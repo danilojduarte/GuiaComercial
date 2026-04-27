@@ -54,33 +54,32 @@ function renderizarCards(lista) {
   }
 
   lista.forEach((lojista) => {
-    // AJUSTE: Adicionado onclick="abrirModal(${lojista.id})" no article
     const cardHTML = `
-            <article class="card-lojista" data-abre="${lojista.abre}" data-fecha="${lojista.fecha}" onclick="abrirModal(${lojista.id})">
-                <div class="card-header" style="background-image: url('${lojista.imagemCapa}');">
-                    <span class="status-badge">Verificando...</span>
+        <article class="card-lojista" onclick="abrirModal(${lojista.id})">
+            <div class="card-header">
+                <img src="${lojista.imagemCapa}" alt="Capa ${lojista.nome}" class="card-banner" />
+                <span class="status-badge">Verificando...</span>
+            </div>
+            <div class="card-content">
+                <div class="logo-wrapper">
+                    <img src="${lojista.logo}" alt="Logo ${lojista.nome}" />
                 </div>
-                <div class="card-content">
-                    <div class="logo-wrapper">
-                        <img src="${lojista.logo}" alt="Logo ${lojista.nome}" />
-                    </div>
-                    <h3 class="lojista-nome">${lojista.nome}</h3>
-                    <div class="horario-info">
-                        <i class="fa-regular fa-clock"></i>
-                        <span>${lojista.horarioTexto}</span>
-                    </div>
-                    <p class="endereco">
-                        <i class="fa-solid fa-location-dot"></i> ${lojista.endereco}
-                    </p>
-                    <p class="descricao">${lojista.descricao}</p>
-                    <div class="card-footer">
-                        <span class="btn-detalhes">
-                            <i class="fa-regular fa-eye"></i> Ver detalhes
-                        </span>
-                    </div>
+                
+                <h3 class="lojista-nome">${lojista.nome}</h3>
+                <div class="horario-info">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>${lojista.horarioTexto}</span>
                 </div>
-            </article>
-        `;
+                <p class="endereco">
+                    <i class="fa-solid fa-location-dot"></i> ${lojista.endereco}
+                </p>
+                <p class="descricao">${lojista.descricao}</p>
+                <div class="card-footer">
+                    <span class="btn-detalhes"><i class="fa-regular fa-eye"></i> Ver detalhes</span>
+                </div>
+            </div>
+        </article>
+    `;
     containerGrid.innerHTML += cardHTML;
   });
 
