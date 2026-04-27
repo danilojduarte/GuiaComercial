@@ -142,3 +142,35 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.target === modal) fecharModal();
     });
 });
+
+/* ==============================================
+   LÓGICA DE FILTROS POR CATEGORIA
+   ============================================== */
+
+// Seleciona todos os botões que têm a classe 'btn-categoria'
+const botoesFiltro = document.querySelectorAll(".btn-categoria");
+
+if (botoesFiltro.length > 0) {
+  botoesFiltro.forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const categoriaSelecionada = botao.getAttribute("data-categoria");
+      
+      console.log("Filtrando por:", categoriaSelecionada); // Agora vai aparecer no console!
+
+      // Se a categoria for "Todos", mostra os destaques iniciais ou a lista completa
+      if (categoriaSelecionada === "Todos") {
+        renderizarCards(lojistas);
+      } else {
+        // Filtra a lista principal baseada na categoria do JSON
+        const filtrados = lojistas.filter(
+          (l) => l.categoria.toLowerCase() === categoriaSelecionada.toLowerCase()
+        );
+        renderizarCards(filtrados);
+      }
+      
+      // Feedback visual: opcional, remove 'ativo' de todos e coloca no clicado
+      botoesFiltro.forEach(b => b.classList.remove("ativo"));
+      botao.classList.add("ativo");
+    });
+  });
+}
