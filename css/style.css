@@ -578,10 +578,11 @@ a {
 /* Ajuste do conteúdo para o logo flutuar */
 .card-content {
     padding: 20px;
+    padding-top: 10px; /* Reduzi um pouco o padding aqui porque o margin do nome já resolve */
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    position: relative; /* Necessário para o logo-wrapper se basear aqui */
+    position: relative;
 }
 
 /* O círculo do Logo */
@@ -609,7 +610,7 @@ a {
 
 /* Ajuste o título para não bater no logo que subiu */
 .lojista-nome {
-    margin-top: 35px; /* Abre espaço para o logo que está flutuando */
+    margin-top: 50px; /* Abre espaço para o logo que está flutuando */
     font-size: 1.2rem;
     color: #333;
     min-height: 2.8rem;
@@ -643,8 +644,20 @@ a {
 
 
 /* Informações de Horário e Endereço */
-.horario-info { color: #2ecc71; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
-.horario-info i { margin-right: 5px; }
+.horario-info {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conjunto ícone + texto */
+    gap: 8px;                /* Espaço entre o ícone e o texto */
+    font-size: 0.9rem;
+    color: var(--cor-texto-muted);
+    margin-bottom: 10px;
+    background: #f9f9f9;     /* Um fundo bem leve ajuda a destacar */
+    padding: 5px;
+    border-radius: 8px;
+}
+    color: #2ecc71; font-weight: 600; font-size: 0.85rem; margin-bottom: 8px; }
+.horario-info i { margin-right: 5px; color: #3498db; }
 
 .endereco { font-size: 0.85rem; color: #888; margin-bottom: 15px; }
 
