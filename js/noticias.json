@@ -14,5 +14,13 @@
     "resumo": "As obras começam na próxima segunda-feira e prometem melhorar a mobilidade.",
     "imagem": "img/noticias/ciclovia.jpg",
     "link": "#"
+  },
+  {
+    "id": 3,
+    "titulo": "Nova Ciclovia na Avenida Principal",
+    "data": "20 Abr, 2026",
+    "resumo": "As obras começam na próxima segunda-feira e prometem melhorar a mobilidade.",
+    "imagem": "img/noticias/ciclovia.jpg",
+    "link": "#"
   }
 ]
