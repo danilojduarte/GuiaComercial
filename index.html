@@ -47,18 +47,18 @@
             role="menu"
             aria-labelledby="btnCategorias"
           >
-            <a href="#" role="menuitem">Comércio</a>
-            <a href="#" role="menuitem">Alimentação</a>
-            <a href="#" role="menuitem">Serviço</a>
-            <a href="#" role="menuitem">Lazer</a>
-            <a href="#" role="menuitem">Moda</a>
-            <a href="#" role="menuitem">Farmácia</a>
-            <a href="#" role="menuitem">Estética</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Comércio">Comércio</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Alimentação">Alimentação</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Serviços">Serviços</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Lazer">Lazer</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Moda">Moda</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Saúde">Saúde</a>
+            <a href="#" role="menuitem" class="btn-categoria" data-categoria="Automotivo">Automotivo</a>
           </div>
         </div>
 
-        <a href="#destaques">Destaques</a>
-        <a href="#noticias">Notícias</a>
+        <a href="#">Destaques</a>
+        <a href="#">Notícias</a>
         <a href="#">Contato</a>
       </nav>
 
@@ -207,6 +207,10 @@
               <i class="fa-solid fa-pills" aria-hidden="true"></i>
               Saúde
             </div>
+            <!-- <div class="q-card" tabindex="0" data-categoria="Saúde">
+              <i class="fa-solid fa-pills"></i>
+              Saúde
+            </div> -->
           </div>
         </div>
       </section>
@@ -215,41 +219,34 @@
          Section Destaques - Exibi o card dos principais 
          lojistas
          ============================================= -->
-      <section class="destaques" id="destaques">
-        <div class="container">
-          <h2 class="section-title">Comércios em Destaque</h2>
-          <p class="section-subtitle">
-            Os melhores lugares do bairro selecionados para você.
-          </p>
+      <section class="destaques">
+  <div class="container">
+    <h2 class="section-title">Comércios em Destaque</h2>
+    <p class="section-subtitle">
+      Os melhores lugares do bairro selecionados para você.
+    </p>
 
-          <div
-            id="area-filtros"
-            style="display: none; text-align: center; margin-bottom: 30px"
-          >
-            <button
-              id="btnLimparBusca"
-              style="
-                background: #e1306c;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 50px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: 0.3s;
-              "
-            >
-              <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os
-              destaques
-            </button>
-          </div>
+    <div id="area-filtros" style="display: none; text-align: center; margin-bottom: 30px">
+      <button id="btnLimparBusca" style="
+          background: #e1306c;
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 50px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: 0.3s;
+        ">
+        <i class="fa-solid fa-circle-xmark"></i> Mostrar todos os destaques
+      </button>
+    </div>
 
-          <div class="cards-grid" id="cardsGrid"></div>
-        </div>
-      </section>
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+</section>
 
       <!-- =============================================
-         Section Noticias [lembrar de colocar o ID="noticias"]
+         
          ============================================= -->
     </main>
 

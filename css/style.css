@@ -166,10 +166,10 @@ a {
 .dropdown-content {
     display: none;              /* Oculto por padrão */
     position: absolute;
-    top: calc(100% + 8px);     /* Logo abaixo do botão */
+    top: calc(90% + 4px);     /* Logo abaixo do botão */
     left: 0;
     background-color: #ffffff;
-    min-width: 170px;
+    min-width: 140px;
     border: 0.5px solid #e8e8e8;
     border-radius: 12px;
     box-shadow: var(--sombra-media);

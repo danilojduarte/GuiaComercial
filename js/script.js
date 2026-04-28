@@ -260,6 +260,7 @@ if (campoBusca) {
 // 5. EVENTOS E INICIALIZAÇÃO
 document.addEventListener("DOMContentLoaded", () => {
   carregarDadosLojistas();
+  registrarFiltrosCategorias();
 
   // Fechar modal pelo botão X
   const btnFechar = document.getElementById("fecharModal");
@@ -313,13 +314,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ==============================================
    LÓGICA DE FILTROS POR CATEGORIA
+   (registrada após DOMContentLoaded para pegar
+    tanto os quick-cards quanto o dropdown da nav)
    ============================================== */
 
-const botoesFiltro = document.querySelectorAll(".btn-categoria");
+function registrarFiltrosCategorias() {
+  // Seleciona quick-cards E links do dropdown — todos têm .btn-categoria
+  const botoesFiltro = document.querySelectorAll(".btn-categoria");
 
-if (botoesFiltro.length > 0) {
   botoesFiltro.forEach((botao) => {
-    botao.addEventListener("click", () => {
+    botao.addEventListener("click", (e) => {
+      e.preventDefault(); // Evita o href="#" rolar para o topo
       const categoriaSelecionada = botao.getAttribute("data-categoria");
       const areaFiltros = document.getElementById("area-filtros");
 
@@ -332,9 +337,8 @@ if (botoesFiltro.length > 0) {
         renderizarCards(filtrados, true);
       }
 
-      // Mostra o botão de limpar ao filtrar por categoria
+      // Mostra o botão "Mostrar todos" e marca o botão ativo
       if (areaFiltros) areaFiltros.style.display = "block";
-
       botoesFiltro.forEach((b) => b.classList.remove("ativo"));
       botao.classList.add("ativo");
     });
