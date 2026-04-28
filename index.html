@@ -297,20 +297,80 @@
       <!-- =============================================
          Section Noticias - Exibi cards com noticias em destaques
          ============================================= -->
-         <section id="noticias" class="noticias-secao">
-    <div class="container">
-        <h2 class="section-title">Avisos e Notícias do Bairro</h2>
-        
-        <div class="noticias-container-flex">
-            <div class="noticias-lista-lateral" id="listaNoticiasLateral">
-                </div>
+      <section class="noticias" id="noticias" aria-label="Seção de notícias">
+        <div class="container">
+          <h2 class="section-title">Notícias do Bairro</h2>
+          <p class="section-subtitle">
+            Fique por dentro de tudo que acontece na sua região.
+          </p>
 
-            <div class="noticia-principal" id="noticiaPrincipalExibicao">
-                </div>
+          <div class="noticias-layout">
+            <!-- Coluna esquerda: lista de notícias -->
+            <div
+              class="noticias-lista"
+              id="noticiaLista"
+              role="list"
+              aria-label="Lista de notícias"
+            >
+              <!-- Preenchido pelo JS -->
+            </div>
+
+            <!-- Coluna direita: notícia em destaque -->
+            <div
+              class="noticia-destaque"
+              id="noticiaDestaque"
+              aria-live="polite"
+            >
+              <div class="destaque-imagem-wrap">
+                <img id="destaqueImagem" src="" alt="" />
+              </div>
+              <div class="destaque-corpo">
+                <span class="destaque-categoria" id="destaqueCategoria"></span>
+                <h3 class="destaque-titulo" id="destaqueTitulo"></h3>
+                <p class="destaque-data" id="destaqueData"></p>
+                <p class="destaque-resumo" id="destaqueResumo"></p>
+                <button
+                  class="destaque-btn-ler"
+                  id="destaqueBtnLer"
+                  aria-label="Ler notícia completa"
+                >
+                  <i class="fa-solid fa-book-open"></i> Ler notícia completa
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-</section>
+      </section>
+
+      <!-- Modal da Notícia Completa -->
+      <div id="modalNoticia" class="modal-overlay" aria-hidden="true">
+        <div class="modal-noticia-content">
+          <button
+            id="fecharModalNoticia"
+            class="btn-fechar"
+            aria-label="Fechar notícia"
+          >
+            &times;
+          </button>
+          <img
+            id="modalNoticiaImagem"
+            src=""
+            alt=""
+            class="modal-noticia-imagem"
+          />
+          <div class="modal-noticia-corpo">
+            <span class="destaque-categoria" id="modalNoticiaCategoria"></span>
+            <h2 id="modalNoticiaTitulo"></h2>
+            <p class="destaque-data" id="modalNoticiaData"></p>
+            <div id="modalNoticiaTexto" class="modal-noticia-texto"></div>
+          </div>
+        </div>
+      </div>
     </main>
+
+    <!-- =============================================~
+     Código Moda
+         ============================================= -->
 
     <div id="modalDetalhes" class="modal-overlay" aria-hidden="true">
       <div class="modal-content">

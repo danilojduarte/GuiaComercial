@@ -948,6 +948,23 @@ a {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* =========== RESPONSIVIDADE ===========*/
 
 /* -----------------------------------------------
@@ -990,6 +1007,36 @@ a {
     .hamburger {
         display: flex;
     }
+}
+
+/* Carrossel horizontal para tablets e celulares (abaixo de 900px) */
+@media (max-width: 900px) {
+    /* Container vira trilho de scroll horizontal */
+    .cards-grid {
+        flex-wrap: nowrap !important;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 20px;
+        padding: 20px 24px 40px 24px;
+        -webkit-overflow-scrolling: touch;
+        justify-content: flex-start; /* Alinha do início no carrossel */
+    }
+ 
+    /* Card ocupa ~80% da tela — mostra a borda do próximo (dica visual) */
+    .card-lojista {
+        flex: 0 0 80%;
+        max-width: 360px;
+        scroll-snap-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+ 
+    /* Esconde a barra de scroll feia */
+    .cards-grid::-webkit-scrollbar {
+        display: none;
+    }
+ 
+    .section-title { font-size: 1.8rem; }
+    .hero-content h1 { font-size: 2rem; }
 }
 
 /* Mobile: telas até 600px */
