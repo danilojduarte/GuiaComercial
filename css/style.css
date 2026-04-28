@@ -176,7 +176,7 @@ a {
     overflow: hidden;
     z-index: 100;
     /* Animação de entrada sutil */
-    animation: fadeDown 0.2s ease;
+    animation: fadeDown 0.8s ease;
 }
 
 /* Exibe o dropdown ao passar o mouse ou focar no elemento pai */
