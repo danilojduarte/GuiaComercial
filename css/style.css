@@ -529,27 +529,51 @@ a {
 
 /* GRID RESPONSIVO: Ajusta colunas automaticamente conforme o tamanho da tela */
 .cards-grid {
-    display: grid;
-    /* O 'minmax' diz: no mínimo 250px, no máximo 1 fração do espaço */
-    /* Isso permite que os cards fiquem menores para caberem 4 em 1200px */
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centraliza cards ímpares automaticamente */
     gap: 25px;
-    max-width: 1300px; /* Aumentei um pouco para caber os 4 confortavelmente */
+    max-width: 1300px;
     margin: 0 auto;
     padding: 20px 0;
+
+
+
+
+
+    /*
+    display: grid;
+     O 'minmax' diz: no mínimo 250px, no máximo 1 fração do espaço */
+    /* Isso permite que os cards fiquem menores para caberem 4 em 1200px */
+    /*grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 25px;
+    max-width: 1300px;  Aumentei um pouco para caber os 4 confortavelmente 
+    margin: 0 auto;
+    padding: 20px 0;*/
 }
 
 /* ESTILO DO CARD */
 .card-lojista {
+    flex: 0 0 calc(25% - 19px); /* 4 colunas descontando os gaps */
     background-color: #fff;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+
+
+    /* background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; */
     
-    display: flex;          /* Adicione isso */
-    flex-direction: column; /* Adicione isso */
+    /*display: flex;          Adicione isso */
+    /*flex-direction: column; /* Adicione isso */
 }
 
 .card-lojista:hover {
