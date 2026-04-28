@@ -12,7 +12,16 @@
         "keywords": "pão, bolo, salgados, coxinhas, suco, refrigerantes, café, lanche, padaria",
         "imagemCapa": "https://picsum.photos/400/250?random=1",
         "logo": "https://picsum.photos/80/80?random=11",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      0
+    ]
     },
     {
         "id": 2,

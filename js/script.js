@@ -46,11 +46,17 @@ function renderizarCards(lista, comScroll = false) {
   }
 
   lista.forEach((lojista) => {
+    // Converte array de dias para string ex: "1,2,3,4,5" (padrão JS: 0=Dom...6=Sáb)
+    const diasStr = Array.isArray(lojista.diasFuncionamento)
+      ? lojista.diasFuncionamento.join(",")
+      : "0,1,2,3,4,5,6"; // fallback: abre todos os dias
+
     const cardHTML = `
         <article class="card-lojista" 
                  data-id="${lojista.id}" 
                  data-abre="${lojista.abre}" 
-                 data-fecha="${lojista.fecha}" 
+                 data-fecha="${lojista.fecha}"
+                 data-dias="${diasStr}"
                  onclick="abrirModal(${lojista.id})">
             <div class="card-header">
                 <img src="${lojista.imagemCapa}" alt="Capa ${lojista.nome}" class="card-banner" />
@@ -90,20 +96,33 @@ function renderizarCards(lista, comScroll = false) {
 function atualizarStatusLojas() {
   const agora = new Date();
   const horaAtual = agora.getHours() * 100 + agora.getMinutes();
+  const diaSemanaAtual = agora.getDay(); // 0=Dom, 1=Seg ... 6=Sáb
   const cards = document.querySelectorAll(".card-lojista");
 
   cards.forEach((card) => {
     const badge = card.querySelector(".status-badge");
     const abreStr = card.getAttribute("data-abre");
     const fechaStr = card.getAttribute("data-fecha");
+    const diasStr = card.getAttribute("data-dias");
 
     if (abreStr && fechaStr) {
       const hAbre = parseInt(abreStr.replace(":", ""));
       const hFecha = parseInt(fechaStr.replace(":", ""));
 
-      if (horaAtual >= hAbre && horaAtual < hFecha) {
+      // Converte a string de dias de volta para array de números
+      const diasFuncionamento = diasStr
+        ? diasStr.split(",").map(Number)
+        : [0, 1, 2, 3, 4, 5, 6];
+
+      const funcionaHoje = diasFuncionamento.includes(diaSemanaAtual);
+      const dentroDoHorario = horaAtual >= hAbre && horaAtual < hFecha;
+
+      if (funcionaHoje && dentroDoHorario) {
         badge.textContent = "Aberto Agora";
         badge.className = "status-badge aberto";
+      } else if (!funcionaHoje) {
+        badge.textContent = "Fechado Hoje";
+        badge.className = "status-badge fechado";
       } else {
         badge.textContent = "Fechado";
         badge.className = "status-badge fechado";
