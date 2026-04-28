@@ -946,7 +946,295 @@ a {
 .btn-acao.whats { background: #25D366; color: white; }
 .btn-acao.maps { background: #4285F4; color: white; }
 
+ 
+/* ==============================================
+   SECTION NOTÍCIAS
+   ============================================== */
+ 
+.noticias {
+  padding: 100px 5%;
+  background-color: #ffffff;
+  scroll-margin-top: 80px;
+}
+ 
+/* Layout principal: lista à esquerda, destaque à direita */
+.noticias-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 28px;
+  align-items: start;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+ 
+/* ── COLUNA ESQUERDA: lista ── */
+.noticias-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 540px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cor-primaria) #f0f0f0;
+}
+ 
+.noticias-lista::-webkit-scrollbar { width: 4px; }
+.noticias-lista::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 4px; }
+.noticias-lista::-webkit-scrollbar-thumb { background: var(--cor-primaria); border-radius: 4px; }
+ 
+/* Card da lista */
+.noticia-item {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
+}
+ 
+.noticia-item:hover {
+  background: #fff0f5;
+  border-color: var(--cor-primaria);
+  transform: translateX(4px);
+}
+ 
+.noticia-item.ativo {
+  background: #fff0f5;
+  border-color: var(--cor-primaria);
+}
+ 
+.noticia-item img {
+  width: 90px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+ 
+.noticia-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+ 
+.noticia-item-categoria {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--cor-primaria);
+  letter-spacing: 0.5px;
+}
+ 
+.noticia-item-titulo {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ 
+.noticia-item-data {
+  font-size: 0.75rem;
+  color: var(--cor-texto-muted);
+}
+ 
+/* ── COLUNA DIREITA: destaque ── */
+.noticia-destaque {
+  background: #f8f9fa;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  display: flex;
+  flex-direction: column;
+  animation: fadeInDestaque 0.35s ease;
+}
+ 
+@keyframes fadeInDestaque {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+.destaque-imagem-wrap {
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+}
+ 
+.destaque-imagem-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+ 
+.noticia-destaque:hover .destaque-imagem-wrap img {
+  transform: scale(1.03);
+}
+ 
+.destaque-corpo {
+  padding: 24px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+ 
+.destaque-categoria {
+  display: inline-block;
+  background: var(--cor-primaria);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  width: fit-content;
+}
+ 
+.destaque-titulo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--cor-texto);
+  line-height: 1.35;
+  margin: 0;
+}
+ 
+.destaque-data {
+  font-size: 0.82rem;
+  color: var(--cor-texto-muted);
+  margin: 0;
+}
+ 
+.destaque-resumo {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.65;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+ 
+.destaque-btn-ler {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--cor-primaria);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 24px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  width: fit-content;
+  margin-top: 6px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(225, 48, 108, 0.3);
+}
+ 
+.destaque-btn-ler:hover {
+  background: var(--cor-primaria-escura);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(225, 48, 108, 0.4);
+}
+ 
+/* ── MODAL DA NOTÍCIA COMPLETA ── */
+.modal-noticia-content {
+  background: #fff;
+  border-radius: 20px;
+  max-width: 720px;
+  width: 92%;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative; /* garante que o btn-fechar se posicione corretamente */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  animation: abrirModalAnim 0.3s ease-out;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cor-primaria) #f0f0f0;
+}
 
+/* Botão fechar do modal de notícia — fica sobre a imagem */
+#fecharModalNoticia {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 20;
+}
+
+/* Botão "Voltar" fixo no rodapé do modal — confortável para o polegar no mobile */
+.btn-voltar-noticia {
+  display: none; /* visível apenas no mobile via media query */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: calc(100% - 48px);
+  margin: 0 24px 28px;
+  padding: 14px;
+  background: var(--cor-primaria);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  box-shadow: 0 4px 14px rgba(225, 48, 108, 0.3);
+}
+
+.btn-voltar-noticia:hover {
+  background: var(--cor-primaria-escura);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .btn-voltar-noticia {
+    display: flex;
+  }
+}
+ 
+.modal-noticia-imagem {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+  display: block;
+}
+ 
+.modal-noticia-corpo {
+  padding: 28px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+ 
+.modal-noticia-corpo h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--cor-texto);
+  line-height: 1.3;
+  margin: 0;
+}
+ 
+.modal-noticia-texto {
+  font-size: 0.97rem;
+  color: #444;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+ 
 
 
 
@@ -1037,6 +1325,80 @@ a {
  
     .section-title { font-size: 1.8rem; }
     .hero-content h1 { font-size: 2rem; }
+
+    /* ── NOTÍCIAS MOBILE: painel destaque some, lista vira feed ── */
+
+    /* Oculta o painel de destaque — clique abre direto o modal */
+    .noticia-destaque {
+        display: none !important;
+    }
+
+    /* Layout vira coluna única */
+    .noticias-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* Lista ocupa toda a largura, sem altura máxima nem scroll vertical */
+    .noticias-lista {
+        display: flex;
+        flex-direction: column;
+        max-height: none;
+        overflow-y: visible;
+        overflow-x: visible;
+        padding-right: 0;
+        gap: 0;
+    }
+
+    /* Card compacto estilo feed de notícias */
+    .noticia-item {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 14px;
+        align-items: center;
+        background: #fff;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid #eee;
+        padding: 14px 4px;
+        transform: none !important; /* remove o translateX do hover */
+    }
+
+    .noticia-item:first-child {
+        border-top: 1px solid #eee;
+    }
+
+    /* Remove borda lateral colorida do item ativo (não faz sentido no feed) */
+    .noticia-item.ativo,
+    .noticia-item:hover {
+        border-color: #eee;
+        background: #fff;
+        border-left: none;
+    }
+
+    /* Imagem maior e com proporção fixa */
+    .noticia-item img {
+        width: 110px;
+        height: 75px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+
+    /* Título em destaque com a cor primária, igual à imagem de referência */
+    .noticia-item-titulo {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: var(--cor-primaria);
+        -webkit-line-clamp: 3;
+        line-height: 1.4;
+    }
+
+    .noticia-item-categoria {
+        font-size: 0.68rem;
+    }
+
+    .noticia-item-data {
+        font-size: 0.72rem;
+    }
 }
 
 /* Mobile: telas até 600px */

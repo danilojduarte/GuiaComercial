@@ -364,6 +364,10 @@
             <p class="destaque-data" id="modalNoticiaData"></p>
             <div id="modalNoticiaTexto" class="modal-noticia-texto"></div>
           </div>
+          <!-- Botão voltar — visível apenas no mobile -->
+          <button class="btn-voltar-noticia" id="btnVoltarNoticia" aria-label="Fechar notícia">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+          </button>
         </div>
       </div>
     </main>
@@ -425,6 +429,62 @@
         </div>
       </div>
     </div>
+
+
+    <!-- =============================================
+         DADOS DAS NOTÍCIAS
+         Para adicionar ou editar notícias, basta
+         incluir/alterar os objetos abaixo.
+         ============================================= -->
+    <script>
+      window.noticias = [
+        {
+          id: 1,
+          titulo: "Nova praça é inaugurada no centro do bairro",
+          categoria: "Infraestrutura",
+          data: "27 de abril de 2026",
+          resumo: "A prefeitura entregou nesta semana a reforma completa da Praça Central, com novo paisagismo, iluminação LED e área de lazer para crianças e idosos.",
+          textoCompleto: "A tão aguardada reforma da Praça Central foi concluída e entregue à população nesta terça-feira. O projeto, que durou cerca de seis meses, trouxe melhorias significativas para o espaço público mais frequentado do bairro.\n\nEntre as novidades, destaque para a nova arborização com espécies nativas, o sistema de iluminação em LED que reduz o consumo de energia em 40%, e o playground inclusivo para crianças com e sem deficiência.\n\nA pista de caminhada foi ampliada e recebeu piso emborrachado antiderrapante. Bancos e mesas para jogos também foram instalados, incentivando a convivência entre os moradores de todas as idades.",
+          imagem: "https://picsum.photos/800/400?random=31"
+        },
+        {
+          id: 2,
+          titulo: "Feira de saúde gratuita acontece no próximo sábado",
+          categoria: "Saúde",
+          data: "25 de abril de 2026",
+          resumo: "Evento oferece consultas, aferição de pressão, teste de glicemia e orientações nutricionais para toda a comunidade, sem necessidade de agendamento.",
+          textoCompleto: "A Secretaria Municipal de Saúde, em parceria com o posto de saúde do bairro, realizará na próxima sexta-feira uma grande feira de saúde gratuita e aberta a todos os moradores.\n\nO evento acontecerá das 8h às 14h na quadra coberta da Escola Municipal e contará com diversas especialidades: clínica geral, nutrição, fisioterapia e odontologia preventiva.\n\nSerão realizados gratuitamente testes de glicemia capilar, aferição de pressão arterial, avaliação de IMC e orientações sobre prevenção de doenças crônicas.\n\nNão é necessário agendamento. Basta comparecer com documento de identidade e cartão do SUS.",
+          imagem: "https://picsum.photos/800/400?random=32"
+        },
+        {
+          id: 3,
+          titulo: "Novos comércios abrem as portas na Rua das Flores",
+          categoria: "Comércio",
+          data: "22 de abril de 2026",
+          resumo: "Três novos estabelecimentos chegaram ao bairro trazendo mais opções de alimentação, serviços estéticos e artigos para o lar. Conheça os novos vizinhos!",
+          textoCompleto: "O comércio local continua crescendo! Três novos estabelecimentos abriram as portas na Rua das Flores neste mês, movimentando ainda mais a economia do bairro e gerando novos empregos para os moradores.\n\nO primeiro é o Bistrô da Vila, especializado em pratos executivos e marmitas fitness. O segundo é o Espaço Beleza Moderna, salão completo com cabelo, manicure, pedicure e estética facial.\n\nO terceiro estabelecimento é a Loja Casa & Cia, com artigos de decoração, utilidades domésticas e presentes. Os três negócios são empreendimentos locais, de moradores do próprio bairro.\n\nO Guia Comercial já cadastrou todos eles. Acesse a seção de busca para encontrar endereço, horário e contato.",
+          imagem: "https://picsum.photos/800/400?random=33"
+        },
+        {
+          id: 4,
+          titulo: "Campeonato de futsal reúne times do bairro",
+          categoria: "Esporte",
+          data: "19 de abril de 2026",
+          resumo: "A segunda edição do Campeonato Comunitário de Futsal começa no próximo final de semana com 12 times e premiação para os três primeiros colocados.",
+          textoCompleto: "As inscrições para a segunda edição do Campeonato Comunitário de Futsal encerraram com recorde de participação: 12 times confirmados, reunindo mais de 150 atletas amadores de diferentes faixas etárias.\n\nA competição será disputada aos sábados e domingos durante todo o mês de maio, sempre na quadra poliesportiva do bairro. A entrada é gratuita para os espectadores.\n\nO campeão receberá troféu e vale-compras no valor de R$ 500,00 patrocinado por comerciantes locais. O segundo e terceiro colocados também serão premiados.\n\nAs partidas começam às 8h da manhã. A organização pede que torcedores levem um quilo de alimento não perecível para doação.",
+          imagem: "https://picsum.photos/800/400?random=34"
+        },
+        {
+          id: 5,
+          titulo: "Escola municipal recebe laboratório de informática",
+          categoria: "Educação",
+          data: "15 de abril de 2026",
+          resumo: "Investimento da prefeitura garante 30 computadores novos e internet de alta velocidade para alunos do ensino fundamental da Escola Municipal São Jorge.",
+          textoCompleto: "A Escola Municipal São Jorge recebeu nesta semana a entrega oficial do seu novo laboratório de informática, equipado com 30 computadores modernos, projetor interativo e conexão de internet de alta velocidade.\n\nO investimento, de aproximadamente R$ 180 mil, foi viabilizado por meio de emenda parlamentar e representa uma grande conquista para os cerca de 600 alunos matriculados na unidade.\n\nAs aulas no laboratório começarão na próxima segunda-feira, integradas à grade curricular regular. Os professores passaram por capacitação durante as últimas duas semanas.\n\nA diretora da escola destacou que o espaço também estará disponível no contraturno para atividades de reforço e projetos extracurriculares voltados à inclusão digital.",
+          imagem: "https://picsum.photos/800/400?random=35"
+        }
+      ];
+    </script>
 
     <!-- Script principal (carregado por último para não bloquear o HTML) -->
     <script src="js/script.js"></script>

@@ -280,6 +280,7 @@ if (campoBusca) {
 document.addEventListener("DOMContentLoaded", () => {
   carregarDadosLojistas();
   registrarFiltrosCategorias();
+  inicializarNoticias();
 
   // Fechar modal pelo botão X
   const btnFechar = document.getElementById("fecharModal");
@@ -362,4 +363,150 @@ function registrarFiltrosCategorias() {
       botao.classList.add("ativo");
     });
   });
+}
+
+
+
+
+
+
+function fecharModalNoticia() {
+  const modal = document.getElementById("modalNoticia");
+  if (modal) {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "auto";
+  }
+}
+ 
+/* ==============================================
+   MÓDULO DE NOTÍCIAS
+   As notícias são definidas no index.html via
+   window.noticias = [...] — edite lá facilmente.
+   ============================================== */
+
+let noticiaAtiva = null;
+
+function inicializarNoticias() {
+  const lista = document.getElementById("noticiaLista");
+  if (!lista) return;
+
+  // Lê o array definido no HTML
+  const dados = window.noticias || [];
+  if (dados.length === 0) return;
+
+  // Renderiza os itens da lista lateral
+  dados.forEach((noticia) => {
+    const item = document.createElement("div");
+    item.className = "noticia-item";
+    item.setAttribute("role", "listitem");
+    item.setAttribute("tabindex", "0");
+    item.setAttribute("aria-label", noticia.titulo);
+    item.dataset.id = noticia.id;
+
+    item.innerHTML = `
+      <img src="${noticia.imagem}" alt="${noticia.titulo}" loading="lazy" />
+      <div class="noticia-item-info">
+        <span class="noticia-item-categoria">${noticia.categoria}</span>
+        <span class="noticia-item-titulo">${noticia.titulo}</span>
+        <span class="noticia-item-data">${noticia.data}</span>
+      </div>
+    `;
+
+    item.addEventListener("click", () => {
+      // Mobile (< 900px): abre modal direto — painel destaque está oculto
+      if (window.innerWidth < 900) {
+        abrirModalNoticia(noticia.id);
+      } else {
+        selecionarNoticia(noticia.id);
+      }
+    });
+    item.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        if (window.innerWidth < 900) {
+          abrirModalNoticia(noticia.id);
+        } else {
+          selecionarNoticia(noticia.id);
+        }
+      }
+    });
+
+    lista.appendChild(item);
+  });
+
+  // Seleciona a primeira notícia por padrão
+  selecionarNoticia(dados[0].id);
+
+  // Botão "Ler notícia completa"
+  const btnLer = document.getElementById("destaqueBtnLer");
+  if (btnLer) {
+    btnLer.addEventListener("click", () => {
+      if (noticiaAtiva) abrirModalNoticia(noticiaAtiva.id);
+    });
+  }
+
+  // Fechar modal da notícia — botão X (desktop) e botão Voltar (mobile)
+  const btnFecharNoticia = document.getElementById("fecharModalNoticia");
+  if (btnFecharNoticia) btnFecharNoticia.addEventListener("click", fecharModalNoticia);
+
+  const btnVoltarNoticia = document.getElementById("btnVoltarNoticia");
+  if (btnVoltarNoticia) btnVoltarNoticia.addEventListener("click", fecharModalNoticia);
+
+  window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modalNoticia");
+    if (e.target === modal) fecharModalNoticia();
+  });
+}
+
+function selecionarNoticia(id) {
+  const dados = window.noticias || [];
+  const noticia = dados.find((n) => n.id === id);
+  if (!noticia) return;
+  noticiaAtiva = noticia;
+
+  // Atualiza o painel de destaque
+  document.getElementById("destaqueImagem").src = noticia.imagem;
+  document.getElementById("destaqueImagem").alt = noticia.titulo;
+  document.getElementById("destaqueCategoria").textContent = noticia.categoria;
+  document.getElementById("destaqueTitulo").textContent = noticia.titulo;
+  document.getElementById("destaqueData").textContent = noticia.data;
+  document.getElementById("destaqueResumo").textContent = noticia.resumo;
+
+  // Reinicia animação de entrada
+  const destaque = document.getElementById("noticiaDestaque");
+  destaque.style.animation = "none";
+  destaque.offsetHeight;
+  destaque.style.animation = "";
+
+  // Marca item ativo na lista
+  document.querySelectorAll(".noticia-item").forEach((item) => {
+    item.classList.toggle("ativo", parseInt(item.dataset.id) === id);
+  });
+}
+
+function abrirModalNoticia(id) {
+  const dados = window.noticias || [];
+  const noticia = dados.find((n) => n.id === id);
+  if (!noticia) return;
+
+  document.getElementById("modalNoticiaImagem").src = noticia.imagem;
+  document.getElementById("modalNoticiaImagem").alt = noticia.titulo;
+  document.getElementById("modalNoticiaCategoria").textContent = noticia.categoria;
+  document.getElementById("modalNoticiaTitulo").textContent = noticia.titulo;
+  document.getElementById("modalNoticiaData").textContent = noticia.data;
+  document.getElementById("modalNoticiaTexto").textContent = noticia.textoCompleto;
+
+  const modal = document.getElementById("modalNoticia");
+  modal.style.display = "flex";
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function fecharModalNoticia() {
+  const modal = document.getElementById("modalNoticia");
+  if (modal) {
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "auto";
+  }
 }
