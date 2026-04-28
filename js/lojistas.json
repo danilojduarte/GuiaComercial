@@ -13,15 +13,9 @@
         "imagemCapa": "https://picsum.photos/400/250?random=1",
         "logo": "https://picsum.photos/80/80?random=11",
         "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
-        "diasFuncionamento": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      0
-    ]
+            "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 2,
@@ -36,7 +30,10 @@
         "keywords": "remedio, soro, dipirona, pressão, farmacia, saude, dor, curativo, higiene",
         "imagemCapa": "https://picsum.photos/400/250?random=2",
         "logo": "https://picsum.photos/80/80?random=12",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+            "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 3,
@@ -51,7 +48,10 @@
         "keywords": "gasolina, alcool, diesel, combustivel, calibragem, oleo, troca, conveniencia",
         "imagemCapa": "https://picsum.photos/400/250?random=3",
         "logo": "https://picsum.photos/80/80?random=13",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+        ]
     },
     {
         "id": 4,
@@ -66,7 +66,15 @@
         "keywords": "oculos, lente, armação, visão, oftalmologia, sol, grau, otica",
         "imagemCapa": "https://picsum.photos/400/250?random=4",
         "logo": "https://picsum.photos/80/80?random=14",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
     },
     {
         "id": 5,
@@ -81,7 +89,10 @@
         "keywords": "carro, motor, freio, suspensão, mecanico, oficina, conserto, alinhamento",
         "imagemCapa": "https://picsum.photos/400/250?random=5",
         "logo": "https://picsum.photos/80/80?random=15",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+            "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 6,
@@ -96,7 +107,10 @@
         "keywords": "obra, construção, tijolo, cimento, reforma, casa, pedreiro, reboco",
         "imagemCapa": "https://picsum.photos/400/250?random=6",
         "logo": "https://picsum.photos/80/80?random=16",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+            "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 7,
@@ -111,7 +125,10 @@
         "keywords": "pintor, tinta, parede, textura, reforma, cor, acabamento, grafiato",
         "imagemCapa": "https://picsum.photos/400/250?random=7",
         "logo": "https://picsum.photos/80/80?random=17",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 8,
@@ -126,7 +143,10 @@
         "keywords": "arcondicionado, ar-condicionado, ar condicionado, gelado, split, limpeza, manutenção, tecnico, frio, calor",
         "imagemCapa": "https://picsum.photos/400/250?random=8",
         "logo": "https://picsum.photos/80/80?random=18",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 9,
@@ -141,7 +161,10 @@
         "keywords": "cachorro, gato, pet, ração, banho, tosa, veterinario, coleira, animais",
         "imagemCapa": "https://picsum.photos/400/250?random=9",
         "logo": "https://picsum.photos/80/80?random=19",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 10,
@@ -156,7 +179,9 @@
         "keywords": "mercado, compras, carne, fruta, verdura, limpeza, arroz, feijão, supermercado",
         "imagemCapa": "https://picsum.photos/400/250?random=10",
         "logo": "https://picsum.photos/80/80?random=20",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#","diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 11,
@@ -171,7 +196,10 @@
         "keywords": "esporte, areia, beach tennis, volei, lazer, exercicio, quadra, aluguel",
         "imagemCapa": "https://picsum.photos/400/250?random=11",
         "logo": "https://picsum.photos/80/80?random=21",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 12,
@@ -186,7 +214,10 @@
         "keywords": "roupa, moda, feminino, vestido, acessorio, luxo, tendencia, boutique",
         "imagemCapa": "https://picsum.photos/400/250?random=12",
         "logo": "https://picsum.photos/80/80?random=22",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 13,
@@ -201,7 +232,10 @@
         "keywords": "criança, festa, diversão, brinquedo, infantil, monitor, aniversario, lazer",
         "imagemCapa": "https://picsum.photos/400/250?random=13",
         "logo": "https://picsum.photos/80/80?random=23",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 14,
@@ -216,7 +250,10 @@
         "keywords": "homem, moda, masculino, terno, camiseta, jeans, sapato, estilo",
         "imagemCapa": "https://picsum.photos/400/250?random=14",
         "logo": "https://picsum.photos/80/80?random=24",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 15,
@@ -231,7 +268,10 @@
         "keywords": "cinema, filme, diversão, pipoca, lazer, entretenimento, estreia, ingresso",
         "imagemCapa": "https://picsum.photos/400/250?random=15",
         "logo": "https://picsum.photos/80/80?random=25",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 16,
@@ -246,7 +286,10 @@
         "keywords": "tenis, sneaker, street, skate, urbano, moletom, boné, moda",
         "imagemCapa": "https://picsum.photos/400/250?random=16",
         "logo": "https://picsum.photos/80/80?random=26",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 17,
@@ -261,7 +304,10 @@
         "keywords": "xadrez, rpg, jogo de tabuleiro, lazer, cultura, estrategia, clube, encontro",
         "imagemCapa": "https://picsum.photos/400/250?random=17",
         "logo": "https://picsum.photos/80/80?random=27",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 18,
@@ -276,7 +322,10 @@
         "keywords": "praia, biquini, maio, sol, verão, mar, moda, piscina",
         "imagemCapa": "https://picsum.photos/400/250?random=18",
         "logo": "https://picsum.photos/80/80?random=28",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 19,
@@ -291,7 +340,10 @@
         "keywords": "lazer, inflável, criança, pula pula, diversão, praça, fim de semana",
         "imagemCapa": "https://picsum.photos/400/250?random=19",
         "logo": "https://picsum.photos/80/80?random=29",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     },
     {
         "id": 20,
@@ -306,6 +358,9 @@
         "keywords": "fitness, academia, treino, legging, esportivo, moda, saude, ginastica",
         "imagemCapa": "https://picsum.photos/400/250?random=20",
         "logo": "https://picsum.photos/80/80?random=30",
-        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#"
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 1, 2, 3, 4, 5, 6
+            ]
     }
 ]
