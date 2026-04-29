@@ -169,6 +169,9 @@ function realizarBusca() {
   const termo = campoBusca.value.toLowerCase().trim();
   const areaFiltros = document.getElementById("area-filtros");
 
+  // Esconde o teclado virtual no mobile ao realizar a busca
+  if (campoBusca) campoBusca.blur();
+
   // Se vazio, volta aos destaques e esconde o botão de limpar
   if (termo === "") {
     const apenasDestaques = lojistas.filter((l) => l.isDestaque);
@@ -361,6 +364,13 @@ function registrarFiltrosCategorias() {
       if (areaFiltros) areaFiltros.style.display = "block";
       botoesFiltro.forEach((b) => b.classList.remove("ativo"));
       botao.classList.add("ativo");
+
+      // Fecha o dropdown retirando o foco do botão (colapsa o :focus-within do CSS)
+      const btnCategorias = document.getElementById("btnCategorias");
+      if (btnCategorias) {
+        btnCategorias.blur();
+        btnCategorias.setAttribute("aria-expanded", "false");
+      }
     });
   });
 }
