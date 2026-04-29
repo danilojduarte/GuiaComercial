@@ -26,7 +26,7 @@
 
       <!-- Menu de navegação central (visível apenas no desktop) -->
       <nav class="menu-central" role="navigation" aria-label="Menu principal">
-        <a href="#">Início</a>
+        <a href="#hero">Início</a>
 
         <!-- Dropdown de categorias:
                  usamos <button> aqui (não <a>) porque ele ABRE um menu,
@@ -99,9 +99,9 @@
           </div>
         </div>
 
-        <a href="#">Destaques</a>
-        <a href="#">Notícias</a>
-        <a href="#">Contato</a>
+        <a href="#destaques">Destaques</a>
+        <a href="#noticias">Notícias</a>
+        <a href="#contato">Contato</a>
       </nav>
 
       <!-- Lado direito da navbar: ícone do Instagram + hamburguer mobile -->
@@ -155,8 +155,8 @@
       <a href="#">Moda</a>
       <a href="#">Farmácia</a>
       <a href="#">Estética</a>
-      <a href="#">Destaques</a>
-      <a href="#">Notícias</a>
+      <a href="#destaques">Destaques</a>
+      <a href="#noticias">Notícias</a>
       <a href="#">Contato</a>
     </nav>
 
@@ -164,7 +164,7 @@
          HERO — seção principal com busca
          ============================================= -->
     <main>
-      <section class="hero" aria-label="Seção de busca principal">
+      <section class="hero" id="hero" aria-label="Seção de busca principal">
         <!-- Camada escura sobre a imagem de fundo (melhora leitura do texto) -->
         <div class="overlay" aria-hidden="true"></div>
 
@@ -261,7 +261,7 @@
          Section Destaques - Exibi o card dos principais 
          lojistas
          ============================================= -->
-      <section class="destaques">
+      <section class="destaques" id="destaques">
         <div class="container">
           <h2 class="section-title">Comércios em Destaque</h2>
           <p class="section-subtitle">
