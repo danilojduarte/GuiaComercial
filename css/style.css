@@ -1625,3 +1625,52 @@ a {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(225, 48, 108, 0.4);
 }
+
+/* ==============================================
+   BOTÃO FLUTUANTE — VOLTAR AO TOPO
+   ============================================== */
+
+.btn-voltar-topo {
+  position: fixed;
+  bottom: 28px;
+  right: 24px;
+  z-index: 9998;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(225, 48, 108, 0.45);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s, background 0.2s;
+}
+
+/* Aparece após rolar 300px */
+.btn-voltar-topo.visivel {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.btn-voltar-topo:hover {
+  background: var(--cor-primaria-escura);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(225, 48, 108, 0.55);
+}
+
+@media (max-width: 900px) {
+  .btn-voltar-topo {
+    bottom: 20px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}

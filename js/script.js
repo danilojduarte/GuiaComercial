@@ -500,6 +500,10 @@ function abrirModalNoticia(id) {
   modal.style.display = "flex";
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+
+  // Sempre volta ao topo do modal ao abrir uma nova notícia
+  const conteudo = modal.querySelector(".modal-noticia-content");
+  if (conteudo) conteudo.scrollTop = 0;
 }
 
 function fecharModalNoticia() {
@@ -510,3 +514,32 @@ function fecharModalNoticia() {
     document.body.style.overflow = "auto";
   }
 }
+
+
+/* ==============================================
+   BOTÃO FLUTUANTE — VOLTAR AO TOPO
+   ============================================== */
+
+(function () {
+  const btn = document.getElementById("btnVoltarTopo");
+  if (!btn) return;
+
+  // Exibe o botão após rolar 300px
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      btn.classList.add("visivel");
+    } else {
+      btn.classList.remove("visivel");
+    }
+  }, { passive: true });
+
+  // Clique: scroll suave até o hero (topo da página)
+  btn.addEventListener("click", () => {
+    const hero = document.querySelector(".hero");
+    if (hero) {
+      hero.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+})();
