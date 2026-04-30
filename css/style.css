@@ -1674,3 +1674,231 @@ a {
     height: 44px;
   }
 }
+
+
+/* ==============================================
+   FOOTER — Rodapé
+   ============================================== */
+
+.footer {
+  background-color: #111318;  /* Fundo escuro — contraste com o restante da página */
+  color: #ccc;
+  padding-top: 0;
+}
+
+/* Linha gradiente decorativa no topo do footer */
+.footer-divider {
+  height: 4px;
+  background: linear-gradient(90deg, var(--cor-primaria), var(--cor-primaria-escura), var(--cor-primaria));
+  background-size: 200% auto;
+  animation: gradientSlide 4s linear infinite;
+}
+
+@keyframes gradientSlide {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Container principal — grid de 4 colunas no desktop */
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 48px;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 64px 5% 48px;
+}
+
+/* ── COLUNA 1: Brand ── */
+.footer-logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+}
+
+.footer-logo span {
+  color: var(--cor-primaria);
+}
+
+.footer-descricao {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #999;
+  margin-bottom: 24px;
+  max-width: 280px;
+}
+
+/* Ícones de redes sociais */
+.footer-social {
+  display: flex;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+
+.social-link:hover {
+  background: var(--cor-primaria);
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+.social-link.whatsapp:hover {
+  background: #25D366;
+}
+
+/* ── COLUNAS 2 e 3: Links de navegação ── */
+.footer-col-titulo {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #fff;
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+/* Linha decorativa abaixo do título de cada coluna */
+.footer-col-titulo::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 28px;
+  height: 2px;
+  background: var(--cor-primaria);
+  border-radius: 2px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  color: #999;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s, padding-left 0.2s;
+  display: inline-block;
+}
+
+.footer-links a:hover {
+  color: var(--cor-primaria);
+  padding-left: 6px;
+}
+
+/* ── COLUNA 4: CTA para lojistas ── */
+.footer-cta-texto {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: #999;
+  margin-bottom: 20px;
+}
+
+.footer-btn-whats {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
+  white-space: nowrap;
+}
+
+.footer-btn-whats:hover {
+  background: #1ebe5d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
+}
+
+/* ── Linha inferior: copyright e crédito ── */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 20px 5%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.footer-bottom p {
+  font-size: 0.82rem;
+  color: #666;
+  margin: 0;
+}
+
+.footer-credito strong {
+  color: #aaa;
+  font-weight: 600;
+}
+
+.footer-credito strong span {
+  color: var(--cor-primaria);
+}
+
+/* ── RESPONSIVIDADE ── */
+
+/* Tablet: 2 colunas */
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    padding: 48px 5% 36px;
+  }
+
+  /* Brand ocupa largura total no topo */
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-descricao {
+    max-width: 100%;
+  }
+}
+
+/* Mobile: coluna única */
+@media (max-width: 500px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 40px 5% 28px;
+  }
+
+  .footer-brand {
+    grid-column: auto;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
+  }
+}

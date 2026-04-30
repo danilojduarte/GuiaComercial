@@ -285,6 +285,10 @@ document.addEventListener("DOMContentLoaded", () => {
   registrarFiltrosCategorias();
   inicializarNoticias();
 
+  // Preenche o ano atual no footer dinamicamente
+  const anoAtual = document.getElementById("anoAtual");
+  if (anoAtual) anoAtual.textContent = new Date().getFullYear();
+
   // Fechar modal pelo botão X
   const btnFechar = document.getElementById("fecharModal");
   if (btnFechar) btnFechar.addEventListener("click", fecharModal);
