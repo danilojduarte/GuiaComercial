@@ -26,7 +26,7 @@
 
       <!-- Menu de navegação central (visível apenas no desktop) -->
       <nav class="menu-central" role="navigation" aria-label="Menu principal">
-        <a href="#hero">Início</a>
+        <a href="#">Início</a>
 
         <!-- Dropdown de categorias:
                  usamos <button> aqui (não <a>) porque ele ABRE um menu,
@@ -99,16 +99,16 @@
           </div>
         </div>
 
-        <a href="#destaques">Destaques</a>
-        <a href="#noticias">Notícias</a>
-        <a href="#contato">Contato</a>
+        <a href="#">Destaques</a>
+        <a href="#">Notícias</a>
+        <a href="#">Contato</a>
       </nav>
 
       <!-- Lado direito da navbar: ícone do Instagram + hamburguer mobile -->
       <div class="navbar-right">
         <!-- Botão do Instagram (abre em nova aba) -->
         <a
-          href="https://www.instagram.com/danilojduarte/"
+          href="SUA_URL_DO_INSTAGRAM_AQUI"
           target="_blank"
           rel="noopener noreferrer"
           class="btn-insta-icon"
@@ -148,23 +148,23 @@
     >
       <a href="#">Início</a>
       <!-- Categorias aparecem direto no mobile (sem dropdown) -->
-      <a href="#">Comércio</a>
-      <a href="#">Alimentação</a>
-      <a href="#">Serviços</a>
-      <a href="#">Lazer</a>
-      <a href="#">Moda</a>
-      <a href="#">Farmácia</a>
-      <a href="#">Estética</a>
+      <a href="#" class="btn-categoria" data-categoria="Comércio">Comércio</a>
+      <a href="#" class="btn-categoria" data-categoria="Alimentação">Alimentação</a>
+      <a href="#" class="btn-categoria" data-categoria="Serviços">Serviços</a>
+      <a href="#" class="btn-categoria" data-categoria="Lazer">Lazer</a>
+      <a href="#" class="btn-categoria" data-categoria="Moda">Moda</a>
+      <a href="#" class="btn-categoria" data-categoria="Saúde">Saúde</a>
+      <a href="#" class="btn-categoria" data-categoria="Automotivo">Automotivo</a>
       <a href="#destaques">Destaques</a>
       <a href="#noticias">Notícias</a>
-      <a href="#">Contato</a>
+      <a href="#contato">Contato</a>
     </nav>
 
     <!-- =============================================
          HERO — seção principal com busca
          ============================================= -->
     <main>
-      <section class="hero" id="hero" aria-label="Seção de busca principal">
+      <section class="hero" aria-label="Seção de busca principal">
         <!-- Camada escura sobre a imagem de fundo (melhora leitura do texto) -->
         <div class="overlay" aria-hidden="true"></div>
 

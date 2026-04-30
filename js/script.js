@@ -365,11 +365,23 @@ function registrarFiltrosCategorias() {
       botoesFiltro.forEach((b) => b.classList.remove("ativo"));
       botao.classList.add("ativo");
 
-      // Fecha o dropdown retirando o foco do botão (colapsa o :focus-within do CSS)
+      // Fecha o dropdown da navbar (desktop)
       const btnCategorias = document.getElementById("btnCategorias");
       if (btnCategorias) {
         btnCategorias.blur();
         btnCategorias.setAttribute("aria-expanded", "false");
+      }
+
+      // Fecha o menu mobile se estiver aberto
+      const menuMobile = document.getElementById("menuMobile");
+      const btnHamburger = document.getElementById("btnHamburger");
+      if (menuMobile && menuMobile.classList.contains("aberto")) {
+        menuMobile.classList.remove("aberto");
+        menuMobile.setAttribute("aria-hidden", "true");
+        if (btnHamburger) {
+          btnHamburger.classList.remove("ativo");
+          btnHamburger.setAttribute("aria-expanded", "false");
+        }
       }
     });
   });
