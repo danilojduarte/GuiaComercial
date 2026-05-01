@@ -5,14 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Guia Comercial Local</title>
 
+    <!-- SEO e compartilhamento social -->
+    <meta name="description" content="Guia Comercial do bairro — encontre comércios, serviços, alimentação, moda, saúde e lazer perto de você." />
+    <meta name="theme-color" content="#E1306C" />
+    <meta property="og:title" content="Guia Comercial Local" />
+    <meta property="og:description" content="Encontre os melhores estabelecimentos do seu bairro." />
+    <meta property="og:type" content="website" />
+
+    <!-- Preconnect: avisa o navegador para conectar ao CDN antecipadamente -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+
     <!-- Folha de estilos principal -->
     <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Ícones Font Awesome (Instagram, lupa, etc.) -->
+    <!-- Font Awesome — carregamento não bloqueante:
+         media="print" faz o browser baixar sem bloquear a renderização;
+         onload muda para "all" quando terminar, aplicando os estilos.
+         O <noscript> garante fallback para quem desativou JS. -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    </noscript>
   </head>
   <body>
     <!-- =============================================
@@ -357,6 +375,8 @@
             src=""
             alt=""
             class="modal-noticia-imagem"
+            width="720"
+            height="280"
           />
           <div class="modal-noticia-corpo">
             <span class="destaque-categoria" id="modalNoticiaCategoria"></span>
@@ -383,9 +403,9 @@
         </button>
 
         <div class="modal-header">
-          <img id="modalBanner" src="" alt="Capa do estabelecimento" />
+          <img id="modalBanner" src="" alt="Capa do estabelecimento" width="800" height="180" />
           <div class="modal-logo-wrapper">
-            <img id="modalLogo" src="" alt="Logo do estabelecimento" />
+            <img id="modalLogo" src="" alt="Logo do estabelecimento" width="80" height="80" />
           </div>
         </div>
 

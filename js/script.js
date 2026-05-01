@@ -13,10 +13,17 @@ const btnBuscar = document.getElementById("btnBuscar");
 // 1. CARREGAMENTO DOS DADOS
 async function carregarDadosLojistas() {
   try {
-    const resposta = await fetch("js/lojistas.json");
-    if (!resposta.ok) throw new Error("Erro ao carregar JSON");
-
-    lojistas = await resposta.json();
+    // Tenta carregar do sessionStorage primeiro (evita fetch repetido na mesma sessão)
+    const cached = sessionStorage.getItem("guia_lojistas");
+    if (cached) {
+      lojistas = JSON.parse(cached);
+    } else {
+      const resposta = await fetch("js/lojistas.json");
+      if (!resposta.ok) throw new Error("Erro ao carregar JSON");
+      lojistas = await resposta.json();
+      // Salva no cache da sessão para próximas navegações
+      try { sessionStorage.setItem("guia_lojistas", JSON.stringify(lojistas)); } catch (_) {}
+    }
 
     const apenasDestaques = lojistas.filter((l) => l.isDestaque === true);
     const vitrineFinal = apenasDestaques.sort(() => Math.random() - 0.5).slice(0, 4);
@@ -45,47 +52,66 @@ function renderizarCards(lista, comScroll = false) {
     return;
   }
 
+  // Usa DocumentFragment: monta todos os cards em memória e insere
+  // no DOM de uma só vez — evita reconstruções a cada iteração
+  const fragment = document.createDocumentFragment();
+
   lista.forEach((lojista) => {
     // Converte array de dias para string ex: "1,2,3,4,5" (padrão JS: 0=Dom...6=Sáb)
     const diasStr = Array.isArray(lojista.diasFuncionamento)
       ? lojista.diasFuncionamento.join(",")
       : "0,1,2,3,4,5,6"; // fallback: abre todos os dias
 
-    const cardHTML = `
-        <article class="card-lojista" 
-                 data-id="${lojista.id}" 
-                 data-abre="${lojista.abre}" 
-                 data-fecha="${lojista.fecha}"
-                 data-dias="${diasStr}"
-                 onclick="abrirModal(${lojista.id})">
-            <div class="card-header">
-                <img src="${lojista.imagemCapa}" alt="Capa ${lojista.nome}" class="card-banner" />
-                <span class="status-badge">Verificando...</span>
-            </div>
-            <div class="card-content">
-                <div class="logo-wrapper">
-                    <img src="${lojista.logo}" alt="Logo ${lojista.nome}" />
-                </div>
-                
-                <h3 class="lojista-nome">${lojista.nome}</h3>
-                <div class="horario-info">
-                    <i class="fa-regular fa-clock"></i>
-                    <span>${lojista.horarioTexto}</span>
-                </div>
-                <p class="endereco">
-                    <i class="fa-solid fa-location-dot"></i> ${lojista.endereco}
-                </p>
-                <p class="descricao">${lojista.descricao}</p>
-                <div class="card-footer">
-                    <span class="btn-detalhes">
-                        <i class="fa-regular fa-eye"></i> Ver detalhes
-                    </span>
-                </div>
-            </div>
-        </article>
-    `;
-    containerGrid.innerHTML += cardHTML;
+    // Cria o elemento via template — mais seguro e performático que innerHTML +=
+    const template = document.createElement("template");
+    template.innerHTML = `
+      <article class="card-lojista"
+               data-id="${lojista.id}"
+               data-abre="${lojista.abre}"
+               data-fecha="${lojista.fecha}"
+               data-dias="${diasStr}">
+        <div class="card-header">
+          <img src="${lojista.imagemCapa}"
+               alt="Capa ${lojista.nome}"
+               class="card-banner"
+               width="400" height="250"
+               loading="lazy" />
+          <span class="status-badge">Verificando...</span>
+        </div>
+        <div class="card-content">
+          <div class="logo-wrapper">
+            <img src="${lojista.logo}"
+                 alt="Logo ${lojista.nome}"
+                 width="80" height="80"
+                 loading="lazy" />
+          </div>
+          <h3 class="lojista-nome">${lojista.nome}</h3>
+          <div class="horario-info">
+            <i class="fa-regular fa-clock"></i>
+            <span>${lojista.horarioTexto}</span>
+          </div>
+          <p class="endereco">
+            <i class="fa-solid fa-location-dot"></i> ${lojista.endereco}
+          </p>
+          <p class="descricao">${lojista.descricao}</p>
+          <div class="card-footer">
+            <span class="btn-detalhes">
+              <i class="fa-regular fa-eye"></i> Ver detalhes
+            </span>
+          </div>
+        </div>
+      </article>`.trim();
+
+    const card = template.content.firstElementChild;
+
+    // Evento de clique adicionado via JS (sem onclick inline — melhor prática)
+    card.addEventListener("click", () => abrirModal(lojista.id));
+
+    fragment.appendChild(card);
   });
+
+  // Uma única inserção no DOM — muito mais eficiente
+  containerGrid.appendChild(fragment);
 
   atualizarStatusLojas();
 
@@ -307,6 +333,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // Preenche o ano atual no footer dinamicamente
   const anoAtual = document.getElementById("anoAtual");
   if (anoAtual) anoAtual.textContent = new Date().getFullYear();
+
+  // Inicializa animações após o primeiro frame pintado
+  requestAnimationFrame(() => {
+    inicializarScrollReveal();
+    inicializarContadores();
+  });
 
   // Fechar modal pelo botão X
   const btnFechar = document.getElementById("fecharModal");
@@ -569,13 +601,19 @@ function fecharModalNoticia() {
   const btn = document.getElementById("btnVoltarTopo");
   if (!btn) return;
 
-  // Exibe o botão após rolar 300px
+  // Throttle: limita o scroll a disparar no máximo 1x a cada 100ms
+  // evita processamento excessivo em scrolls rápidos
+  let scrollTimer = null;
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      btn.classList.add("visivel");
-    } else {
-      btn.classList.remove("visivel");
-    }
+    if (scrollTimer) return;
+    scrollTimer = setTimeout(() => {
+      scrollTimer = null;
+      if (window.scrollY > 300) {
+        btn.classList.add("visivel");
+      } else {
+        btn.classList.remove("visivel");
+      }
+    }, 100);
   }, { passive: true });
 
   // Clique: scroll suave até o hero (topo da página)
@@ -725,9 +763,5 @@ function inicializarContadores() {
 // Roda após o DOM estar pronto, mas aguarda
 // um frame extra para garantir que tudo foi pintado.
 
-document.addEventListener("DOMContentLoaded", () => {
-  requestAnimationFrame(() => {
-    inicializarScrollReveal();
-    inicializarContadores();
-  });
-});
+// inicializarScrollReveal e inicializarContadores são chamados
+// dentro do DOMContentLoaded principal — ver bloco acima.

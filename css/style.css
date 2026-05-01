@@ -1301,7 +1301,7 @@ a {
 @media (max-width: 900px) {
     /* Container vira trilho de scroll horizontal */
     .cards-grid {
-        flex-wrap: nowrap !important;
+        flex-wrap: nowrap;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         gap: 20px;
@@ -2031,6 +2031,11 @@ a {
   opacity: 0;
   transform: translateY(32px);
   transition: opacity 0.55s ease, transform 0.55s ease;
+  will-change: opacity, transform; /* sugere ao browser usar GPU para estas props */
+}
+
+.reveal.visivel {
+  will-change: auto; /* libera o recurso após a animação terminar */
 }
 
 .reveal.visivel {
@@ -2051,27 +2056,27 @@ a {
 
 /* Botão de busca */
 #btnBuscar {
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s !important;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
 #btnBuscar:hover  { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(225,48,108,0.4); }
 #btnBuscar:active { transform: scale(0.97); }
 
 /* Quick-cards de categoria */
 .q-card {
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s, color 0.2s !important;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s, color 0.2s;
 }
 .q-card:hover  { transform: translateY(-4px) scale(1.04); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
 .q-card:active { transform: scale(0.97); }
 
 /* Cards de lojista */
 .card-lojista {
-  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card-lojista:hover { transform: translateY(-8px); box-shadow: 0 16px 40px rgba(0,0,0,0.14); }
 
 /* Botão "Ver detalhes" dentro do card */
 .btn-detalhes {
-  transition: background 0.2s, color 0.2s, letter-spacing 0.2s !important;
+  transition: background 0.2s, color 0.2s, letter-spacing 0.2s;
 }
 .card-lojista:hover .btn-detalhes {
   letter-spacing: 0.5px;
@@ -2079,12 +2084,12 @@ a {
 
 /* Links do footer */
 .footer-links a {
-  transition: color 0.2s, padding-left 0.25s !important;
+  transition: color 0.2s, padding-left 0.25s;
 }
 
 /* Botão voltar ao topo */
 .btn-voltar-topo {
-  transition: opacity 0.3s, transform 0.3s, background 0.2s, box-shadow 0.2s !important;
+  transition: opacity 0.3s, transform 0.3s, background 0.2s, box-shadow 0.2s;
 }
 
 /* ── 4. MODAIS — entrada e saída suaves ──          */
@@ -2140,7 +2145,7 @@ a {
 
 /* ── 6. NOTÍCIA DESTAQUE — já tem fadeInDestaque, reforça ── */
 .noticia-item {
-  transition: border-color 0.25s, background 0.25s, transform 0.2s !important;
+  transition: border-color 0.25s, background 0.25s, transform 0.2s;
 }
 
 /* ── 7. NAVBAR LINKS — underline deslizante ── */
@@ -2167,7 +2172,7 @@ a {
 
 /* ── 8. IMAGEM DO CARD — zoom suave ao hover ── */
 .card-banner {
-  transition: transform 0.4s ease !important;
+  transition: transform 0.4s ease;
 }
 .card-lojista:hover .card-banner {
   transform: scale(1.06);
@@ -2175,10 +2180,10 @@ a {
 
 /* ── 9. FOOTER SOCIAL — bounce ao hover ── */
 .social-link {
-  transition: background 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), color 0.2s !important;
+  transition: background 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1), color 0.2s;
 }
 .social-link:hover {
-  transform: translateY(-4px) scale(1.12) !important;
+  transform: translateY(-4px) scale(1.12);
 }
 
 /* ── 10. BADGE ABERTO/FECHADO — pulso sutil no "Aberto Agora" ── */
