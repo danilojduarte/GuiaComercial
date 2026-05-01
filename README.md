@@ -10,7 +10,7 @@
 
 | Desktop | Mobile |
 |--------|--------|
-| ![Preview Desktop](img/desktop.png) | ![Preview Mobile](img/mobile.png) |
+| ![Preview Desktop](img/Desktop_001.png) | ![Preview Mobile](img/Mobile_001.png)
 
 ---
 
