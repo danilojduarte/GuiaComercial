@@ -569,3 +569,146 @@ function fecharModalNoticia() {
     }
   });
 })();
+
+/* ==============================================
+   ANIMAÇÕES — Guia Comercial
+   ============================================== */
+
+// ── 1. SCROLL REVEAL ──
+// Usa IntersectionObserver para detectar quando elementos
+// entram na viewport e aplica a classe .visivel neles.
+
+function inicializarScrollReveal() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visivel");
+          // Para de observar após revelar (animação roda só 1x)
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12,   // 12% do elemento visível já dispara
+      rootMargin: "0px 0px -40px 0px", // margem extra no fundo
+    }
+  );
+
+  // Adiciona .reveal nos títulos das seções para animar a linha
+  document.querySelectorAll(".section-title").forEach((el) => {
+    observer.observe(el);
+  });
+
+  // Adiciona .reveal nos subtítulos das seções
+  document.querySelectorAll(".section-subtitle").forEach((el) => {
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+
+  // Cards de lojista — revelados em grupo com delay escalonado
+  function observarCards() {
+    const grid = document.getElementById("cardsGrid");
+    if (!grid) return;
+
+    grid.classList.add("reveal-group");
+    grid.querySelectorAll(".card-lojista").forEach((card) => {
+      card.classList.add("reveal");
+      observer.observe(card);
+    });
+  }
+
+  // Observa o grid ao carregar e também após cada renderização
+  observarCards();
+
+  // MutationObserver: re-aplica reveal sempre que novos cards forem renderizados
+  const gridEl = document.getElementById("cardsGrid");
+  if (gridEl) {
+    const mutationObs = new MutationObserver(() => {
+      gridEl.classList.add("reveal-group");
+      gridEl.querySelectorAll(".card-lojista:not(.reveal)").forEach((card) => {
+        card.classList.add("reveal");
+        observer.observe(card);
+      });
+    });
+    mutationObs.observe(gridEl, { childList: true });
+  }
+
+  // Itens de notícia
+  document.querySelectorAll(".noticia-item").forEach((el) => {
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+
+  // Painel destaque de notícia
+  const destaque = document.getElementById("noticiaDestaque");
+  if (destaque) {
+    destaque.classList.add("reveal");
+    observer.observe(destaque);
+  }
+
+  // Colunas do footer
+  document.querySelectorAll(".footer-col").forEach((el) => {
+    el.classList.add("reveal");
+    observer.observe(el);
+  });
+
+  // Linha de copyright do footer
+  const footerBottom = document.querySelector(".footer-bottom");
+  if (footerBottom) {
+    footerBottom.classList.add("reveal");
+    observer.observe(footerBottom);
+  }
+}
+
+// ── 2. CONTADOR ANIMADO ──
+// Anima qualquer elemento com data-contador="número"
+// Ex: <span data-contador="150">0</span>
+// Conta do 0 até o valor alvo com easing suave.
+
+function animarContador(el) {
+  const alvo = parseInt(el.getAttribute("data-contador"), 10);
+  const duracao = 1800; // ms
+  const inicio = performance.now();
+
+  function tick(agora) {
+    const progresso = Math.min((agora - inicio) / duracao, 1);
+    // Easing: easeOutQuart — começa rápido, termina devagar
+    const ease = 1 - Math.pow(1 - progresso, 4);
+    el.textContent = Math.floor(ease * alvo).toLocaleString("pt-BR");
+    if (progresso < 1) requestAnimationFrame(tick);
+    else el.textContent = alvo.toLocaleString("pt-BR");
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function inicializarContadores() {
+  const contadores = document.querySelectorAll("[data-contador]");
+  if (contadores.length === 0) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animarContador(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.5 }
+  );
+
+  contadores.forEach((el) => observer.observe(el));
+}
+
+// ── INICIALIZAÇÃO ──
+// Roda após o DOM estar pronto, mas aguarda
+// um frame extra para garantir que tudo foi pintado.
+
+document.addEventListener("DOMContentLoaded", () => {
+  requestAnimationFrame(() => {
+    inicializarScrollReveal();
+    inicializarContadores();
+  });
+});
