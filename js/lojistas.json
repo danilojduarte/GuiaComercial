@@ -362,5 +362,23 @@
         "diasFuncionamento": [
             0, 1, 2, 3, 4, 5, 6
             ]
+    },
+    {
+        "id": 21,
+        "nome": "Pizzaria Puro Sabor",
+        "isDestaque": false,
+        "categoria": "Alimentação",
+        "abre": "18:00",
+        "fecha": "23:40",
+        "horarioTexto": "Seg a Sab: 07:00 - 21:00",
+        "endereco": "Av. da Academia, 550",
+        "descricao": "Massa tradicional, ingredientes frescos e o nosso tempero secreto!",
+        "keywords": "pizza, pizzaria, massa, massas, calzone, borda recheada, fatia, brotinho, cachorro quente",
+        "imagemCapa": "https://picsum.photos/400/250?random=20",
+        "logo": "https://picsum.photos/80/80?random=30",
+        "linkInsta": "#", "linkWhats": "#", "linkMaps": "#",
+        "diasFuncionamento": [
+            0, 2, 3, 4, 5, 6
+            ]
     }
 ]
