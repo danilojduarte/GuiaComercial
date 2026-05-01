@@ -1495,31 +1495,37 @@ a {
 .modal-nao-encontrado {
   background: #ffffff;
   border-radius: 20px;
-  padding: 40px 32px 32px;
-  max-width: 480px;
-  width: 90%;
+  padding: 48px 20px 28px; /* topo alto: espaço para o btn X */
+  max-width: 440px;
+  width: 92%;
+  max-height: 88vh;
+  overflow-y: auto;
   position: relative;
   text-align: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
   animation: abrirModalAnim 0.3s ease-out;
+  box-sizing: border-box;
 }
 
+/* Botão X — sempre fixo no canto, nunca some */
 .btn-fechar-nao-encontrado {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  background: rgba(0, 0, 0, 0.08);
+  top: 12px;
+  right: 12px;
+  background: rgba(0,0,0,0.07);
   color: #555;
   border: none;
-  width: 34px;
-  height: 34px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;   /* nunca encolhe */
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background 0.2s, color 0.2s;
+  z-index: 5;
   line-height: 1;
 }
 
@@ -1528,69 +1534,88 @@ a {
   color: #fff;
 }
 
+/* Ícone lupa — tamanho controlado */
 .nao-encontrado-icone {
-  font-size: 3.5rem;
-  margin-bottom: 12px;
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  line-height: 1;
   animation: pulseIcon 1.5s ease infinite;
 }
 
 @keyframes pulseIcon {
   0%, 100% { transform: scale(1); }
-  50%       { transform: scale(1.12); }
+  50%       { transform: scale(1.1); }
 }
 
+/* Título */
 .nao-encontrado-titulo {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #2c3e50;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  line-height: 1.3;
 }
 
+/* Texto — palavra longa não vaza */
 .nao-encontrado-texto {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: #555;
   line-height: 1.6;
   margin-bottom: 16px;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
+/* Badge verde — linha única, texto fixo sem o termo buscado */
 .nao-encontrado-info {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   background: #eafaf1;
   color: #27ae60;
   border: 1px solid #a9dfbf;
   border-radius: 50px;
-  padding: 8px 18px;
-  font-size: 0.88rem;
+  padding: 9px 18px;
+  font-size: 0.84rem;
   font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  max-width: 100%;          /* nunca ultrapassa o modal */
+  box-sizing: border-box;
 }
 
+.nao-encontrado-info span {
+  white-space: nowrap;      /* texto do badge sempre em uma linha */
+}
+
+/* Subtítulo das sugestões */
 .nao-encontrado-sugestao-titulo {
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   color: #888;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
+/* Grid de tags de sugestão */
 .sugestoes-wrap {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
+/* Tag individual — nunca quebra em duas linhas */
 .sugestao-tag {
   background: #f4f4f4;
   color: #444;
   border: 1px solid #ddd;
   border-radius: 50px;
-  padding: 7px 16px;
-  font-size: 0.85rem;
+  padding: 7px 14px;
+  font-size: 0.82rem;
   cursor: pointer;
   font-family: inherit;
+  white-space: nowrap;
   transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
 }
 
@@ -1601,29 +1626,88 @@ a {
   transform: translateY(-2px);
 }
 
+/* Botão principal de voltar */
 .btn-voltar-principal {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: var(--cor-primaria);
   color: #fff;
   border: none;
   border-radius: 50px;
-  padding: 12px 28px;
-  font-size: 0.95rem;
+  padding: 13px 24px;
+  font-size: 0.9rem;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(225, 48, 108, 0.3);
   width: 100%;
-  justify-content: center;
+  box-sizing: border-box;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(225,48,108,0.3);
 }
 
 .btn-voltar-principal:hover {
   background: var(--cor-primaria-escura);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(225, 48, 108, 0.4);
+  box-shadow: 0 6px 18px rgba(225,48,108,0.4);
+}
+
+/* ── Telas muito pequenas (< 400px) ── */
+@media (max-width: 400px) {
+  .modal-nao-encontrado {
+    width: 96%;
+    padding: 44px 14px 24px;
+    border-radius: 16px;
+  }
+
+  .nao-encontrado-icone  { font-size: 2rem; }
+  .nao-encontrado-titulo { font-size: 1.1rem; }
+  .nao-encontrado-texto  { font-size: 0.82rem; }
+
+  .nao-encontrado-info {
+    font-size: 0.78rem;
+    padding: 8px 14px;
+  }
+
+  .sugestao-tag {
+    font-size: 0.78rem;
+    padding: 6px 11px;
+  }
+
+  .btn-voltar-principal {
+    font-size: 0.86rem;
+    padding: 12px 18px;
+  }
+}
+
+/* ── Responsividade específica do modal não encontrado ── */
+@media (max-width: 400px) {
+  .modal-nao-encontrado {
+    padding: 40px 18px 24px;
+    width: 96%;
+    border-radius: 16px;
+  }
+
+  .nao-encontrado-icone  { font-size: 2.2rem; }
+  .nao-encontrado-titulo { font-size: 1.15rem; }
+  .nao-encontrado-texto  { font-size: 0.85rem; }
+
+  .nao-encontrado-info {
+    font-size: 0.78rem;
+    padding: 8px 12px;
+    border-radius: 10px;
+  }
+
+  .sugestao-tag {
+    font-size: 0.78rem;
+    padding: 6px 11px;
+  }
+
+  .btn-voltar-principal {
+    font-size: 0.88rem;
+    padding: 12px 20px;
+  }
 }
 
 /* ==============================================

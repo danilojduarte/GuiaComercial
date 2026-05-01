@@ -212,25 +212,44 @@ function abrirModalNaoEncontrado(termoBuscado) {
     .map(s => `<button class="sugestao-tag" onclick="buscarSugestao('${s}')">${s}</button>`)
     .join("");
 
+  // Trunca o termo se for muito longo para não quebrar o layout
+  const termoExibido = termoBuscado.length > 20
+    ? termoBuscado.substring(0, 20) + "..."
+    : termoBuscado;
+
   const modalHTML = `
     <div class="modal-overlay" id="modalNaoEncontrado" style="display:flex;" aria-modal="true" role="dialog">
       <div class="modal-nao-encontrado">
+
         <button class="btn-fechar-nao-encontrado" id="fecharNaoEncontrado" aria-label="Fechar">&times;</button>
+
+        <!-- Ícone -->
         <div class="nao-encontrado-icone">🔍</div>
+
+        <!-- Título -->
         <h2 class="nao-encontrado-titulo">Ops! Nada encontrado</h2>
+
+        <!-- Texto explicativo — sem o termo para não quebrar o layout -->
         <p class="nao-encontrado-texto">
-          Não encontramos nenhum resultado para <strong>"${termoBuscado}"</strong>.<br><br>
-          Mas não se preocupe — já anotamos essa sugestão e nossa equipe será notificada para buscar esse tipo de comércio para você!
+          Não encontramos resultados para <strong>"${termoExibido}"</strong>.
+          Mas não se preocupe — nossa equipe será notificada para buscar esse tipo de comércio para você!
         </p>
+
+        <!-- Badge verde simplificado — só ícone + texto fixo, sem o termo -->
         <div class="nao-encontrado-info">
           <i class="fa-solid fa-circle-check"></i>
-          Sugestão "<strong>${termoBuscado}</strong>" enviada ao suporte!
+          <span>Sugestão enviada ao suporte!</span>
         </div>
-        <p class="nao-encontrado-sugestao-titulo">Que tal tentar uma dessas buscas?</p>
+
+        <!-- Sugestões de busca -->
+        <p class="nao-encontrado-sugestao-titulo">Que tal tentar uma dessas?</p>
         <div class="sugestoes-wrap">${sugestoesHTML}</div>
+
+        <!-- Botão de voltar -->
         <button class="btn-voltar-principal" id="btnVoltarPrincipal">
-          <i class="fa-solid fa-arrow-left"></i> Voltar à tela principal
+          <i class="fa-solid fa-arrow-left"></i> Voltar ao início
         </button>
+
       </div>
     </div>
   `;
