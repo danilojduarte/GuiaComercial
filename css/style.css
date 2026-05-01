@@ -522,9 +522,10 @@ a {
 }
 
 .section-subtitle {
-    text-align: center;
+    text-align: left;
     color: #777;
     margin-bottom: 60px;
+    text-transform: capitalize;
 }
 
 /* GRID RESPONSIVO: Ajusta colunas automaticamente conforme o tamanho da tela */
