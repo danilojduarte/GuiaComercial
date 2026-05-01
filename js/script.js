@@ -172,6 +172,7 @@ function abrirModal(id) {
 
   const foneLimpo = lojista.linkWhats.replace(/\D/g, "");
   document.getElementById("linkWhatsModal").href = `https://wa.me/55${foneLimpo}`;
+  document.getElementById("linkInstaModal").href = lojista.linkInsta;
   document.getElementById("linkMapsModal").href = lojista.linkMaps;
 
   const modal = document.getElementById("modalDetalhes");
