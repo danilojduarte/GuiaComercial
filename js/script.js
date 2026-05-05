@@ -10,6 +10,37 @@ const containerGrid = document.getElementById("cardsGrid");
 const campoBusca = document.getElementById("campoBusca");
 const btnBuscar = document.getElementById("btnBuscar");
 
+/* ==============================================
+   OTIMIZADOR DE IMAGENS — Cloudinary
+   Detecta se a URL é do Cloudinary e injeta
+   parâmetros automáticos de tamanho, qualidade
+   e formato. URLs externas passam sem alteração.
+
+   Perfis disponíveis:
+   - "capa"  → 400×250px  — imagem do card
+   - "logo"  → 80×80px    — logo circular do card
+   - "banner"→ 800×300px  — banner do modal de detalhes
+   - "noticia"→ 800×400px — imagem da notícia
+   ============================================== */
+function otimizarImagem(url, perfil = "capa") {
+  if (!url || !url.includes("cloudinary.com")) return url;
+
+  // Parâmetros por perfil: largura, altura, qualidade, crop
+  const perfis = {
+    capa:    "w_400,h_250,c_fill,q_auto,f_auto",
+    logo:    "w_80,h_80,c_fill,q_auto,f_auto,r_max",
+    banner:  "w_800,h_300,c_fill,q_auto,f_auto",
+    noticia: "w_800,h_400,c_fill,q_auto,f_auto",
+  };
+
+  const params = perfis[perfil] || perfis.capa;
+
+  // Insere os parâmetros após "/upload/" na URL do Cloudinary
+  // Ex: https://res.cloudinary.com/demo/image/upload/sample.jpg
+  //  →  https://res.cloudinary.com/demo/image/upload/w_400,h_250,c_fill,q_auto,f_auto/sample.jpg
+  return url.replace("/upload/", `/upload/${params}/`);
+}
+
 // 1. CARREGAMENTO DOS DADOS
 async function carregarDadosLojistas() {
   try {
@@ -77,7 +108,7 @@ function renderizarCards(lista, comScroll = false) {
                data-fecha="${lojista.fecha}"
                data-dias="${diasStr}">
         <div class="card-header">
-          <img src="${lojista.imagemCapa}"
+          <img src="${otimizarImagem(lojista.imagemCapa, 'capa')}"
                alt="Capa ${lojista.nome}"
                class="card-banner"
                width="400" height="250"
@@ -86,7 +117,7 @@ function renderizarCards(lista, comScroll = false) {
         </div>
         <div class="card-content">
           <div class="logo-wrapper">
-            <img src="${lojista.logo}"
+            <img src="${otimizarImagem(lojista.logo, 'logo')}"
                  alt="Logo ${lojista.nome}"
                  width="80" height="80"
                  loading="lazy" />
@@ -169,8 +200,8 @@ function abrirModal(id) {
   if (!lojista) return;
 
   document.getElementById("modalNome").textContent = lojista.nome;
-  document.getElementById("modalBanner").src = lojista.imagemCapa;
-  document.getElementById("modalLogo").src = lojista.logo;
+  document.getElementById("modalBanner").src = otimizarImagem(lojista.imagemCapa, "banner");
+  document.getElementById("modalLogo").src = otimizarImagem(lojista.logo, "logo");
   document.getElementById("modalCategoria").textContent = lojista.categoria;
   document.getElementById("modalHorario").textContent = lojista.horarioTexto;
   document.getElementById("modalEndereco").textContent = lojista.endereco;
@@ -492,7 +523,7 @@ function inicializarNoticias() {
     item.dataset.id = noticia.id;
 
     item.innerHTML = `
-      <img src="${noticia.imagem}" alt="${noticia.titulo}" loading="lazy" />
+      <img src="${otimizarImagem(noticia.imagem, 'capa')}" alt="${noticia.titulo}" loading="lazy" />
       <div class="noticia-item-info">
         <span class="noticia-item-categoria">${noticia.categoria}</span>
         <span class="noticia-item-titulo">${noticia.titulo}</span>
@@ -552,7 +583,7 @@ function selecionarNoticia(id) {
   noticiaAtiva = noticia;
 
   // Atualiza o painel de destaque
-  document.getElementById("destaqueImagem").src = noticia.imagem;
+  document.getElementById("destaqueImagem").src = otimizarImagem(noticia.imagem, "noticia");
   document.getElementById("destaqueImagem").alt = noticia.titulo;
   document.getElementById("destaqueCategoria").textContent = noticia.categoria;
   document.getElementById("destaqueTitulo").textContent = noticia.titulo;
@@ -576,7 +607,7 @@ function abrirModalNoticia(id) {
   const noticia = dados.find((n) => n.id === id);
   if (!noticia) return;
 
-  document.getElementById("modalNoticiaImagem").src = noticia.imagem;
+  document.getElementById("modalNoticiaImagem").src = otimizarImagem(noticia.imagem, "noticia");
   document.getElementById("modalNoticiaImagem").alt = noticia.titulo;
   document.getElementById("modalNoticiaCategoria").textContent = noticia.categoria;
   document.getElementById("modalNoticiaTitulo").textContent = noticia.titulo;
@@ -840,25 +871,24 @@ function filtrarPorProximidade(lat, lng) {
   // Exibe o botão "Mostrar todos"
   if (areaFiltros) areaFiltros.style.display = "block";
 
-  // Injeta o badge de distância em cada card após renderizar
+  // Injeta o badge de distância dentro do card-footer, abaixo do botão "Ver detalhes"
   requestAnimationFrame(() => {
     document.querySelectorAll(".card-lojista").forEach((card) => {
       const id = parseInt(card.dataset.id);
       const lojista = proximos.find((l) => l.id === id);
       if (!lojista) return;
 
-      const cardContent = card.querySelector(".card-content");
-      if (!cardContent) return;
+      // Remove badge anterior se existir (evita duplicatas)
+      card.querySelectorAll(".distancia-badge").forEach(b => b.remove());
 
-      // Remove badge anterior se existir
-      const badgeExistente = cardContent.querySelector(".distancia-badge");
-      if (badgeExistente) badgeExistente.remove();
+      // Insere dentro do .card-footer, após o botão "Ver detalhes"
+      const cardFooter = card.querySelector(".card-footer");
+      if (!cardFooter) return;
 
-      // Cria e insere o badge de distância
       const badge = document.createElement("span");
       badge.className = "distancia-badge";
       badge.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${formatarDistancia(lojista.distanciaKm)} de você`;
-      cardContent.appendChild(badge);
+      cardFooter.appendChild(badge);
     });
   });
 

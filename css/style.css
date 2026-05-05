@@ -703,12 +703,13 @@ a {
 /* BOTÕES DE AÇÃO */
 .card-footer {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    flex-direction: column;  /* badge embaixo do botão, sem amassar */
+    align-items: center;
+    gap: 10px;
     border-top: 1px solid #f1f1f1;
     padding-top: 15px;
     width: 100%;
-    margin-top: auto; /* Isso cria um espaço flexível que empurra o botão para a base */
+    margin-top: auto;
 }
 
 .btn-social {
@@ -944,7 +945,6 @@ a {
 .btn-acao:active { transform: scale(0.98); }
 
 .btn-acao.whats { background: #25D366; color: white; }
-.btn-acao.insta { background: #833AB4; color: white; }
 .btn-acao.maps { background: #4285F4; color: white; }
 
  
@@ -2268,16 +2268,23 @@ a {
 .distancia-badge {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  background: rgba(225, 48, 108, 0.1);
+  gap: 5px;
+  background: #fff;
   color: var(--cor-primaria);
-  border: 1px solid rgba(225, 48, 108, 0.25);
+  border: 1.5px solid rgba(225, 48, 108, 0.3);
   border-radius: 50px;
-  padding: 3px 10px;
+  padding: 5px 12px;
   font-size: 0.78rem;
-  font-weight: 600;
-  margin-top: 6px;
+  font-weight: 700;
   width: fit-content;
+  box-shadow: 0 2px 8px rgba(225, 48, 108, 0.12);
+  animation: heroEntrada 0.4s ease both; /* aparece suavemente */
+  letter-spacing: 0.2px;
+}
+
+.distancia-badge i {
+  font-size: 0.72rem;
+  opacity: 0.85;
 }
 
 /* Responsivo — botão menor no mobile */
