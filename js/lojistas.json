@@ -29,20 +29,20 @@
     },
     {
         "id": 2,
-        "nome": "Farmácia Preço Baixo",
+        "nome": "Unifarma Jardins",
         "isDestaque": true,
         "categoria": "Saúde",
         "abre": "07:30",
-        "fecha": "22:00",
-        "horarioTexto": "Seg a Sáb: 07:30 - 22:00",
-        "endereco": "Rua das Flores, 45",
+        "fecha": "23:00",
+        "horarioTexto": "Seg a Dom: 07:30 - 23:00",
+        "endereco": "Avenida Cidade das Flores, 117",
         "descricao": "Sua saúde em boas mãos com os melhores preços em medicamentos e perfumaria.",
         "keywords": "remedio, soro, dipirona, pressão, farmacia, saude, dor, curativo, higiene",
         "imagemCapa": "https://picsum.photos/400/250?random=2",
         "logo": "https://picsum.photos/80/80?random=12",
-        "linkInsta": "#",
+        "linkInsta": "https://www.instagram.com/redeunifarma/",
         "linkWhats": "#",
-        "linkMaps": "#",
+        "linkMaps": "https://wa.me/558488607957?text=Olá!%20Gostaria%20de%20cadastrar%20meu%20negócio%20no%20Guia%20Comercial.",
         "diasFuncionamento": [
             0,
             1,
@@ -52,8 +52,8 @@
             5,
             6
         ],
-        "latitude": -5.7935,
-        "longitude": -35.3312
+        "latitude": -5.74867,
+        "longitude": -35.30726
     },
     {
         "id": 3,
