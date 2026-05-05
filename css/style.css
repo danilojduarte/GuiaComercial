@@ -522,10 +522,9 @@ a {
 }
 
 .section-subtitle {
-    text-align: left;
+    text-align: center;
     color: #777;
     margin-bottom: 60px;
-    text-transform: capitalize;
 }
 
 /* GRID RESPONSIVO: Ajusta colunas automaticamente conforme o tamanho da tela */
@@ -945,7 +944,6 @@ a {
 .btn-acao:active { transform: scale(0.98); }
 
 .btn-acao.whats { background: #25D366; color: white; }
-.btn-acao.insta { background: #833AB4; color: white; }
 .btn-acao.maps { background: #4285F4; color: white; }
 
  
@@ -2204,5 +2202,87 @@ a {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ==============================================
+   BOTÃO DE LOCALIZAÇÃO — Hero Section
+   ============================================== */
+
+.btn-localizacao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50px;
+  padding: 12px 26px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  margin-bottom: 20px;
+  backdrop-filter: blur(6px);
+  transition: background 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+}
+
+.btn-localizacao:hover {
+  background: rgba(255, 255, 255, 0.28);
+  border-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.btn-localizacao:active {
+  transform: scale(0.97);
+}
+
+/* Estado: buscando localização */
+.btn-localizacao.buscando {
+  opacity: 0.75;
+  cursor: wait;
+  pointer-events: none;
+}
+
+.btn-localizacao.buscando i {
+  animation: spinIcon 1s linear infinite;
+}
+
+@keyframes spinIcon {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Estado: localização ativa — destaque em verde */
+.btn-localizacao.ativo {
+  background: rgba(39, 174, 96, 0.25);
+  border-color: #2ecc71;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(39,174,96,0.25);
+}
+
+/* Badge de distância nos cards */
+.distancia-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(225, 48, 108, 0.1);
+  color: var(--cor-primaria);
+  border: 1px solid rgba(225, 48, 108, 0.25);
+  border-radius: 50px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-top: 6px;
+  width: fit-content;
+}
+
+/* Responsivo — botão menor no mobile */
+@media (max-width: 500px) {
+  .btn-localizacao {
+    padding: 10px 20px;
+    font-size: 0.88rem;
   }
 }

@@ -172,8 +172,11 @@ function abrirModal(id) {
 
   const foneLimpo = lojista.linkWhats.replace(/\D/g, "");
   document.getElementById("linkWhatsModal").href = `https://wa.me/55${foneLimpo}`;
-  document.getElementById("linkInstaModal").href = lojista.linkInsta;
   document.getElementById("linkMapsModal").href = lojista.linkMaps;
+
+  // Instagram — adicionado no modal pelo usuário
+  const linkInsta = document.getElementById("linkInstaModal");
+  if (linkInsta) linkInsta.href = lojista.linkInsta || "#";
 
   const modal = document.getElementById("modalDetalhes");
   modal.style.display = "flex";
@@ -766,3 +769,199 @@ function inicializarContadores() {
 
 // inicializarScrollReveal e inicializarContadores são chamados
 // dentro do DOMContentLoaded principal — ver bloco acima.
+
+/* ==============================================
+   MÓDULO DE GEOLOCALIZAÇÃO
+   Usa a Geolocation API nativa do navegador.
+   Ao clicar no botão, pede permissão, calcula a
+   distância até cada lojista (fórmula de Haversine)
+   e exibe apenas os que estão dentro do raio definido.
+   ============================================== */
+
+// Raio padrão de busca em km — ajuste conforme necessário
+const RAIO_KM = 3;
+
+// Guarda a localização atual do usuário para uso posterior
+let localizacaoUsuario = null;
+
+/**
+ * Fórmula de Haversine — calcula a distância em km
+ * entre dois pontos geográficos (lat/lng).
+ */
+function calcularDistanciaKm(lat1, lng1, lat2, lng2) {
+  const R = 6371; // Raio da Terra em km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+/**
+ * Formata a distância para exibição amigável:
+ * abaixo de 1km mostra em metros, acima mostra em km.
+ */
+function formatarDistancia(km) {
+  if (km < 1) return `${Math.round(km * 1000)}m`;
+  return `${km.toFixed(1)}km`;
+}
+
+/**
+ * Filtra os lojistas dentro do raio e os ordena
+ * do mais próximo ao mais distante.
+ * Também injeta o badge de distância em cada card após renderizar.
+ */
+function filtrarPorProximidade(lat, lng) {
+  const areaFiltros = document.getElementById("area-filtros");
+
+  // Calcula distância e filtra pelo raio
+  const proximos = lojistas
+    .filter((l) => l.latitude && l.longitude)
+    .map((l) => ({
+      ...l,
+      distanciaKm: calcularDistanciaKm(lat, lng, l.latitude, l.longitude),
+    }))
+    .filter((l) => l.distanciaKm <= RAIO_KM)
+    .sort((a, b) => a.distanciaKm - b.distanciaKm);
+
+  // Renderiza os cards com scroll automático
+  renderizarCards(proximos, true);
+
+  // Exibe o botão "Mostrar todos"
+  if (areaFiltros) areaFiltros.style.display = "block";
+
+  // Injeta o badge de distância em cada card após renderizar
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".card-lojista").forEach((card) => {
+      const id = parseInt(card.dataset.id);
+      const lojista = proximos.find((l) => l.id === id);
+      if (!lojista) return;
+
+      const cardContent = card.querySelector(".card-content");
+      if (!cardContent) return;
+
+      // Remove badge anterior se existir
+      const badgeExistente = cardContent.querySelector(".distancia-badge");
+      if (badgeExistente) badgeExistente.remove();
+
+      // Cria e insere o badge de distância
+      const badge = document.createElement("span");
+      badge.className = "distancia-badge";
+      badge.innerHTML = `<i class="fa-solid fa-location-dot"></i> ${formatarDistancia(lojista.distanciaKm)} de você`;
+      cardContent.appendChild(badge);
+    });
+  });
+
+  // Mensagem quando nenhum lojista for encontrado no raio
+  if (proximos.length === 0) {
+    const grid = document.getElementById("cardsGrid");
+    if (grid) {
+      grid.innerHTML = `
+        <div style="grid-column:1/-1; text-align:center; padding:40px; color:#666;">
+          <i class="fa-solid fa-location-dot" style="font-size:2rem; color:var(--cor-primaria); margin-bottom:12px; display:block;"></i>
+          <strong>Nenhum lojista encontrado</strong> em um raio de ${RAIO_KM}km.<br>
+          <span style="font-size:0.9rem; color:#999;">Tente ampliar a busca ou use os filtros de categoria.</span>
+        </div>`;
+    }
+  }
+}
+
+/**
+ * Inicializa o botão de localização.
+ * Ao clicar: pede permissão → mostra loading → filtra → atualiza botão.
+ */
+function inicializarGeolocalizacao() {
+  const btn = document.getElementById("btnLocalizacao");
+  const btnTexto = document.getElementById("btnLocalizacaoTexto");
+  const btnLimpar = document.getElementById("btnLimparBusca");
+  if (!btn) return;
+
+  // Verifica se o navegador suporta geolocalização
+  if (!navigator.geolocation) {
+    btn.style.display = "none";
+    return;
+  }
+
+  btn.addEventListener("click", () => {
+    // Se já está ativo, desativa e volta aos destaques
+    if (btn.classList.contains("ativo")) {
+      btn.classList.remove("ativo");
+      btn.querySelector("i").className = "fa-solid fa-location-crosshairs";
+      btnTexto.textContent = "Lojistas perto de mim";
+      localizacaoUsuario = null;
+
+      // Remove badges de distância e restaura destaques
+      document.querySelectorAll(".distancia-badge").forEach(b => b.remove());
+      const apenasDestaques = lojistas.filter((l) => l.isDestaque);
+      renderizarCards(apenasDestaques);
+      const areaFiltros = document.getElementById("area-filtros");
+      if (areaFiltros) areaFiltros.style.display = "none";
+      return;
+    }
+
+    // Estado: buscando
+    btn.classList.add("buscando");
+    btn.querySelector("i").className = "fa-solid fa-spinner";
+    btnTexto.textContent = "Obtendo localização...";
+
+    navigator.geolocation.getCurrentPosition(
+      // Sucesso
+      (posicao) => {
+        const { latitude, longitude } = posicao.coords;
+        localizacaoUsuario = { latitude, longitude };
+
+        // Atualiza botão para estado ativo
+        btn.classList.remove("buscando");
+        btn.classList.add("ativo");
+        btn.querySelector("i").className = "fa-solid fa-location-dot";
+        btnTexto.textContent = `Próximos (raio ${RAIO_KM}km)`;
+
+        // Filtra os lojistas
+        filtrarPorProximidade(latitude, longitude);
+
+        // Garante que o botão "Mostrar todos" também limpa a geolocalização
+        if (btnLimpar) {
+          btnLimpar.onclick = () => {
+            btn.classList.remove("ativo");
+            btn.querySelector("i").className = "fa-solid fa-location-crosshairs";
+            btnTexto.textContent = "Lojistas perto de mim";
+            localizacaoUsuario = null;
+            document.querySelectorAll(".distancia-badge").forEach(b => b.remove());
+            const apenasDestaques = lojistas.filter((l) => l.isDestaque);
+            renderizarCards(apenasDestaques);
+            const areaFiltros = document.getElementById("area-filtros");
+            if (areaFiltros) areaFiltros.style.display = "none";
+          };
+        }
+      },
+      // Erro
+      (erro) => {
+        btn.classList.remove("buscando");
+        btn.querySelector("i").className = "fa-solid fa-location-crosshairs";
+        btnTexto.textContent = "Lojistas perto de mim";
+
+        const msgs = {
+          1: "Permissão de localização negada. Habilite nas configurações do navegador.",
+          2: "Não foi possível obter sua localização. Tente novamente.",
+          3: "Tempo esgotado. Tente novamente.",
+        };
+        alert(msgs[erro.code] || "Erro ao obter localização.");
+      },
+      // Opções
+      {
+        enableHighAccuracy: true,  // Usa GPS quando disponível
+        timeout: 10000,            // Máximo 10s de espera
+        maximumAge: 60000,         // Aceita localização cacheada por até 1 minuto
+      }
+    );
+  });
+}
+
+// Chama a inicialização dentro do DOMContentLoaded existente
+document.addEventListener("DOMContentLoaded", () => {
+  inicializarGeolocalizacao();
+});
