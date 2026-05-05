@@ -945,6 +945,7 @@ a {
 .btn-acao:active { transform: scale(0.98); }
 
 .btn-acao.whats { background: #25D366; color: white; }
+.btn-acao.insta { background: #833AB4; color: white; }
 .btn-acao.maps { background: #4285F4; color: white; }
 
  
