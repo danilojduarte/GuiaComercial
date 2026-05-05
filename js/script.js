@@ -36,10 +36,16 @@ async function carregarDadosLojistas() {
 
 // SCROLL SUAVE ATÉ A SEÇÃO DE CARDS
 function scrollParaCards() {
-  const secaoDestaques = document.querySelector(".destaques");
-  if (secaoDestaques) {
-    secaoDestaques.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  const grid = document.getElementById("cardsGrid");
+  if (!grid) return;
+
+  // Calcula a posição do grid descontando a altura da navbar fixa (80px)
+  // para o primeiro card não ficar escondido atrás dela
+  const navbar = document.querySelector(".navbar");
+  const alturaNavbar = navbar ? navbar.offsetHeight : 70;
+  const topo = grid.getBoundingClientRect().top + window.scrollY - alturaNavbar - 16;
+
+  window.scrollTo({ top: topo, behavior: "smooth" });
 }
 
 // 2. RENDERIZAÇÃO DOS CARDS
