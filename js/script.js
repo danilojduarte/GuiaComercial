@@ -73,8 +73,8 @@ function scrollParaCards() {
   // Calcula a posição do grid descontando a altura da navbar fixa (80px)
   // para o primeiro card não ficar escondido atrás dela
   const navbar = document.querySelector(".navbar");
-  const alturaNavbar = navbar ? navbar.offsetHeight : 70;
-  const topo = grid.getBoundingClientRect().top + window.scrollY - alturaNavbar - 16;
+  const alturaNavbar = navbar ? navbar.offsetHeight : 50;
+  const topo = grid.getBoundingClientRect().top + window.scrollY - alturaNavbar - 18;
 
   window.scrollTo({ top: topo, behavior: "smooth" });
 }
