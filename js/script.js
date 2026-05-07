@@ -73,8 +73,8 @@ function scrollParaCards() {
   // Calcula a posição do grid descontando a altura da navbar fixa (80px)
   // para o primeiro card não ficar escondido atrás dela
   const navbar = document.querySelector(".navbar");
-  const alturaNavbar = navbar ? navbar.offsetHeight : 50;
-  const topo = grid.getBoundingClientRect().top + window.scrollY - alturaNavbar - 18;
+  const alturaNavbar = navbar ? navbar.offsetHeight : 70;
+  const topo = grid.getBoundingClientRect().top + window.scrollY - alturaNavbar - 16;
 
   window.scrollTo({ top: topo, behavior: "smooth" });
 }
@@ -1000,4 +1000,162 @@ function inicializarGeolocalizacao() {
 // Chama a inicialização dentro do DOMContentLoaded existente
 document.addEventListener("DOMContentLoaded", () => {
   inicializarGeolocalizacao();
+});
+
+/* ==============================================
+   MÓDULO DE ENCARTES — Carrossel Coverflow
+   - Expansão automática a cada 4s
+   - Pausa ao hover/touch
+   - Navegação por clique nas colunas e bolinhas
+   - Abre modal do lojista ao clicar em "Ver lojista"
+   ============================================== */
+
+function inicializarEncartes() {
+  const container = document.getElementById("encartesCarrossel");
+  const dotsContainer = document.getElementById("encartesDots");
+  const dados = window.encartes || [];
+  if (!container || dados.length === 0) return;
+
+  let ativoIndex = 0;
+  let intervalo = null;
+  let pausado = false;
+
+  // ── Renderiza as colunas ──
+  dados.forEach((encarte, i) => {
+    const col = document.createElement("div");
+    col.className = "encarte-col" + (i === 0 ? " ativo" : "");
+    col.setAttribute("role", "listitem");
+    col.setAttribute("aria-label", encarte.titulo);
+    col.dataset.index = i;
+
+    col.innerHTML = `
+      <img
+        class="encarte-imagem"
+        src="${otimizarImagem(encarte.imagemEncarte, 'banner')}"
+        alt="${encarte.titulo}"
+        loading="lazy"
+        draggable="false"
+      />
+      <div class="encarte-overlay"></div>
+      <div class="encarte-info">
+        <div class="encarte-lojista-nome">
+          <i class="fa-solid fa-store"></i>
+          <span>${encarte.nomeLojista}</span>
+        </div>
+        <h3 class="encarte-titulo">${encarte.titulo}</h3>
+        <p class="encarte-descricao">${encarte.descricao}</p>
+        <button
+          class="encarte-btn"
+          data-lojista-id="${encarte.lojistaId}"
+          aria-label="Ver detalhes de ${encarte.nomeLojista}"
+        >
+          <i class="fa-regular fa-eye"></i> Ver lojista
+        </button>
+      </div>
+    `;
+
+    // Clique na coluna comprimida → expande
+    col.addEventListener("click", (e) => {
+      // Se clicou no botão, abre o modal — não ativa o encarte
+      if (e.target.closest(".encarte-btn")) return;
+      if (!col.classList.contains("ativo")) {
+        ativarEncarte(i);
+        reiniciarIntervalo();
+      }
+    });
+
+    // Botão "Ver lojista" → abre modal do lojista
+    col.querySelector(".encarte-btn").addEventListener("click", () => {
+      abrirModal(encarte.lojistaId);
+    });
+
+    container.appendChild(col);
+  });
+
+  // ── Renderiza as bolinhas ──
+  dados.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "encarte-dot" + (i === 0 ? " ativo" : "");
+    dot.setAttribute("aria-label", `Encarte ${i + 1}`);
+    dot.addEventListener("click", () => {
+      ativarEncarte(i);
+      reiniciarIntervalo();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  // ── Ativa um encarte pelo índice ──
+  function ativarEncarte(index) {
+    ativoIndex = index;
+
+    // Atualiza colunas
+    container.querySelectorAll(".encarte-col").forEach((col, i) => {
+      col.classList.toggle("ativo", i === index);
+    });
+
+    // Atualiza bolinhas
+    dotsContainer.querySelectorAll(".encarte-dot").forEach((dot, i) => {
+      dot.classList.toggle("ativo", i === index);
+    });
+  }
+
+  // ── Avança para o próximo encarte ──
+  function avancar() {
+    if (pausado) return;
+    ativarEncarte((ativoIndex + 1) % dados.length);
+  }
+
+  // ── Inicia o intervalo automático (4s) ──
+  function iniciarIntervalo() {
+    intervalo = setInterval(avancar, 4000);
+  }
+
+  function reiniciarIntervalo() {
+    clearInterval(intervalo);
+    iniciarIntervalo();
+  }
+
+  // ── Pausa ao hover (desktop) ──
+  container.addEventListener("mouseenter", () => { pausado = true; });
+  container.addEventListener("mouseleave", () => { pausado = false; });
+
+  // ── Pausa ao toque (mobile) — retoma após 3s sem tocar ──
+  let touchTimer = null;
+  container.addEventListener("touchstart", () => {
+    pausado = true;
+    clearTimeout(touchTimer);
+  }, { passive: true });
+
+  container.addEventListener("touchend", () => {
+    clearTimeout(touchTimer);
+    touchTimer = setTimeout(() => { pausado = false; }, 3000);
+  }, { passive: true });
+
+  // ── Swipe mobile: deslizar para navegar ──
+  let touchStartX = 0;
+  container.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  container.addEventListener("touchend", (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // Deslizou para esquerda → avança
+        ativarEncarte((ativoIndex + 1) % dados.length);
+      } else {
+        // Deslizou para direita → volta
+        ativarEncarte((ativoIndex - 1 + dados.length) % dados.length);
+      }
+      reiniciarIntervalo();
+    }
+  }, { passive: true });
+
+  // ── Inicia ──
+  iniciarIntervalo();
+}
+
+// Chama no DOMContentLoaded já existente via patch abaixo
+document.addEventListener("DOMContentLoaded", () => {
+  inicializarEncartes();
 });
