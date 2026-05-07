@@ -322,6 +322,31 @@
         </div>
       </section>
 
+
+      <!-- =============================================
+         SECTION ENCARTES — Carrossel Coverflow
+         Exibe promoções dos lojistas em carrossel
+         automático com expansão da coluna ativa.
+         Os dados são definidos em window.encartes
+         no bloco de scripts abaixo.
+         ============================================= -->
+      <section class="encartes" id="encartes" aria-label="Encartes e promoções">
+        <div class="encartes-header">
+          <h2 class="section-title">Promoções em Destaque</h2>
+          <p class="section-subtitle">
+            Ofertas exclusivas dos comerciantes do bairro. Aproveite!
+          </p>
+        </div>
+
+        <!-- Carrossel -->
+        <div class="encartes-coverflow" id="encartesCarrossel" role="list" aria-label="Carrossel de encartes">
+          <!-- Preenchido pelo JS -->
+        </div>
+
+        <!-- Indicadores de paginação (bolinhas) -->
+        <div class="encartes-dots" id="encartesDots" aria-label="Navegação do carrossel"></div>
+      </section>
+
       <!-- =============================================
          Section Noticias - Exibi cards com noticias em destaques
          ============================================= -->
@@ -577,6 +602,58 @@
       </div>
 
     </footer>
+
+    <!-- =============================================
+         DADOS DOS ENCARTES
+         Para adicionar ou editar encartes, basta
+         incluir/alterar os objetos abaixo.
+         imagemEncarte: URL da imagem promocional (Cloudinary recomendado)
+         lojistaId: id do lojista no lojistas.json (abre o modal ao clicar)
+         ============================================= -->
+    <script>
+      window.encartes = [
+        {
+          id: 1,
+          lojistaId: 1,
+          nomeLojista: "Padaria Pão de Ouro",
+          titulo: "Pão Fresquinho Todo Dia!",
+          descricao: "Combo café da manhã com 20% OFF",
+          imagemEncarte: "https://picsum.photos/600/900?random=41"
+        },
+        {
+          id: 2,
+          lojistaId: 8,
+          nomeLojista: "Ar-Condicionado Natal",
+          titulo: "Limpeza + Manutenção",
+          descricao: "A partir de R$ 89,90. Agende já!",
+          imagemEncarte: "https://picsum.photos/600/900?random=42"
+        },
+        {
+          id: 3,
+          lojistaId: 11,
+          nomeLojista: "Arena Beach Sports",
+          titulo: "Quadra por R$ 60/hora",
+          descricao: "Reserve online e garanta seu horário",
+          imagemEncarte: "https://picsum.photos/600/900?random=43"
+        },
+        {
+          id: 4,
+          lojistaId: 18,
+          nomeLojista: "Moda Praia Sol & Mar",
+          titulo: "Coleção Verão 2026",
+          descricao: "Até 30% OFF em biquínis selecionados",
+          imagemEncarte: "https://picsum.photos/600/900?random=44"
+        },
+        {
+          id: 5,
+          lojistaId: 20,
+          nomeLojista: "Espaço Fitness Wear",
+          titulo: "Kit Treino Completo",
+          descricao: "Legging + Top + Squeeze com desconto",
+          imagemEncarte: "https://picsum.photos/600/900?random=45"
+        }
+      ];
+    </script>
 
     <!-- =============================================
          DADOS DAS NOTÍCIAS
