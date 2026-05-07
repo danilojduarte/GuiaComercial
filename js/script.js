@@ -1159,3 +1159,99 @@ function inicializarEncartes() {
 document.addEventListener("DOMContentLoaded", () => {
   inicializarEncartes();
 });
+
+/* ==============================================
+   TRANSIÇÕES DE NAVEGAÇÃO
+   ============================================== */
+
+(function () {
+
+  /* ── 1. SCROLL SUAVE COM EASING PERSONALIZADO ──
+     Intercepta todos os links de âncora (#section)
+     e aplica scroll com curva easeInOutQuart —
+     muito mais suave que o scroll nativo do browser. */
+
+  function easeInOutQuart(t) {
+    return t < 0.5
+      ? 8 * t * t * t * t
+      : 1 - Math.pow(-2 * t + 2, 4) / 2;
+  }
+
+  function scrollSuave(alvo, duracao) {
+    const navbar = document.querySelector(".navbar");
+    const alturaNavbar = navbar ? navbar.offsetHeight : 70;
+    const inicio = window.scrollY;
+    const destino = alvo - alturaNavbar - 16;
+    const distancia = destino - inicio;
+    let startTime = null;
+
+    function animar(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progresso = Math.min((timestamp - startTime) / duracao, 1);
+      const ease = easeInOutQuart(progresso);
+      window.scrollTo(0, inicio + distancia * ease);
+      if (progresso < 1) requestAnimationFrame(animar);
+    }
+
+    requestAnimationFrame(animar);
+  }
+
+  /* ── 2. HIGHLIGHT NA SEÇÃO DE DESTINO ──
+     Ao chegar, pisca uma borda rosé suave na seção
+     para orientar o usuário visualmente. */
+
+  function destacarSecao(el) {
+    el.classList.remove("section-highlight");
+    void el.offsetWidth; // força reflow para reiniciar animação
+    el.classList.add("section-highlight");
+    setTimeout(() => el.classList.remove("section-highlight"), 1300);
+  }
+
+  /* ── 3. INTERCEPTA CLIQUES NOS LINKS DE ÂNCORA ── */
+
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href^='#']");
+    if (!link) return;
+
+    const hash = link.getAttribute("href");
+    if (!hash || hash === "#") return;
+
+    const alvo = document.querySelector(hash);
+    if (!alvo) return;
+
+    e.preventDefault();
+
+    const topoAlvo = alvo.getBoundingClientRect().top + window.scrollY;
+    scrollSuave(topoAlvo, 900); // 900ms — suave mas não lento demais
+
+    // Destaca a seção após o scroll chegar
+    setTimeout(() => destacarSecao(alvo), 920);
+  });
+
+  /* ── 4. NAVBAR COMPACTA AO ROLAR ──
+     Reduz o padding da navbar quando o usuário
+     rola para baixo, ganhando mais espaço visual. */
+
+  const navbar = document.querySelector(".navbar");
+  if (navbar) {
+    let ultimoScroll = 0;
+    let timerNavbar = null;
+
+    window.addEventListener("scroll", () => {
+      if (timerNavbar) return; // throttle
+      timerNavbar = setTimeout(() => {
+        timerNavbar = null;
+        const scrollAtual = window.scrollY;
+
+        if (scrollAtual > 80) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+
+        ultimoScroll = scrollAtual;
+      }, 80);
+    }, { passive: true });
+  }
+
+})();
