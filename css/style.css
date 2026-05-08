@@ -524,15 +524,22 @@ a {
 }
 
 .section-title {
+    text-align: center;
     font-size: 2.5rem;
     color: #333;
     margin-bottom: 10px;
+    /* display: block garante que text-align: center funcione corretamente
+       mesmo quando o elemento é redefinido como inline-block nas animações */
+    display: block;
+    width: 100%;
 }
 
 .section-subtitle {
     text-align: center;
     color: #777;
     margin-bottom: 60px;
+    display: block;
+    width: 100%;
 }
 
 /* GRID RESPONSIVO: Ajusta colunas automaticamente conforme o tamanho da tela */
@@ -953,7 +960,6 @@ a {
 .btn-acao:active { transform: scale(0.98); }
 
 .btn-acao.whats { background: #25D366; color: white; }
-.btn-acao.insta { background: #833AB4; color: white; }
 .btn-acao.maps { background: #4285F4; color: white; }
 
  
@@ -2135,9 +2141,12 @@ a {
 
 .section-title {
   position: relative;
-  display: inline-block;
+  /* Mantém block para respeitar text-align: center do container */
+  display: block;
+  width: 100%;
 }
 
+/* Linha decorativa gerada via pseudo-elemento centralizado */
 .section-title::after {
   content: "";
   display: block;
@@ -2145,7 +2154,7 @@ a {
   width: 0;
   background: var(--cor-primaria);
   border-radius: 2px;
-  margin: 8px auto 0;
+  margin: 8px auto 0; /* auto nas laterais centraliza a linha */
   transition: width 0.6s ease;
 }
 
@@ -2204,6 +2213,12 @@ a {
 
 .status-badge.aberto {
   animation: pulseBadge 2.5s ease infinite;
+}
+
+/* Badge de intervalo de almoço — tom laranja/âmbar */
+.status-badge.almoco {
+  background: #f39c12;
+  color: #fff;
 }
 
 /* ── Respeita preferência do usuário por menos movimento ── */
@@ -2504,19 +2519,31 @@ a {
 
 /* ── RESPONSIVO ── */
 @media (max-width: 900px) {
+  .encartes {
+    overflow: hidden; /* garante que nada vaza do container da section */
+  }
+
   .encartes-coverflow {
-    gap: 10px;
-    padding: 16px 20px 28px;
+    gap: 8px;
+    padding: 16px 16px 28px;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .encarte-col {
-    width: 60px;
-    height: 400px;
-    border-radius: 18px;
+    width: 52px;
+    height: 380px;
+    border-radius: 16px;
+    flex-shrink: 0;
   }
 
+  /* Card ativo — ocupa o espaço restante calculado dinamicamente:
+     100vw - (padding 32px) - (4 cols × 52px) - (4 gaps × 8px) = ~200px em 600px */
   .encarte-col.ativo {
-    width: 260px;
+    width: calc(100vw - 32px - (4 * 52px) - (4 * 8px));
+    max-width: 220px;
+    min-width: 160px;
   }
 
   .encarte-titulo { font-size: 1rem; }
@@ -2524,23 +2551,51 @@ a {
 }
 
 @media (max-width: 500px) {
-  .encarte-col {
-    width: 44px;
-    height: 340px;
-    border-radius: 14px;
-  }
-
-  .encarte-col.ativo {
-    width: 210px;
+  .encartes {
+    overflow: hidden;
   }
 
   .encartes-coverflow {
-    gap: 8px;
+    gap: 6px;
     padding: 12px 12px 24px;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    justify-content: center;
   }
 
-  .encarte-titulo { font-size: 0.95rem; }
-  .encarte-descricao { font-size: 0.78rem; }
+  .encarte-col {
+    width: 36px;      /* mais fino — dá mais espaço pro card ativo */
+    height: 300px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  /* Cálculo exato para 5 encartes em ~360px:
+     360 - 24px(padding) - 4×36px(cols) - 4×6px(gaps) = 168px */
+  .encarte-col.ativo {
+    width: calc(100vw - 24px - (4 * 36px) - (4 * 6px));
+    max-width: 180px;
+    min-width: 140px;
+  }
+
+  .encarte-titulo    { font-size: 0.9rem; }
+  .encarte-descricao { font-size: 0.75rem; margin-bottom: 10px; }
+  .encarte-info      { padding: 16px 14px; }
+  .encarte-btn       { padding: 8px 14px; font-size: 0.8rem; }
+}
+
+/* Telas muito pequenas (< 360px) */
+@media (max-width: 360px) {
+  .encarte-col {
+    width: 30px;
+    height: 280px;
+  }
+
+  .encarte-col.ativo {
+    width: calc(100vw - 20px - (4 * 30px) - (4 * 6px));
+    min-width: 120px;
+  }
 }
 
 

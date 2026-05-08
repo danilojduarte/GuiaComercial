@@ -106,7 +106,9 @@ function renderizarCards(lista, comScroll = false) {
                data-id="${lojista.id}"
                data-abre="${lojista.abre}"
                data-fecha="${lojista.fecha}"
-               data-dias="${diasStr}">
+               data-dias="${diasStr}"
+               data-almoco-inicio="${lojista.almocoInicio || ''}"
+               data-almoco-fim="${lojista.almocoFim || ''}">
         <div class="card-header">
           <img src="${otimizarImagem(lojista.imagemCapa, 'capa')}"
                alt="Capa ${lojista.nome}"
@@ -156,6 +158,9 @@ function renderizarCards(lista, comScroll = false) {
 }
 
 // 3. LÓGICA DE STATUS
+// Suporta horário de almoço via campos opcionais:
+// data-almoco-inicio e data-almoco-fim no card
+// Ex: "12:00" e "13:30" — lojista fechado nesse intervalo
 function atualizarStatusLojas() {
   const agora = new Date();
   const horaAtual = agora.getHours() * 100 + agora.getMinutes();
@@ -164,32 +169,44 @@ function atualizarStatusLojas() {
 
   cards.forEach((card) => {
     const badge = card.querySelector(".status-badge");
-    const abreStr = card.getAttribute("data-abre");
+    const abreStr  = card.getAttribute("data-abre");
     const fechaStr = card.getAttribute("data-fecha");
-    const diasStr = card.getAttribute("data-dias");
+    const diasStr  = card.getAttribute("data-dias");
+    const almocoInicioStr = card.getAttribute("data-almoco-inicio");
+    const almocoFimStr    = card.getAttribute("data-almoco-fim");
 
-    if (abreStr && fechaStr) {
-      const hAbre = parseInt(abreStr.replace(":", ""));
-      const hFecha = parseInt(fechaStr.replace(":", ""));
+    if (!abreStr || !fechaStr) return;
 
-      // Converte a string de dias de volta para array de números
-      const diasFuncionamento = diasStr
-        ? diasStr.split(",").map(Number)
-        : [0, 1, 2, 3, 4, 5, 6];
+    const hAbre  = parseInt(abreStr.replace(":", ""));
+    const hFecha = parseInt(fechaStr.replace(":", ""));
 
-      const funcionaHoje = diasFuncionamento.includes(diaSemanaAtual);
-      const dentroDoHorario = horaAtual >= hAbre && horaAtual < hFecha;
+    const diasFuncionamento = diasStr
+      ? diasStr.split(",").map(Number)
+      : [0, 1, 2, 3, 4, 5, 6];
 
-      if (funcionaHoje && dentroDoHorario) {
-        badge.textContent = "Aberto Agora";
-        badge.className = "status-badge aberto";
-      } else if (!funcionaHoje) {
-        badge.textContent = "Fechado Hoje";
-        badge.className = "status-badge fechado";
-      } else {
-        badge.textContent = "Fechado";
-        badge.className = "status-badge fechado";
-      }
+    const funcionaHoje   = diasFuncionamento.includes(diaSemanaAtual);
+    const dentroDoHorario = horaAtual >= hAbre && horaAtual < hFecha;
+
+    // Verifica se está no intervalo de almoço
+    let noAlmoco = false;
+    if (almocoInicioStr && almocoFimStr) {
+      const hAlmocoInicio = parseInt(almocoInicioStr.replace(":", ""));
+      const hAlmocoFim    = parseInt(almocoFimStr.replace(":", ""));
+      noAlmoco = horaAtual >= hAlmocoInicio && horaAtual < hAlmocoFim;
+    }
+
+    if (!funcionaHoje) {
+      badge.textContent = "Fechado Hoje";
+      badge.className   = "status-badge fechado";
+    } else if (funcionaHoje && dentroDoHorario && noAlmoco) {
+      badge.textContent = "Fechado — Almoço";
+      badge.className   = "status-badge almoco";
+    } else if (funcionaHoje && dentroDoHorario) {
+      badge.textContent = "Aberto Agora";
+      badge.className   = "status-badge aberto";
+    } else {
+      badge.textContent = "Fechado";
+      badge.className   = "status-badge fechado";
     }
   });
 }
