@@ -396,7 +396,11 @@ document.addEventListener("DOMContentLoaded", () => {
   requestAnimationFrame(() => {
     inicializarScrollReveal();
     inicializarContadores();
-  });
+  
+
+  // Inicializações adicionadas pelos módulos de geolocalização e animações
+  inicializarGeolocalizacao();
+  inicializarEncartes();});
 
   // Fechar modal pelo botão X
   const btnFechar = document.getElementById("fecharModal");
@@ -1015,54 +1019,55 @@ function inicializarGeolocalizacao() {
 }
 
 // Chama a inicialização dentro do DOMContentLoaded existente
-document.addEventListener("DOMContentLoaded", () => {
-  inicializarGeolocalizacao();
-});
+
 
 /* ==============================================
-   MÓDULO DE ENCARTES — Carrossel Coverflow
-   - Expansão automática a cada 4s
-   - Pausa ao hover/touch
-   - Navegação por clique nas colunas e bolinhas
-   - Abre modal do lojista ao clicar em "Ver lojista"
+   MÓDULO DE ENCARTES — Bento Grid
+   Layout editorial com cards de tamanhos variados.
+   - 2 primeiros encartes → cards grandes (bento-grande)
+   - Restantes → cards médios (bento-medio)
+   - Cores rotacionadas automaticamente (6 opções)
+   - Clique no botão abre o modal do lojista
    ============================================== */
 
 function inicializarEncartes() {
-  const container = document.getElementById("encartesCarrossel");
-  const dotsContainer = document.getElementById("encartesDots");
+  const grid = document.getElementById("bentoGrid");
   const dados = window.encartes || [];
-  if (!container || dados.length === 0) return;
+  if (!grid || dados.length === 0) return;
 
-  let ativoIndex = 0;
-  let intervalo = null;
-  let pausado = false;
+  const fragment = document.createDocumentFragment();
 
-  // ── Renderiza as colunas ──
   dados.forEach((encarte, i) => {
-    const col = document.createElement("div");
-    col.className = "encarte-col" + (i === 0 ? " ativo" : "");
-    col.setAttribute("role", "listitem");
-    col.setAttribute("aria-label", encarte.titulo);
-    col.dataset.index = i;
+    // Os 2 primeiros são grandes, o restante é médio
+    const tamanho = i < 2 ? "bento-grande" : "bento-medio";
 
-    col.innerHTML = `
+    // Cor rotacionada automaticamente (0 a 5)
+    const cor = i % 6;
+
+    const card = document.createElement("article");
+    card.className = `bento-card ${tamanho} reveal`;
+    card.setAttribute("role", "listitem");
+    card.setAttribute("aria-label", encarte.titulo);
+    card.setAttribute("data-cor", cor);
+
+    card.innerHTML = `
       <img
-        class="encarte-imagem"
+        class="bento-imagem"
         src="${otimizarImagem(encarte.imagemEncarte, 'banner')}"
         alt="${encarte.titulo}"
         loading="lazy"
         draggable="false"
       />
-      <div class="encarte-overlay"></div>
-      <div class="encarte-info">
-        <div class="encarte-lojista-nome">
+      <div class="bento-overlay"></div>
+      <div class="bento-info">
+        <span class="bento-tag">
           <i class="fa-solid fa-store"></i>
-          <span>${encarte.nomeLojista}</span>
-        </div>
-        <h3 class="encarte-titulo">${encarte.titulo}</h3>
-        <p class="encarte-descricao">${encarte.descricao}</p>
+          ${encarte.nomeLojista}
+        </span>
+        <h3 class="bento-titulo">${encarte.titulo}</h3>
+        <p class="bento-produto">${encarte.descricao}</p>
         <button
-          class="encarte-btn"
+          class="bento-btn"
           data-lojista-id="${encarte.lojistaId}"
           aria-label="Ver detalhes de ${encarte.nomeLojista}"
         >
@@ -1071,111 +1076,52 @@ function inicializarEncartes() {
       </div>
     `;
 
-    // Clique na coluna comprimida → expande
-    col.addEventListener("click", (e) => {
-      // Se clicou no botão, abre o modal — não ativa o encarte
-      if (e.target.closest(".encarte-btn")) return;
-      if (!col.classList.contains("ativo")) {
-        ativarEncarte(i);
-        reiniciarIntervalo();
-      }
-    });
-
-    // Botão "Ver lojista" → abre modal do lojista
-    col.querySelector(".encarte-btn").addEventListener("click", () => {
+    // Botão abre o modal do lojista correspondente
+    card.querySelector(".bento-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
       abrirModal(encarte.lojistaId);
     });
 
-    container.appendChild(col);
+    // Clique em qualquer parte do card também abre o modal
+    card.addEventListener("click", () => {
+      abrirModal(encarte.lojistaId);
+    });
+
+    fragment.appendChild(card);
   });
 
-  // ── Renderiza as bolinhas ──
-  dados.forEach((_, i) => {
-    const dot = document.createElement("button");
-    dot.className = "encarte-dot" + (i === 0 ? " ativo" : "");
-    dot.setAttribute("aria-label", `Encarte ${i + 1}`);
-    dot.addEventListener("click", () => {
-      ativarEncarte(i);
-      reiniciarIntervalo();
-    });
-    dotsContainer.appendChild(dot);
-  });
+  grid.appendChild(fragment);
 
-  // ── Ativa um encarte pelo índice ──
-  function ativarEncarte(index) {
-    ativoIndex = index;
+  // Aciona o ScrollReveal nos cards recém criados
+  requestAnimationFrame(() => {
+    if (typeof inicializarScrollReveal === "function") {
+      grid.querySelectorAll(".bento-card.reveal").forEach((card) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(32px)";
+      });
 
-    // Atualiza colunas
-    container.querySelectorAll(".encarte-col").forEach((col, i) => {
-      col.classList.toggle("ativo", i === index);
-    });
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, idx) => {
+            if (entry.isIntersecting) {
+              setTimeout(() => {
+                entry.target.style.transition = "opacity 0.55s ease, transform 0.55s ease";
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+              }, idx * 80);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
 
-    // Atualiza bolinhas
-    dotsContainer.querySelectorAll(".encarte-dot").forEach((dot, i) => {
-      dot.classList.toggle("ativo", i === index);
-    });
-  }
-
-  // ── Avança para o próximo encarte ──
-  function avancar() {
-    if (pausado) return;
-    ativarEncarte((ativoIndex + 1) % dados.length);
-  }
-
-  // ── Inicia o intervalo automático (4s) ──
-  function iniciarIntervalo() {
-    intervalo = setInterval(avancar, 4000);
-  }
-
-  function reiniciarIntervalo() {
-    clearInterval(intervalo);
-    iniciarIntervalo();
-  }
-
-  // ── Pausa ao hover (desktop) ──
-  container.addEventListener("mouseenter", () => { pausado = true; });
-  container.addEventListener("mouseleave", () => { pausado = false; });
-
-  // ── Pausa ao toque (mobile) — retoma após 3s sem tocar ──
-  let touchTimer = null;
-  container.addEventListener("touchstart", () => {
-    pausado = true;
-    clearTimeout(touchTimer);
-  }, { passive: true });
-
-  container.addEventListener("touchend", () => {
-    clearTimeout(touchTimer);
-    touchTimer = setTimeout(() => { pausado = false; }, 3000);
-  }, { passive: true });
-
-  // ── Swipe mobile: deslizar para navegar ──
-  let touchStartX = 0;
-  container.addEventListener("touchstart", (e) => {
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-
-  container.addEventListener("touchend", (e) => {
-    const diff = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) {
-        // Deslizou para esquerda → avança
-        ativarEncarte((ativoIndex + 1) % dados.length);
-      } else {
-        // Deslizou para direita → volta
-        ativarEncarte((ativoIndex - 1 + dados.length) % dados.length);
-      }
-      reiniciarIntervalo();
+      grid.querySelectorAll(".bento-card").forEach((card) => observer.observe(card));
     }
-  }, { passive: true });
-
-  // ── Inicia ──
-  iniciarIntervalo();
+  });
 }
 
-// Chama no DOMContentLoaded já existente via patch abaixo
-document.addEventListener("DOMContentLoaded", () => {
-  inicializarEncartes();
-});
+
 
 /* ==============================================
    TRANSIÇÕES DE NAVEGAÇÃO

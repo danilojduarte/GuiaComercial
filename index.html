@@ -18,19 +18,14 @@
     <!-- Folha de estilos principal -->
     <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Font Awesome — carregamento não bloqueante:
-         media="print" faz o browser baixar sem bloquear a renderização;
-         onload muda para "all" quando terminar, aplicando os estilos.
-         O <noscript> garante fallback para quem desativou JS. -->
+    <!-- Font Awesome — carregamento direto com crossorigin para evitar
+         bloqueios de tracking prevention em Edge/Safari -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-      media="print"
-      onload="this.media='all'"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-    <noscript>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    </noscript>
   </head>
   <body>
     <!-- =============================================
@@ -118,7 +113,6 @@
         </div>
 
         <a href="#destaques">Destaques</a>
-        <a href="#encartes">Promoções</a>
         <a href="#noticias">Notícias</a>
         <a href="#contato">Contato</a>
       </nav>
@@ -176,7 +170,6 @@
       <a href="#" class="btn-categoria" data-categoria="Automotivo">Automotivo</a>
       <a href="#destaques">Destaques</a>
       <a href="#noticias">Notícias</a>
-      <a href="#encartes">Promoções</a>
       <a href="#contato">Contato</a>
     </nav>
 
@@ -326,27 +319,21 @@
 
 
       <!-- =============================================
-         SECTION ENCARTES — Carrossel Coverflow
-         Exibe promoções dos lojistas em carrossel
-         automático com expansão da coluna ativa.
-         Os dados são definidos em window.encartes
-         no bloco de scripts abaixo.
+         SECTION ENCARTES — Bento Grid
+         Layout editorial com cards de tamanhos variados.
+         2 cards grandes + até 4 menores por linha.
+         Os dados são definidos em window.encartes abaixo.
          ============================================= -->
       <section class="encartes" id="encartes" aria-label="Encartes e promoções">
-        <div class="encartes-header">
+        <div class="container">
           <h2 class="section-title">Promoções em Destaque</h2>
           <p class="section-subtitle">
             Ofertas exclusivas dos comerciantes do bairro. Aproveite!
           </p>
+          <!-- Bento Grid preenchido pelo JS -->
+          <div class="bento-grid" id="bentoGrid" role="list" aria-label="Grade de promoções">
+          </div>
         </div>
-
-        <!-- Carrossel -->
-        <div class="encartes-coverflow" id="encartesCarrossel" role="list" aria-label="Carrossel de encartes">
-          <!-- Preenchido pelo JS -->
-        </div>
-
-        <!-- Indicadores de paginação (bolinhas) -->
-        <div class="encartes-dots" id="encartesDots" aria-label="Navegação do carrossel"></div>
       </section>
 
       <!-- =============================================
