@@ -509,15 +509,7 @@ function registrarFiltrosCategorias() {
 
 
 
-function fecharModalNoticia() {
-  const modal = document.getElementById("modalNoticia");
-  if (modal) {
-    modal.style.display = "none";
-    modal.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "auto";
-  }
-}
- 
+
 /* ==============================================
    MÓDULO DE NOTÍCIAS
    As notícias são definidas no index.html via
