@@ -1,0 +1,39 @@
+========================================================
+========================================================
+#01
+*Nome do estabelecimento - Lucas Automotivo;
+*Categoria -  (Automotivo);
+*Endereço -  Avenida Flores Silvestres, 442 - Jardins;
+*Horário de funcionamento - 08:00 às 18:00;
+*Dias que funciona -  Segunda a Sexta-feira: 08:00 às 18:00 | Sábado: 08:00 às 17:00;
+*Fecha para almoço - Não;
+*WhatsApp -  84 98703-7661;
+*Link do Google Maps -  https://www.google.com/maps/place/Lucas+Automotivo/@-5.7532425,-35.3004925,715m/data=!3m2!1e3!4b1!4m6!3m5!1s0x7b3aba59c6a46c9:0x17fa147ab2f066dd!8m2!3d-5.7532425!4d-35.3004925!16s%2Fg%2F1ptx8x4nq?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D;
+*Link do Instagram -  https://www.instagram.com/lucasautomotivo/;
+*Descrição curta -  O melhor serviço e cuidado para seu carro;
+*Palavras-chave para busca -  Troca de óleo, Troca de pastilha de freio, freio, suspensão, injeção, eletrônico, macha, direção, caixa, vazamento;
+*É destaque - (Sim ou Não)
+*URL da imagem de capa -  ;
+*URL do logo -  ;
+*Latitude -  -5.75300| Longitude - -35.30047;
+========================================================
+========================================================
+#02
+*Nome do estabelecimento - Gula Mix;
+*Categoria -  (Alimentação);
+*Endereço - ;
+*Horário de funcionamento - ;
+*Dias que funciona -  ;
+*Fecha para almoço - ? Se sim, qual horário?
+*WhatsApp -  ;
+*Link do Google Maps -  ;
+*Link do Instagram -  ;
+*Descrição curta -  ;
+*Palavras-chave para busca -  ;
+*É destaque - (Sim ou Não)
+*URL da imagem de capa -  ;
+*URL do logo -  ;
+*Latitude -  | Longitude - ;
+
+========================================================
+========================================================

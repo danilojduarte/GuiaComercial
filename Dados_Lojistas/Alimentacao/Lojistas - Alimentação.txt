@@ -1,0 +1,58 @@
+#01
+Nome do estabelecimento - Delicia de Bolo Pães;
+Categoria - (Alimentação);
+Endereço - Avenida Cidade das Rosas;
+Horário de funcionamento - Seg a Sáb 06:30 às 20:00 - 
+Dom 06:30 às 11:00/15:00 às 19:30 - 
+Feriados 06:30 às 19:30;
+Dias que funciona (Seg a Domingo);
+Fecha para almoço -  Não;
+WhatsApp - (84999384620);
+Link do Google Maps - https://maps.app.goo.gl/VGSHvLjJ3Y3zpZ1n8;
+Link do Instagram - https://www.instagram.com/deliciadeboloepaes/;
+Descrição curta Pão quentinho a toda hora, bolos caseiros e os melhores salgados do bairro;
+Palavras-chave para busca - pão, bolo, salgados, coxinhas, suco, refrigerantes, coca cola, coca-cola, aiversário, kit, café, lanche, padaria;
+É destaque? - Sim
+URL da imagem de capa - https://res.cloudinary.com/dxd0s5muc/image/upload/v1778008674/logo_delicia_bolo_02_jmy6c2.png;
+URL do logo - https://res.cloudinary.com/dxd0s5muc/image/upload/v1778007419/logo_delicia_bolo_cuv4z1.png;
+Latitude - -575055 | Longitude - -3530230;
+
+========================================================
+#02
+*Nome do estabelecimento - Gula Mix;
+*Categoria -  (Alimentação);
+*Endereço - Av. Flores das Violetas na rotatória do Cidade das Flores. No Gemina center.;
+*Horário de funcionamento - 16:00 às 22:30;
+*Dias que funciona -  Domingo a Domingo;
+*Fecha para almoço - Fechado;
+*WhatsApp -  84987868764;
+*Link do Google Maps -  https://www.google.com/maps/place/Gula+Mix/@-5.7488258,-35.3082293,89m/data=!3m1!1e3!4m14!1m7!3m6!1s0x7b3aba59c6a46c9:0x17fa147ab2f066dd!2sLucas+Automotivo!8m2!3d-5.7532425!4d-35.3004925!16s%2Fg%2F1ptx8x4nq!3m5!1s0x7b3ac7408f0a9b3:0x3a3d335cc87d5918!8m2!3d-5.7489074!4d-35.3080047!16s%2Fg%2F11hdc3xcj9?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D;
+*Link do Instagram -  https://www.instagram.com/gulamix_cidadedasflores/;
+*Descrição curta -  Penssando em uma refeição completa? Venha conhecer o cardapio do Gula Miz;
+*Palavras-chave para busca -  Sorvete, Açaí, Tapioca, recheada, Sanduíches, Panqueca, Fritas, Bebidas, Sopa, Cuzcus, Cachorro Quente;
+*É destaque - (Sim)
+*URL da imagem de capa -  ;
+*URL do logo -  ;
+*Latitude - -5.74865  | Longitude - -35.30810;
+
+========================================================
+========================================================
+
+*Nome do estabelecimento - Gula Mix;
+*Categoria -  (Alimentação);
+*Endereço - ;
+*Horário de funcionamento - ;
+*Dias que funciona -  ;
+*Fecha para almoço - ? Se sim, qual horário?
+*WhatsApp -  ;
+*Link do Google Maps -  ;
+*Link do Instagram -  ;
+*Descrição curta -  ;
+*Palavras-chave para busca -  ;
+*É destaque - (Sim ou Não)
+*URL da imagem de capa -  ;
+*URL do logo -  ;
+*Latitude -  | Longitude - ;
+
+========================================================
+========================================================
